@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class CodeDTO {
 
-    private int codeidrrrrrr;
+    private int codeid;
     private String codetext;
     private String comment;
     private int numlines;
