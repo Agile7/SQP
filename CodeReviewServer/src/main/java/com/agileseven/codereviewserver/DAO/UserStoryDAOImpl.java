@@ -13,8 +13,9 @@ public class UserStoryDAOImpl implements UserStoryDAO {
 
     @Override
     public List<UserstoryDTO> getAllUserStories() throws SQLException {
+
         Connection connection = ConnectionFactory.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM user_stories;");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM user_story;");
         ResultSet resultSet = statement.executeQuery();
 
         List<UserstoryDTO> userStories = new ArrayList<>();
