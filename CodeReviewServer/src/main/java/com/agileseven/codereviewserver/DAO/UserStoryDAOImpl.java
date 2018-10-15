@@ -12,11 +12,8 @@ import java.util.List;
 public class UserStoryDAOImpl implements UserStoryDAO {
 
     @Override
-    public List<UserstoryDTO> getAllUserStories() throws ClassNotFoundException, SQLException {
-
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:9000/code_review_db",
-                "root","");
+    public List<UserstoryDTO> getAllUserStories() throws SQLException {
+        Connection connection = ConnectionFactory.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM user_stories;");
         ResultSet resultSet = statement.executeQuery();
 
