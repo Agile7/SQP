@@ -1,2 +1,14 @@
 /CodeReviewServer/target/
 /CodeReviewClient/target/
+CodeReviewClient/.idea/compiler.xml
+CodeReviewClient/.idea/encodings.xml
+CodeReviewClient/.idea/libraries/R_User_Library.xml
+CodeReviewClient/.idea/misc.xml
+CodeReviewClient/.idea/vcs.xml
+CodeReviewClient/.idea/workspace.xml
+CodeReviewServer/.idea/compiler.xml
+CodeReviewServer/.idea/encodings.xml
+CodeReviewServer/.idea/libraries/R_User_Library.xml
+CodeReviewServer/.idea/misc.xml
+CodeReviewServer/.idea/vcs.xml
+CodeReviewServer/.idea/workspace.xml
