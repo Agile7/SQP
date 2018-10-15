@@ -5,33 +5,33 @@
  */
 package com.agileseven.codereviewserver.DTO;
 
-import java.awt.Image;
-
 /**
  *
  * @author S
  */
 public class UserDTO {
 
+    private int userId;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String fname;
-    private String lastname;
-    private Image photo;
-    private int positionid;
-    private int projectid;
-    private int userid;
+    private String photoPath;
+    private int positionId;
+    private int projectId;
 
-    public UserDTO(String email, String fname, String lastname, Image photo, int positionid, int projectid, int userid) {
-        this.email = email;
-        this.fname = fname;
-        this.lastname = lastname;
-        this.photo = photo;
-        this.positionid = positionid;
-        this.projectid = projectid;
-        this.userid = userid;
+    public UserDTO(){
+
     }
-
-   
+    
+    public UserDTO(int userId, String firstName, String lastName, String email, String photoPath, int positionId, int projectId) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.photoPath = photoPath;
+        this.positionId = positionId;
+        this.projectId = projectId;
+    }
 
     /**
      * @return the email
@@ -48,87 +48,87 @@ public class UserDTO {
     }
 
     /**
-     * @return the fname
+     * @return the firstName
      */
-    public String getFname() {
-        return fname;
+    public String getFirstName() {
+        return firstName;
     }
 
     /**
-     * @param fname the fname to set
+     * @param firstName the firstName to set
      */
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     /**
-     * @return the lastname
+     * @return the lastName
      */
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
     /**
-     * @param lastname the lastname to set
+     * @param lastName the lastName to set
      */
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     /**
      * @return the photo
      */
-    public Image getPhoto() {
-        return photo;
+    public String getPhoto() {
+        return photoPath;
     }
 
     /**
-     * @param photo the photo to set
+     * @param photoPath the photo to set
      */
-    public void setPhoto(Image photo) {
-        this.photo = photo;
+    public void setPhoto(String photoPath) {
+        this.photoPath = photoPath;
     }
 
     /**
-     * @return the positionid
+     * @return the positionId
      */
-    public int getPositionid() {
-        return positionid;
+    public int getPositionId() {
+        return positionId;
     }
 
     /**
-     * @param positionid the positionid to set
+     * @param positionId the positionId to set
      */
-    public void setPositionid(int positionid) {
-        this.positionid = positionid;
+    public void setPositionId(int positionId) {
+        this.positionId = positionId;
     }
 
     /**
-     * @return the projectid
+     * @return the projectId
      */
-    public int getProjectid() {
-        return projectid;
+    public int getProjectId() {
+        return projectId;
     }
 
     /**
-     * @param projectid the projectid to set
+     * @param projectId the projectId to set
      */
-    public void setProjectid(int projectid) {
-        this.projectid = projectid;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
     /**
-     * @return the userid
+     * @return the userId
      */
-    public int getUserid() {
-        return userid;
+    public int getUserId() {
+        return userId;
     }
 
     /**
-     * @param userid the userid to set
+     * @param userId the userId to set
      */
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
 }
