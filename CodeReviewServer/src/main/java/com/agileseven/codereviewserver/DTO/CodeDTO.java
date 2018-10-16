@@ -13,60 +13,54 @@ import java.util.Date;
  */
 public class CodeDTO {
 
-    private int codeid;
-    private String codetext;
+    private int codeId;
+    private String codeText;
     private String comment;
-    private int numlines;
-    private Date pushdate;
-    private int userid;
-    private char userstoryid;
+    private int numLines;
+    private Date pushDate;
+    private int userId;
+    private String userStoryId;
 
-    public CodeDTO(int codeid, String codetext, String comment, int numlines, Date pushdate, int userid, char userstoryid) {
-        this.codeid = codeid;
-        this.codetext = codetext;
+    public CodeDTO(int codeid, String codetext, String comment, int numlines, Date pushdate, int userid, String userstoryid) {
+        this.codeId = codeid;
+        this.codeText = codetext;
         this.comment = comment;
-        this.numlines = numlines;
-        this.pushdate = pushdate;
-        this.userid = userid;
-        this.userstoryid = userstoryid;
+        this.numLines = numlines;
+        this.pushDate = pushdate;
+        this.userId = userid;
+        this.userStoryId = userstoryid;
     }
 
     public CodeDTO() {
-        this.codeid = codeid;
-        this.codetext = codetext;
-        this.comment = comment;
-        this.numlines = numlines;
-        this.pushdate = pushdate;
-        this.userid = userid;
-        this.userstoryid = userstoryid;
+ 
     }
 
     /**
      * @return the codeid
      */
-    public int getCodeid() {
-        return codeid;
+    public int getCodeId() {
+        return codeId;
     }
 
     /**
      * @param codeid the codeid to set
      */
-    public void setCodeid(int codeid) {
-        this.codeid = codeid;
+    public void setCodeId(int codeid) {
+        this.codeId = codeid;
     }
 
     /**
      * @return the codetext
      */
-    public String getCodetext() {
-        return codetext;
+    public String getCodeText() {
+        return codeText;
     }
 
     /**
      * @param codetext the codetext to set
      */
-    public void setCodetext(String codetext) {
-        this.codetext = codetext;
+    public void setCodeText(String codetext) {
+        this.codeText = codetext;
     }
 
     /**
@@ -86,57 +80,57 @@ public class CodeDTO {
     /**
      * @return the numlines
      */
-    public int getNumlines() {
-        return numlines;
+    public int getNumLines() {
+        return numLines;
     }
 
     /**
      * @param numlines the numlines to set
      */
-    public void setNumlines(int numlines) {
-        this.numlines = numlines;
+    public void setNumLines(int numlines) {
+        this.numLines = numlines;
     }
 
     /**
      * @return the pushdate
      */
-    public Date getPushdate() {
-        return pushdate;
+    public Date getPushDate() {
+        return pushDate;
     }
 
     /**
      * @param pushdate the pushdate to set
      */
-    public void setPushdate(Date pushdate) {
-        this.pushdate = pushdate;
+    public void setPushDate(Date pushdate) {
+        this.pushDate = pushdate;
     }
 
     /**
      * @return the userid
      */
-    public int getUserid() {
-        return userid;
+    public int getUserId() {
+        return userId;
     }
 
     /**
      * @param userid the userid to set
      */
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public void setUserId(int userid) {
+        this.userId = userId;
     }
 
     /**
      * @return the userstoryid
      */
-    public int getUserstoryid() {
-        return userstoryid;
+    public String getUserStoryId() {
+        return userStoryId;
     }
 
     /**
      * @param userstoryid the userstoryid to set
      */
-    public void setUserstoryid(char userstoryid) {
-        this.userstoryid = userstoryid;
+    public void setUserStoryId(String userstoryid) {
+        this.userStoryId = userstoryid;
     }
 
 }

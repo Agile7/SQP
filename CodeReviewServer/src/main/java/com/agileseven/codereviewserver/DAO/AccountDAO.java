@@ -5,6 +5,11 @@
  */
 package com.agileseven.codereviewserver.DAO;
 
+import com.agileseven.codereviewserver.DTO.UserDTO;
+
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  * This interface contains the methods to 
  * - get the list of projects
@@ -16,5 +21,6 @@ package com.agileseven.codereviewserver.DAO;
  * @date created : 13.10.2018
  */
 public interface AccountDAO {
-    
+    public UserDTO getUserById(int userId) throws SQLException;
+    public List<UserDTO> getMembersOfProject(int projectId) throws SQLException;
 }

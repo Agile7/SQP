@@ -5,6 +5,9 @@
  */
 package com.agileseven.codereviewserver.DAO;
 
+import com.agileseven.codereviewserver.DTO.CodeDTO;
+import java.util.ArrayList;
+
 /**
  * This interface contains the methods
  * - to push code
@@ -16,5 +19,7 @@ package com.agileseven.codereviewserver.DAO;
  * @date created : 13.10.2018
  */
 public interface CodeDAO {
+    
+    public ArrayList<CodeDTO> getUnreadCodes();
     
 }
