@@ -1,1 +1,5 @@
-com\agileseven\codereview\client\contollers\TestController.class
+com\agileseven\codereview\client\ServiceConsumer.class
+com\agileseven\codereview\client\Session.class
+com\agileseven\codereview\client\views\NewJFrame$1.class
+com\agileseven\codereview\client\views\NewJFrame.class
+com\agileseven\codereview\client\views\NewJFrame$2.class

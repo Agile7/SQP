@@ -5,6 +5,10 @@
  */
 package com.agileseven.codereview.client.views;
 
+import javax.swing.JOptionPane;
+import com.agileseven.codereviewserver.DTO.CodeDTO;
+import com.agileseven.codereviewserver.Controller.CodeController;
+import java.util.Date;
 /**
  *
  * @author Asus
@@ -32,8 +36,9 @@ public class FramePushCode extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        textArea1 = new java.awt.TextArea();
         jTextField2 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,8 +58,19 @@ public class FramePushCode extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setText("Push Code");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTextField2.setText("jTextField2");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jTextArea1.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,9 +85,6 @@ public class FramePushCode extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 1077, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(446, 446, 446)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -81,17 +94,20 @@ public class FramePushCode extends javax.swing.JFrame {
                         .addGap(134, 134, 134)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(188, 188, 188)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1078, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(9, 9, 9)
-                .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3))
@@ -107,6 +123,34 @@ public class FramePushCode extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        // Show popup to make sure that dev checked their code before pushing
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure the code is checked and ready to be pushed?","Warning", dialogButton);
+        if(dialogResult == JOptionPane.YES_OPTION){
+            CodeDTO newCode = new CodeDTO();
+            String codeText = jTextArea1.getText();
+            String codeComment = jTextField2.getText();
+            String userstoryId = jComboBox1.getSelectedItem().toString();
+            int numbLine = jTextArea1.getLineCount();
+            Date pushDate = new Date();
+            int userId = 3;
+            
+            newCode.setCodeText(codeText);
+            newCode.setComment(codeComment);
+            newCode.setNumLines(numbLine);
+            newCode.setPushDate(pushDate);
+            newCode.setUserId(userId);
+            newCode.setUserStoryId(userstoryId);
+            
+        }
+        else if(dialogResult == JOptionPane.NO_OPTION){
+        
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -115,7 +159,8 @@ public class FramePushCode extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField2;
-    private java.awt.TextArea textArea1;
     // End of variables declaration//GEN-END:variables
 }
