@@ -15,7 +15,8 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory {
     
-    public static final String URL = "jdbc:mysql://localhost:3306/code_review_db";
+    //public static final String URL = "jdbc:mysql://localhost:3306/code_review_db";
+    public static final String URL = "jdbc:mysql://localhost:3306/agileseven";
     public static final String USERNAME = "root";
     public static final String PASSWORD = "";
     

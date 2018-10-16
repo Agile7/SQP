@@ -32,19 +32,32 @@ public class CodeController {
     private CodeDAO codeDAO = new CodeDAOImpl();
     
     @RequestMapping(path = "/code", method=RequestMethod.POST)
-    public int pushCode() {
-        // TODO: Implementation for receiving a push code request
+    public int pushCode(CodeDTO code) {
+        try{
+            // TODO: Implementation for receiving a push code request
+            int pushCodeResult = codeDAO.pushCodeToDB(code);
 
-        // After the processing of the push code request,
-        // a CodeDTO object of the new code must be created in order to send warning emails
+            // After the processing of the push code request,
+            // a CodeDTO object of the new code must be created in order to send warning emails
+            if(pushCodeResult > 0){
+                CodeDTO codeDTOForTesting = new CodeDTO();
+                //codeDTOForTesting.setCodeId(5); // CodeId = pushCodeResult;
+                codeDTOForTesting.setCodeId(pushCodeResult);
+                codeDTOForTesting.setUserId(10);
+                EmailNotificationService emailNotificationService = new EmailNotificationService(codeDTOForTesting);
 
-        CodeDTO codeDTOForTesting = new CodeDTO();
-        codeDTOForTesting.setCodeId(5);
-        codeDTOForTesting.setUserId(10);
-        EmailNotificationService emailNotificationService = new EmailNotificationService(codeDTOForTesting);
-
-        emailNotificationService.sendNotification();
-        return -1;
+                emailNotificationService.sendNotification();
+                return -1;
+            }
+            else{
+                
+            }
+        }
+        catch(Exception ex){
+            System.err.println("Got an exception!");
+            System.err.println(ex.getMessage());
+        }
+        return 0;
     }
     
     @RequestMapping(path = "/codes/unreviewed", method=RequestMethod.GET)

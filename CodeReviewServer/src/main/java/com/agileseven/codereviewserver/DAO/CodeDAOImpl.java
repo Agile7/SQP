@@ -7,9 +7,11 @@ package com.agileseven.codereviewserver.DAO;
 
 import com.agileseven.codereviewserver.DTO.CodeDTO;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,4 +75,39 @@ public class CodeDAOImpl implements CodeDAO{
         
     }
     
+    public int pushCodeToDB(CodeDTO code){
+        int result = 0;
+        Connection con = ConnectionFactory.getConnection();
+//        String query = "INSERT INTO code VALUES(NULL," + code.getCodeText() + "," 
+//                     + code.getComment() + "," 
+//                     + code.getNumLines() + "," 
+//                     + code.getPushDate() + "," 
+//                     + code.getUserId()+ "," 
+//                     + code.getUserStoryId() + ")";
+        
+        String query = "INSERT INTO code VALUES(?,?,?,?,?,?)";
+
+        try { 
+            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, code.getCodeText());
+            ps.setString(2, code.getComment());
+            ps.setInt(3, code.getNumLines());
+            ps.setDate(4, (Date) code.getPushDate());
+            ps.setInt(5, code.getUserId());
+            ps.setString(6, code.getUserStoryId());
+            
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if(rs.next()){
+                result = rs.getInt(1);
+            }
+            
+            con.close();
+            return result; // If success => result > 0
+        } catch (SQLException ex) {
+            System.err.println("Got an exception!");
+            System.err.println(ex.getMessage());
+        }
+        return result;
+    }
 }

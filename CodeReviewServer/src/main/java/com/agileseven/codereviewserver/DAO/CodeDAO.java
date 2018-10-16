@@ -21,5 +21,6 @@ import java.util.ArrayList;
 public interface CodeDAO {
     
     public ArrayList<CodeDTO> getUnreadCodes();
+    public int pushCodeToDB(CodeDTO code);
     
 }
