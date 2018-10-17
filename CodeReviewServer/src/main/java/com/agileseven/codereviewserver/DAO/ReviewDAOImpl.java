@@ -5,6 +5,13 @@
  */
 package com.agileseven.codereviewserver.DAO;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  * This class implements the methods of ReviewDAO interface
  * 
@@ -13,5 +20,32 @@ package com.agileseven.codereviewserver.DAO;
  * @date created : 13.10.2018
  */
 public class ReviewDAOImpl implements ReviewDAO {
+
+   
+    public int approveCode(int review_id, int approved) {
+        int result = 0;
+        Connection con = ConnectionFactory.getConnection();
+        
+        String query = "UPDATE review SET "
+                    + "approved = " + approved + " "
+                    + "WHERE review.code_id = " + review_id;
+        
+        System.out.println(query);
+        
+        try { 
+            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+          
+            con.close();
+            return result; // If success => result > 0
+        } catch (SQLException ex) {
+            System.err.println("Got an exception!");
+            System.err.println(ex.getMessage());
+        }
+        return result;
+        
+    }
+
     
 }

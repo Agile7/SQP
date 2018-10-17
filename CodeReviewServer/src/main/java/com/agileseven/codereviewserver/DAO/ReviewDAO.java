@@ -16,4 +16,6 @@ package com.agileseven.codereviewserver.DAO;
  */
 public interface ReviewDAO {
     
+    public int approveCode(int review_id, int approved);
+    
 }
