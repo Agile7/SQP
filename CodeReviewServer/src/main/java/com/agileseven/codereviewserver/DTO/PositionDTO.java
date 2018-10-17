@@ -20,8 +20,7 @@ public class PositionDTO {
     }
 
     public PositionDTO() {
-        this.positionid = positionid;
-        this.role = role;
+        
     }
 
     /**
