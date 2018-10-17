@@ -15,8 +15,7 @@ import java.util.Date;
 public class utils {
     
     public static String dateDiff(Date start, Date end){
-        System.out.println(start);
-        System.out.println(end);
+       
 
         int minutes =0;
         int hours = 0;
@@ -26,7 +25,6 @@ public class utils {
 	days = (int) (diff / (24 * 60 * 60 * 1000));
         
         Calendar calendar_start = Calendar.getInstance();
-         System.out.println(calendar_start.HOUR_OF_DAY );
         Calendar calendar_end = Calendar.getInstance();
         calendar_start.setTime(start);
         calendar_end.setTime(end);
@@ -50,7 +48,7 @@ public class utils {
        
 
         
-        return days + " days "+ hours + " hours "+ minutes + " minutes ago.";
+        return days + " days "+ hours + " Hrs "+ minutes + " mins ago.";
         
     }
     

@@ -6,7 +6,7 @@
 package com.agileseven.codereview.client.views;
 
 import com.agileseven.codereview.client.ServiceConsumer;
-import com.agileseven.codereviewserver.DTO.CodeDTO;
+import com.agileseven.codereview.client.DTO.CodeDTO;
 
 
 /**

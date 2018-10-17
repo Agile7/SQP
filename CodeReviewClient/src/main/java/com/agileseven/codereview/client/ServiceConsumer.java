@@ -1,6 +1,7 @@
 package com.agileseven.codereview.client;
 
-import com.agileseven.codereviewserver.DTO.CodeDTO;
+
+import com.agileseven.codereview.client.DTO.CodeDTO;
 import java.util.ArrayList;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;

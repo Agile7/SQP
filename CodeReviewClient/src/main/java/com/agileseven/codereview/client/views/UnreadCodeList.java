@@ -5,17 +5,17 @@
  */
 package com.agileseven.codereview.client.views;
 
+import com.agileseven.codereview.client.DTO.CodeDTO;
+import com.agileseven.codereview.client.DTO.UserDTO;
 import com.agileseven.codereview.client.ServiceConsumer;
 import com.agileseven.codereview.client.listeners.CodeListMouseListener;
 import com.agileseven.codereview.client.utils;
-import com.agileseven.codereviewserver.DTO.CodeDTO;
+import com.agileseven.codereview.client.DTO.UserstoryDTO;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Label;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JLabel;
 
 /**
  *
@@ -46,9 +46,12 @@ public class UnreadCodeList extends javax.swing.JFrame {
             Date currentDate = new Date();
             codeList.stream().map((code) -> {
                 
-                Label title = new Label(code.getCodeId() + " - " +code.getUserStoryId());
+                UserDTO user = code.getUser();
+                UserstoryDTO userStory = code.getUserStory();
+                
+                Label title = new Label(code.getCodeId() + " - " +code.getUserStoryId() + " " + userStory.getTitle());
                 Label comment = new Label(code.getComment());
-                Label description = new Label("Pushed by Viloshna Sonoo " + utils.dateDiff(code.getPushDate(),currentDate));
+                Label description = new Label("Pushed by " + user.getFname() + " " + user.getLastname() + " "+ utils.dateDiff(code.getPushDate(),currentDate));
                 
                 title.addMouseListener(new CodeListMouseListener(code.getCodeId(), this));                
                 title.setFont(new Font("Arial", Font.BOLD, 32));
