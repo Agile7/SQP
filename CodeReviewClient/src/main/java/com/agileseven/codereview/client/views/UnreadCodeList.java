@@ -51,7 +51,7 @@ public class UnreadCodeList extends javax.swing.JFrame {
                 
                 Label title = new Label(code.getCodeId() + " - " +code.getUserStoryId() + " " + userStory.getTitle());
                 Label comment = new Label(code.getComment());
-                Label description = new Label("Pushed by " + user.getFname() + " " + user.getLastname() + " "+ utils.dateDiff(code.getPushDate(),currentDate));
+                Label description = new Label("Pushed by " + user.getFirstName()+ " " + user.getLastName() + " "+ utils.dateDiff(code.getPushDate(),currentDate));
                 
                 title.addMouseListener(new CodeListMouseListener(code.getCodeId(), this));                
                 title.setFont(new Font("Arial", Font.BOLD, 32));

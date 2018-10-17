@@ -19,7 +19,7 @@ public class ReviewDTO {
     private int reviewId;
     private Time startTime;
     private Time submitTime;
-    private CodeDTO codeDTO;
+    private CodeDTO code;
 
     public ReviewDTO(int approved, int codeid, int reviewerid, int reviewid, Time starttime, Time submittime, CodeDTO codeDTO) {
         this.approved = approved;
@@ -28,103 +28,71 @@ public class ReviewDTO {
         this.reviewId = reviewid;
         this.startTime = starttime;
         this.submitTime = submittime;
-        this.codeDTO = codeDTO;
+        this.code = codeDTO;
     }
    
 
     
 
     public ReviewDTO() {
-        this.approved = approved;
-        this.codeId = codeId;
-        this.reviewerId = reviewerId;
-        this.reviewId = reviewId;
-        this.startTime = startTime;
-        this.submitTime = submitTime;
+    
     }
 
-    /**
-     * @return the approved
-     */
     public int getApproved() {
         return approved;
     }
 
-    /**
-     * @param approved the approved to set
-     */
+    public int getCodeId() {
+        return codeId;
+    }
+
+    public int getReviewerId() {
+        return reviewerId;
+    }
+
+    public int getReviewId() {
+        return reviewId;
+    }
+
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public Time getSubmitTime() {
+        return submitTime;
+    }
+
+    public CodeDTO getCode() {
+        return code;
+    }
+
     public void setApproved(int approved) {
         this.approved = approved;
     }
 
-    /**
-     * @return the codeid
-     */
-    public int getCodeid() {
-        return codeId;
+    public void setCodeId(int codeId) {
+        this.codeId = codeId;
     }
 
-    /**
-     * @param codeid the codeid to set
-     */
-    public void setCodeid(int codeid) {
-        this.codeId = codeid;
+    public void setReviewerId(int reviewerId) {
+        this.reviewerId = reviewerId;
     }
 
-    /**
-     * @return the reviewerid
-     */
-    public int getReviewerid() {
-        return reviewerId;
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
     }
 
-    /**
-     * @param reviewerid the reviewerid to set
-     */
-    public void setReviewerid(int reviewerid) {
-        this.reviewerId = reviewerid;
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
     }
 
-    /**
-     * @return the reviewid
-     */
-    public int getReviewid() {
-        return reviewId;
+    public void setSubmitTime(Time submitTime) {
+        this.submitTime = submitTime;
     }
 
-    /**
-     * @param reviewid the reviewid to set
-     */
-    public void setReviewid(int reviewid) {
-        this.reviewId = reviewid;
+    public void setCode(CodeDTO code) {
+        this.code = code;
     }
 
-    /**
-     * @return the starttime
-     */
-    public Time getStarttime() {
-        return startTime;
-    }
-
-    /**
-     * @param starttime the starttime to set
-     */
-    public void setStarttime(Time starttime) {
-        this.startTime = starttime;
-    }
-
-    /**
-     * @return the submittime
-     */
-    public Time getSubmittime() {
-        return submitTime;
-    }
-
-    /**
-     * @param submittime the submittime to set
-     */
-    public void setSubmittime(Time submittime) {
-        this.submitTime = submittime;
-    }
-
+    
 }

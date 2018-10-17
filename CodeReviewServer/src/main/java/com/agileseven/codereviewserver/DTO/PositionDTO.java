@@ -22,21 +22,19 @@ public class PositionDTO {
     
 
     public PositionDTO() {
-        this.positionId = positionId;
-        this.role = role;
     }
 
     /**
      * @return the positionid
      */
-    public int getPositionid() {
+    public int getPositionId() {
         return positionId;
     }
 
     /**
      * @param positionid the positionid to set
      */
-    public void setPositionid(int positionid) {
+    public void setPositionId(int positionid) {
         this.positionId = positionId;
     }
 

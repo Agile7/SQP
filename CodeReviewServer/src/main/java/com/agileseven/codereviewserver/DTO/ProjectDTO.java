@@ -22,35 +22,33 @@ public class ProjectDTO {
    
 
     public ProjectDTO() {
-        this.projectId = projectId;
-        this.projectName = projectName;
     }
 
     /**
      * @return the projectid
      */
-    public int getProjectid() {
+    public int getProjectId() {
         return projectId;
     }
 
     /**
      * @param projectid the projectid to set
      */
-    public void setProjectid(int projectid) {
+    public void setProjectId(int projectid) {
         this.projectId = projectid;
     }
 
     /**
      * @return the projectname
      */
-    public String getProjectname() {
+    public String getProjectName() {
         return projectName;
     }
 
     /**
      * @param projectname the projectname to set
      */
-    public void setProjectname(String projectname) {
+    public void setProjectName(String projectname) {
         this.projectName = projectname;
     }
 

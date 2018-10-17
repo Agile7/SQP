@@ -25,64 +25,49 @@ public class ReviewannotationDTO {
         this.reviewDTO = reviewDTO;
     }
 
+    public int getAnnotId() {
+        return annotId;
+    }
+
+    public String getAnnotText() {
+        return annotText;
+    }
+
+    public int getReviewId() {
+        return reviewId;
+    }
+
+    public int getRuleId() {
+        return ruleId;
+    }
+
+    public ReviewDTO getReviewDTO() {
+        return reviewDTO;
+    }
+
+    public void setAnnotId(int annotId) {
+        this.annotId = annotId;
+    }
+
+    public void setAnnotText(String annotText) {
+        this.annotText = annotText;
+    }
+
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
+    }
+
+    public void setRuleId(int ruleId) {
+        this.ruleId = ruleId;
+    }
+
+    public void setReviewDTO(ReviewDTO reviewDTO) {
+        this.reviewDTO = reviewDTO;
+    }
+
     
 
    
 
-    /**
-     * @return the annotid
-     */
-    public int getAnnotid() {
-        return annotId;
-    }
-
-    /**
-     * @param annotid the annotid to set
-     */
-    public void setAnnotid(int annotid) {
-        this.annotId = annotid;
-    }
-
-    /**
-     * @return the annottext
-     */
-    public String getAnnottext() {
-        return annotText;
-    }
-
-    /**
-     * @param annottext the annottext to set
-     */
-    public void setAnnottext(String annottext) {
-        this.annotText = annottext;
-    }
-
-    /**
-     * @return the reviewid
-     */
-    public int getReviewid() {
-        return reviewId;
-    }
-
-    /**
-     * @param reviewid the reviewid to set
-     */
-    public void setReviewid(int reviewid) {
-        this.reviewId = reviewid;
-    }
-
-    /**
-     * @return the ruleid
-     */
-    public int getRuleid() {
-        return ruleId;
-    }
-
-    /**
-     * @param ruleid the ruleid to set
-     */
-    public void setRuleid(int ruleid) {
-        this.ruleId = ruleid;
-    }
 
 }

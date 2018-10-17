@@ -15,14 +15,16 @@ public class UserstoryDTO {
     private int projectId;
     private String title;
     private String userstoryId;
-    private ProjectDTO projectDTO;
+    private ProjectDTO project;
 
     public UserstoryDTO(String description, int projectid, String title, String userstoryid) {
         this.description = description;
         this.projectId = projectid;
         this.title = title;
         this.userstoryId = userstoryid;
-        this.projectDTO = projectDTO;
+    }
+
+    public UserstoryDTO() {
     }
 
     
@@ -82,5 +84,31 @@ public class UserstoryDTO {
     public void setUserstoryid(String userstoryid) {
         this.userstoryId = userstoryid;
     }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public String getUserstoryId() {
+        return userstoryId;
+    }
+
+    public ProjectDTO getProject() {
+        return project;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    public void setUserstoryId(String userstoryId) {
+        this.userstoryId = userstoryId;
+    }
+
+    public void setProject(ProjectDTO project) {
+        this.project = project;
+    }
+    
+    
 
 }
