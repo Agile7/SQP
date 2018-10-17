@@ -5,7 +5,12 @@
  */
 package com.agileseven.codereviewserver.Controller;
 
+import com.agileseven.codereviewserver.DAO.AccountDAO;
+import com.agileseven.codereviewserver.DAO.AccountDAOImpl;
+import com.agileseven.codereviewserver.DTO.UserDTO;
+import java.util.ArrayList;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,5 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path="/CodeReviewer")
 public class AccountController {
+    private AccountDAO accountDAO = new AccountDAOImpl();
     
+    @RequestMapping(path = "/users", method=RequestMethod.GET)
+    public ArrayList<UserDTO> getAccountList(){
+        return accountDAO.getAccountList();
+    }
 }

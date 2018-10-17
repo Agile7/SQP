@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,5 +68,41 @@ public class AccountDAOImpl implements AccountDAO {
             users.add(new UserDTO(userId, firstName, lastName, email, photoPath, positionId, pId));
         }
         return users;
+    }
+    
+    public ArrayList<UserDTO> getAccountList() {
+        
+        ArrayList<UserDTO> accountList = new ArrayList<UserDTO>();
+        
+        Connection con = ConnectionFactory.getConnection();
+        ResultSet rs;
+        Statement st;
+        String query = "SELECT * FROM user";
+        
+        try {
+            
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+
+            while (rs.next() == true) {
+                int userid = rs.getInt(1);
+                String fname = rs.getString(2);
+                String lastname = rs.getString(3);
+                String email = rs.getString(4);
+                String photo = rs.getString(5);
+                int positionId = rs.getInt(6);
+                int projectId = rs.getInt(7);
+                
+                UserDTO user = new UserDTO(userid,fname,lastname,email,photo,positionId,projectId);
+                accountList.add(user);
+                
+                st.close();
+                rs.close();
+                con.close();
+            }
+            } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return accountList;
     }
 }
