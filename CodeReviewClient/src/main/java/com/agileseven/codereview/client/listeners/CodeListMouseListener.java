@@ -5,16 +5,23 @@
  */
 package com.agileseven.codereview.client.listeners;
 
+import com.agileseven.codereview.client.views.FrameReview;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JFrame;
 
 /**
  *
  * @author vilosh_na
  */
 public class CodeListMouseListener implements MouseListener {
+    
+    private int codeId;
+    private JFrame frame;
 
-    public CodeListMouseListener() {
+    public CodeListMouseListener(int codeId, JFrame frame) {
+        this.codeId=codeId;
+        this.frame = frame;
     }
     
     
@@ -22,6 +29,9 @@ public class CodeListMouseListener implements MouseListener {
     @Override
      public void mouseClicked(MouseEvent e) {
        System.out.println("csdcsd");
+       this.frame.setVisible(false);
+       new FrameReview(this.codeId).setVisible(true);
+       
     }
 
     @Override

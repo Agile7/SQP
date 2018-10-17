@@ -18,16 +18,17 @@ import com.agileseven.codereviewserver.DTO.CodeDTO;
  */
 public class FrameReview extends javax.swing.JFrame {
 //------------------------------------modified------------------------------------
-    private int approved;
+    private int codeId;
     ServiceConsumer service = new ServiceConsumer();
     /**
      * Creates new form JFrameReviewApprove
      */
-    public FrameReview() {
+    public FrameReview(int codeId) {
+        this.codeId = codeId;
         initComponents();
-        CodeDTO code = service.getCodeById(1);
+        CodeDTO code = service.getCodeById(codeId);
         textArea_ShowCode.setText(code.getCodeText());
-        this.approved = approved;
+        
     }
 
 
@@ -119,7 +120,7 @@ public class FrameReview extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameReview().setVisible(true);
+                new FrameReview(1).setVisible(true);
             }
         });
     
