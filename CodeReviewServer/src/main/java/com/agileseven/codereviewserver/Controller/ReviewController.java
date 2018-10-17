@@ -7,6 +7,7 @@ package com.agileseven.codereviewserver.Controller;
 
 import com.agileseven.codereviewserver.DAO.ReviewDAO;
 import com.agileseven.codereviewserver.DAO.ReviewDAOImpl;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,10 +26,10 @@ public class ReviewController {
     
     ReviewDAO reviewDAO = new ReviewDAOImpl();
     
-    @RequestMapping(path = "/review/approve", method=RequestMethod.PUT)
-    public int setCodeApproved(){
+    @RequestMapping(path = "/review/approve/{codeId}", method=RequestMethod.PUT)
+    public int setCodeApproved(@PathVariable int codeId){
+        //Tested by postman
+       return reviewDAO.approveCode(codeId, 1);
         
-        reviewDAO.approveCode(1, 1);
-        return -1;
     }
 }

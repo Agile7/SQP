@@ -110,4 +110,26 @@ public class CodeDAOImpl implements CodeDAO{
         }
         return result;
     }
+
+    @Override
+    public CodeDTO getCodeById(int codeId) {
+        CodeDTO code = null;
+         Connection con = ConnectionFactory.getConnection();
+        String query = "SELECT * FROM code c " +
+                        "where code_id = "+codeId;
+           try {
+                PreparedStatement ps = con.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    code = buildCodeDTOfromResult(rs);
+                }
+                ps.close();
+                rs.close();
+                con.close();
+            }catch (SQLException ex) {
+                
+            }
+        
+        return code;
+    }
 }

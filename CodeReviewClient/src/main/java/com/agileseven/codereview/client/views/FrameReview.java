@@ -5,6 +5,9 @@
  */
 package com.agileseven.codereview.client.views;
 
+import com.agileseven.codereview.client.ServiceConsumer;
+import com.agileseven.codereviewserver.DTO.CodeDTO;
+
 
 /**
  *
@@ -13,14 +16,17 @@ package com.agileseven.codereview.client.views;
  *       approved or not
  *
  */
-public class JFrameReviewApprove extends javax.swing.JFrame {
+public class FrameReview extends javax.swing.JFrame {
 //------------------------------------modified------------------------------------
     private int approved;
+    ServiceConsumer service = new ServiceConsumer();
     /**
      * Creates new form JFrameReviewApprove
      */
-    public JFrameReviewApprove(int approved) {
+    public FrameReview() {
         initComponents();
+        CodeDTO code = service.getCodeById(1);
+        textArea_ShowCode.setText(code.getCodeText());
         this.approved = approved;
     }
 
@@ -39,6 +45,7 @@ public class JFrameReviewApprove extends javax.swing.JFrame {
         textArea_ShowCode = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jButton_ConfirmApproved.setText("Confirm");
         jButton_ConfirmApproved.addActionListener(new java.awt.event.ActionListener() {
@@ -55,51 +62,69 @@ public class JFrameReviewApprove extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(103, 103, 103)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(168, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton_ConfirmApproved, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addGap(178, 178, 178))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(127, Short.MAX_VALUE)
+                .addContainerGap(118, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
                 .addComponent(jButton_ConfirmApproved, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(55, 55, 55))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_ConfirmApprovedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ConfirmApprovedActionPerformed
-        // TODO add your handling code here:
-         /*
-         //Put approve state
-         String reqJsonStr = "???";
-         headers.setContentType(MediaType.APPLICATION_JSON);
-         HttpEntity<String> entity = new HttpEntity<String>(reqJsonStr,headers);
-         ResponseEntity<Map> resp = 
-                 restTemplate.exchange("???", 
-                         HttpMethod.PUT, entity, Map.class);
+  
+        service.approveCode(1);
+    }
+
+/**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-         if(jButton_ConfirmApproved.isSelected()){
-            approved = 1;
-        }else{
-            approved = 0;
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FrameHomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FrameHomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FrameHomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrameHomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
 
-
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new FrameReview().setVisible(true);
+            }
+        });
+    
     }//GEN-LAST:event_jButton_ConfirmApprovedActionPerformed
 
-    public void notifyObserver() {
-        textArea_ShowCode.setText("");
-    }
     
     /**
      * @param args the command line arguments
