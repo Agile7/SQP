@@ -39,7 +39,15 @@ public class CodeDTO {
         this.userDTO = userDTO;
     }
 
-    
+    public CodeDTO(int codeid, String codetext, String comment, int numlines, Date pushdate, int userid, String userstoryid) {
+        this.codeId = codeid;
+        this.codeText = codetext;
+        this.comment = comment;
+        this.numLines = numlines;
+        this.pushDate = pushdate;
+        this.userId = userid;
+        this.userStoryId = userstoryid;
+    }
 
     public CodeDTO() {
  
@@ -126,7 +134,8 @@ public class CodeDTO {
      * @param userid the userid to set
      */
     public void setUserId(int userid) {
-        this.userId = userId;
+
+        this.userId = userid;
     }
 
     /**
