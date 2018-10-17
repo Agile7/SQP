@@ -16,9 +16,9 @@ import java.sql.SQLException;
 public class ConnectionFactory {
     
     //public static final String URL = "jdbc:mysql://localhost:3306/code_review_db";
-    public static final String URL = "jdbc:mysql://localhost:3306/agileseven";
+    public static final String URL = "jdbc:mysql://localhost/agileseven?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     public static final String USERNAME = "root";
-    public static final String PASSWORD = "";
+    public static final String PASSWORD = "jinjin123";
     
     public static Connection getConnection()
     {
