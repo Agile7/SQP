@@ -24,8 +24,7 @@ public class ProjectAssignDTO {
     
 
     public ProjectAssignDTO() {
-        this.projectId = projectId;
-        this.userId = userId;
+        
     }
 
     /**
