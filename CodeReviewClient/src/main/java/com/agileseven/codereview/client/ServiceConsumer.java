@@ -1,5 +1,7 @@
 package com.agileseven.codereview.client;
 
+import com.agileseven.codereviewserver.DTO.CodeDTO;
+import java.util.ArrayList;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +25,7 @@ public class ServiceConsumer implements CommandLineRunner {
         
          RestTemplate restTemplate = new RestTemplate();
          
-         testmethod(restTemplate);
+         getUnreadCodes();
          
 
     }
@@ -35,6 +37,23 @@ public class ServiceConsumer implements CommandLineRunner {
                 = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/pushCode", Integer.class);
 
         System.out.println(responseEntity.getBody());
+    }
+      
+    public ArrayList<CodeDTO> getUnreadCodes() {
+        
+        RestTemplate restTemplate = new RestTemplate();
+     
+        ArrayList<CodeDTO> codeList = new ArrayList<CodeDTO>();
+        final ResponseEntity<CodeDTO[]> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/codes/unreviewed", CodeDTO[].class);
+       
+        
+        for (CodeDTO code : responseEntity.getBody()) {
+            codeList.add(code);
+        }
+
+
+        return codeList;
     }
 
 
