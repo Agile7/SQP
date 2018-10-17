@@ -11,45 +11,49 @@ package com.agileseven.codereviewserver.DTO;
  */
 public class ProjectAssignDTO {
 
-    private int projectid;
-    private int userid;
+    private int projectId;
+    private int userId;
+    private UserDTO userDTO;
 
-    public ProjectAssignDTO(int projectid, int userid) {
-        this.projectid = projectid;
-        this.userid = userid;
+    public ProjectAssignDTO(int projectid, int userid, UserDTO userDTO) {
+        this.projectId = projectid;
+        this.userId = userid;
+        this.userDTO = userDTO;
     }
 
+    
+
     public ProjectAssignDTO() {
-        this.projectid = projectid;
-        this.userid = userid;
+        this.projectId = projectId;
+        this.userId = userId;
     }
 
     /**
      * @return the projectid
      */
     public int getProjectid() {
-        return projectid;
+        return projectId;
     }
 
     /**
      * @param projectid the projectid to set
      */
     public void setProjectid(int projectid) {
-        this.projectid = projectid;
+        this.projectId = projectid;
     }
 
     /**
      * @return the userid
      */
     public int getUserid() {
-        return userid;
+        return userId;
     }
 
     /**
      * @param userid the userid to set
      */
     public void setUserid(int userid) {
-        this.userid = userid;
+        this.userId = userid;
     }
 
 }

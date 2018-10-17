@@ -14,28 +14,33 @@ import java.sql.Time;
 public class ReviewDTO {
 
     private int approved;
-    private int codeid;
-    private int reviewerid;
-    private int reviewid;
-    private Time starttime;
-    private Time submittime;
+    private int codeId;
+    private int reviewerId;
+    private int reviewId;
+    private Time startTime;
+    private Time submitTime;
+    private CodeDTO codeDTO;
 
-    public ReviewDTO(int approved, int codeid, int reviewerid, int reviewid, Time starttime, Time submittime) {
+    public ReviewDTO(int approved, int codeid, int reviewerid, int reviewid, Time starttime, Time submittime, CodeDTO codeDTO) {
         this.approved = approved;
-        this.codeid = codeid;
-        this.reviewerid = reviewerid;
-        this.reviewid = reviewid;
-        this.starttime = starttime;
-        this.submittime = submittime;
+        this.codeId = codeid;
+        this.reviewerId = reviewerid;
+        this.reviewId = reviewid;
+        this.startTime = starttime;
+        this.submitTime = submittime;
+        this.codeDTO = codeDTO;
     }
+   
+
+    
 
     public ReviewDTO() {
         this.approved = approved;
-        this.codeid = codeid;
-        this.reviewerid = reviewerid;
-        this.reviewid = reviewid;
-        this.starttime = starttime;
-        this.submittime = submittime;
+        this.codeId = codeId;
+        this.reviewerId = reviewerId;
+        this.reviewId = reviewId;
+        this.startTime = startTime;
+        this.submitTime = submitTime;
     }
 
     /**
@@ -56,70 +61,70 @@ public class ReviewDTO {
      * @return the codeid
      */
     public int getCodeid() {
-        return codeid;
+        return codeId;
     }
 
     /**
      * @param codeid the codeid to set
      */
     public void setCodeid(int codeid) {
-        this.codeid = codeid;
+        this.codeId = codeid;
     }
 
     /**
      * @return the reviewerid
      */
     public int getReviewerid() {
-        return reviewerid;
+        return reviewerId;
     }
 
     /**
      * @param reviewerid the reviewerid to set
      */
     public void setReviewerid(int reviewerid) {
-        this.reviewerid = reviewerid;
+        this.reviewerId = reviewerid;
     }
 
     /**
      * @return the reviewid
      */
     public int getReviewid() {
-        return reviewid;
+        return reviewId;
     }
 
     /**
      * @param reviewid the reviewid to set
      */
     public void setReviewid(int reviewid) {
-        this.reviewid = reviewid;
+        this.reviewId = reviewid;
     }
 
     /**
      * @return the starttime
      */
     public Time getStarttime() {
-        return starttime;
+        return startTime;
     }
 
     /**
      * @param starttime the starttime to set
      */
     public void setStarttime(Time starttime) {
-        this.starttime = starttime;
+        this.startTime = starttime;
     }
 
     /**
      * @return the submittime
      */
     public Time getSubmittime() {
-        return submittime;
+        return submitTime;
     }
 
     /**
      * @param submittime the submittime to set
      */
     public void setSubmittime(Time submittime) {
-        this.submittime = submittime;
+        this.submitTime = submittime;
     }
 
 }

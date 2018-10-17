@@ -12,16 +12,20 @@ package com.agileseven.codereviewserver.DTO;
 public class UserstoryDTO {
 
     private String description;
-    private int projectid;
+    private int projectId;
     private String title;
-    private String userstoryid;
+    private String userstoryId;
+    private ProjectDTO projectDTO;
 
-    public UserstoryDTO(String description, int projectid, String title, String userstoryid) {
+    public UserstoryDTO(String description, int projectid, String title, String userstoryid, ProjectDTO projectDTO) {
         this.description = description;
-        this.projectid = projectid;
+        this.projectId = projectid;
         this.title = title;
-        this.userstoryid = userstoryid;
+        this.userstoryId = userstoryid;
+        this.projectDTO = projectDTO;
     }
+
+    
 
     /**
      * @return the description
@@ -41,14 +45,14 @@ public class UserstoryDTO {
      * @return the projectid
      */
     public int getProjectid() {
-        return projectid;
+        return projectId;
     }
 
     /**
      * @param projectid the projectid to set
      */
     public void setProjectid(int projectid) {
-        this.projectid = projectid;
+        this.projectId = projectid;
     }
 
     /**
@@ -69,14 +73,14 @@ public class UserstoryDTO {
      * @return the userstoryid
      */
     public String getUserstoryid() {
-        return userstoryid;
+        return userstoryId;
     }
 
     /**
      * @param userstoryid the userstoryid to set
      */
     public void setUserstoryid(String userstoryid) {
-        this.userstoryid = userstoryid;
+        this.userstoryId = userstoryid;
     }
 
 }
