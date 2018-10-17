@@ -22,15 +22,13 @@ import java.sql.Statement;
 public class ReviewDAOImpl implements ReviewDAO {
 
    
-    public int approveCode(int review_id, int approved) {
-        int result = 0;
+    public int approveCode(int code_id, int approved) {
         Connection con = ConnectionFactory.getConnection();
         
         String query = "UPDATE review SET "
                     + "approved = " + approved + " "
-                    + "WHERE review.code_id = " + review_id;
+                    + "WHERE review.code_id = " + code_id;
         
-        System.out.println(query);
         
         try { 
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -38,12 +36,12 @@ public class ReviewDAOImpl implements ReviewDAO {
             ResultSet rs = ps.getGeneratedKeys();
           
             con.close();
-            return result; // If success => result > 0
         } catch (SQLException ex) {
             System.err.println("Got an exception!");
             System.err.println(ex.getMessage());
+            return -1;
         }
-        return result;
+        return 1;
         
     }
 
