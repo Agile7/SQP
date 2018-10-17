@@ -17,7 +17,7 @@ public class UserstoryDTO {
     private String userstoryId;
     private ProjectDTO projectDTO;
 
-    public UserstoryDTO(String description, int projectid, String title, String userstoryid, ProjectDTO projectDTO) {
+    public UserstoryDTO(String description, int projectid, String title, String userstoryid) {
         this.description = description;
         this.projectId = projectid;
         this.title = title;

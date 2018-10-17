@@ -20,16 +20,26 @@ public class CodeDTO {
     private Date pushDate;
     private int userId;
     private String userStoryId;
+    private UserstoryDTO userStoryDTO;
+    private UserDTO userDTO;
 
-    public CodeDTO(int codeid, String codetext, String comment, int numlines, Date pushdate, int userid, String userstoryid) {
-        this.codeId = codeid;
-        this.codeText = codetext;
-        this.comment = comment;
-        this.numLines = numlines;
-        this.pushDate = pushdate;
-        this.userId = userid;
-        this.userStoryId = userstoryid;
+    public UserstoryDTO getUserStoryDTO() {
+        return userStoryDTO;
     }
+
+    public void setUserStoryDTO(UserstoryDTO userStoryDTO) {
+        this.userStoryDTO = userStoryDTO;
+    }
+
+    public UserDTO getUserDTO() {
+        return userDTO;
+    }
+
+    public void setUserDTO(UserDTO userDTO) {
+        this.userDTO = userDTO;
+    }
+
+    
 
     public CodeDTO() {
  
