@@ -55,6 +55,31 @@ public class ServiceConsumer implements CommandLineRunner {
 
         return codeList;
     }
+    
+    public CodeDTO getCodeById(int codeId) {
+        
+        RestTemplate restTemplate = new RestTemplate();
+     
+        CodeDTO code = null;
+        final ResponseEntity<CodeDTO> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/codes/"+codeId, CodeDTO.class);
+       
+        
+        code = responseEntity.getBody();
+        return code;
+    }
+    
+      public int approveCode(int codeId) {
+        
+        RestTemplate restTemplate = new RestTemplate();
+     
+        final ResponseEntity<Integer> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/approve/"+codeId, Integer.class);
+       
+        
+        return responseEntity.getBody();
+     
+    }
 
 
 }
