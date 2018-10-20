@@ -2,11 +2,15 @@ package com.agileseven.codereview.client;
 
 
 import com.agileseven.codereview.client.DTO.CodeDTO;
+import com.agileseven.codereview.client.DTO.ReviewDTO;
 import java.util.ArrayList;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -75,7 +79,25 @@ public class ServiceConsumer implements CommandLineRunner {
         RestTemplate restTemplate = new RestTemplate();
      
         final ResponseEntity<Integer> responseEntity
-                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/approve/"+codeId, Integer.class);
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/review/approve/"+codeId, Integer.class);
+       
+        
+        return responseEntity.getBody();
+     
+    }
+      
+    public int addReview(String review) {
+        
+        System.out.println(review);
+        RestTemplate restTemplate = new RestTemplate();
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> entity = new HttpEntity<>(review, headers);
+
+        final ResponseEntity<Integer> responseEntity
+        = restTemplate.postForEntity("http://localhost:9000/CodeReviewer/review", entity, Integer.class);
        
         
         return responseEntity.getBody();

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.agileseven.codereviewserver.DAO;
+import com.agileseven.codereviewserver.DTO.ReviewDTO;
 
 /**
  * This interface contains the methods
@@ -17,5 +18,6 @@ package com.agileseven.codereviewserver.DAO;
 public interface ReviewDAO {
     
     public int approveCode(int review_id, int approved);
+    public int addReview(ReviewDTO review);
     
 }

@@ -5,9 +5,8 @@
  */
 package com.agileseven.codereview.client.views;
 
+import com.agileseven.codereview.client.DTO.CodeDTO;
 import javax.swing.JOptionPane;
-import com.agileseven.codereviewserver.DTO.CodeDTO;
-import com.agileseven.codereviewserver.Controller.CodeController;
 import java.util.Date;
 /**
  *

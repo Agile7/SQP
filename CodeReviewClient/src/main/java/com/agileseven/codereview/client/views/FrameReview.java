@@ -7,6 +7,11 @@ package com.agileseven.codereview.client.views;
 
 import com.agileseven.codereview.client.ServiceConsumer;
 import com.agileseven.codereview.client.DTO.CodeDTO;
+import com.agileseven.codereview.client.DTO.ReviewDTO;
+import com.agileseven.codereview.client.utils;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import org.json.JSONObject;
 
 
 /**
@@ -20,6 +25,8 @@ public class FrameReview extends javax.swing.JFrame {
 //------------------------------------modified------------------------------------
     private int codeId;
     ServiceConsumer service = new ServiceConsumer();
+    private Date startDate;
+    private Date endDate;
     /**
      * Creates new form JFrameReviewApprove
      */
@@ -28,6 +35,7 @@ public class FrameReview extends javax.swing.JFrame {
         initComponents();
         CodeDTO code = service.getCodeById(codeId);
         textArea_ShowCode.setText(code.getCodeText());
+        startDate = new Date();
         
     }
 
@@ -101,8 +109,30 @@ public class FrameReview extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_ConfirmApprovedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ConfirmApprovedActionPerformed
-  
-        service.approveCode(1);
+        
+        endDate = new Date();
+        
+        JSONObject review = new JSONObject();
+        
+        review.put("codeId", this.codeId);
+        review.put("reviewerId",3);
+        review.put("approved",1);
+        review.put("startTime", utils.convertDatetoString(this.startDate,"yyyy-M-dd hh:mm:ss"));
+        review.put("submitTime", utils.convertDatetoString(this.endDate,"yyyy-M-dd hh:mm:ss"));
+       
+        int review_id = service.addReview(review.toString());
+        
+        if(review_id != -1){
+            JOptionPane.showMessageDialog(this,"File has been successfully reviewed. Review_id : "+ review_id, "Success", JOptionPane.PLAIN_MESSAGE);
+            this.setVisible(false);
+            new UnreadCodeList().setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(this,"Unable to save review. Please try later.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            this.setVisible(false);
+            new UnreadCodeList().setVisible(true);
+        
+        }
     }
 
 /**

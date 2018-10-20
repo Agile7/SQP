@@ -61,6 +61,12 @@ public class CodeController {
         return 0;
     }
     
+    @RequestMapping(path = "/codes/test", method=RequestMethod.GET)
+    public int test(){
+        return 5;
+    }
+    
+    
     @RequestMapping(path = "/codes/unreviewed", method=RequestMethod.GET)
     public ArrayList<CodeDTO> getUnreadCode(){
         return codeDAO.getUnreadCodes();

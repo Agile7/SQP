@@ -7,7 +7,10 @@ package com.agileseven.codereviewserver.Controller;
 
 import com.agileseven.codereviewserver.DAO.ReviewDAO;
 import com.agileseven.codereviewserver.DAO.ReviewDAOImpl;
+import com.agileseven.codereviewserver.DTO.PositionDTO;
+import com.agileseven.codereviewserver.DTO.ReviewDTO;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,10 +29,26 @@ public class ReviewController {
     
     ReviewDAO reviewDAO = new ReviewDAOImpl();
     
-    @RequestMapping(path = "/review/approve/{codeId}", method=RequestMethod.PUT)
+    @RequestMapping(path = "/review/approve/{codeId}", method=RequestMethod.GET)
     public int setCodeApproved(@PathVariable int codeId){
         //Tested by postman
-       return reviewDAO.approveCode(codeId, 1);
+       return -1;
+        
+    }
+    
+    @RequestMapping(path = "/review", method= RequestMethod.POST)
+    public int addReview(@RequestBody  ReviewDTO review){
+        
+        
+       System.out.println(review.getCodeId());
+       System.out.println(review.getReviewerId());
+       System.out.println(review.getApproved());
+       System.out.println(review.getReviewId());
+       System.out.println(review.getStartTime());
+       System.out.println(review.getSubmitTime());
+
+      return reviewDAO.addReview(review);
+        
         
     }
 }

@@ -5,6 +5,7 @@
  */
 package com.agileseven.codereview.client;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -51,5 +52,16 @@ public class utils {
         return days + " days "+ hours + " Hrs "+ minutes + " mins ago.";
         
     }
+    
+        
+    public static String convertDatetoString(Date date, String format){
+           System.out.println(date);
+
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        String jsonDate = sdf.format(date);
+        
+        return jsonDate;
+ 
+ }       
     
 }

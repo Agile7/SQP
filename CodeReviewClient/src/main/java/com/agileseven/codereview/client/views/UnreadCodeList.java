@@ -39,6 +39,7 @@ public class UnreadCodeList extends javax.swing.JFrame {
       
         
         ArrayList<CodeDTO> codeList = service.getUnreadCodes();
+        
         if(codeList != null && codeList.size() > 0){
             
             GridLayout listLayout = new GridLayout(codeList.size()*4,1,0,20);
@@ -74,6 +75,16 @@ public class UnreadCodeList extends javax.swing.JFrame {
              
             
             
+        }
+        else{
+            
+            GridLayout listLayout = new GridLayout(1,1);
+            jPanel1.setLayout(listLayout);
+            
+            Label info = new Label("No pending unreviewed code.");
+            info.setFont(new Font("Arial", Font.PLAIN, 24));
+            info.setForeground(new java.awt.Color(0,187,85));
+            this.add(info);
         }
         
     }

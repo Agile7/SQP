@@ -5,7 +5,8 @@
  */
 package com.agileseven.codereviewserver.DTO;
 
-import java.sql.Time;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.sql.Date;
 
 /**
  *
@@ -17,11 +18,11 @@ public class ReviewDTO {
     private int codeId;
     private int reviewerId;
     private int reviewId;
-    private Time startTime;
-    private Time submitTime;
+    private String startTime;
+    private String submitTime;
     private CodeDTO code;
 
-    public ReviewDTO(int approved, int codeid, int reviewerid, int reviewid, Time starttime, Time submittime, CodeDTO codeDTO) {
+    public ReviewDTO(int approved, int codeid, int reviewerid, int reviewid, String starttime, String submittime, CodeDTO codeDTO) {
         this.approved = approved;
         this.codeId = codeid;
         this.reviewerId = reviewerid;
@@ -54,11 +55,11 @@ public class ReviewDTO {
         return reviewId;
     }
 
-    public Time getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public Time getSubmitTime() {
+    public String getSubmitTime() {
         return submitTime;
     }
 
@@ -82,11 +83,11 @@ public class ReviewDTO {
         this.reviewId = reviewId;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public void setSubmitTime(Time submitTime) {
+    public void setSubmitTime(String submitTime) {
         this.submitTime = submitTime;
     }
 
