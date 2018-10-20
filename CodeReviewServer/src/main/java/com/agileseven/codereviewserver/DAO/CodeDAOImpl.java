@@ -141,8 +141,12 @@ public class CodeDAOImpl implements CodeDAO{
     public CodeDTO getCodeById(int codeId) {
         CodeDTO code = null;
          Connection con = ConnectionFactory.getConnection();
-        String query = "SELECT * FROM code c " +
+        String query = "SELECT c.code_id, c.comment, c.code_text, c.push_date, c.user_id, "
+                        + "c.user_story_id, u.first_name, u.last_name, us.title "
+                        + "FROM code c, user u , user_story us " +
                         "where code_id = "+codeId;
+        
+        System.out.println(query);
            try {
                 PreparedStatement ps = con.prepareStatement(query);
                 ResultSet rs = ps.executeQuery();

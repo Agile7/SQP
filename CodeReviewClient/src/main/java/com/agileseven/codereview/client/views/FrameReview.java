@@ -7,8 +7,9 @@ package com.agileseven.codereview.client.views;
 
 import com.agileseven.codereview.client.ServiceConsumer;
 import com.agileseven.codereview.client.DTO.CodeDTO;
-import com.agileseven.codereview.client.DTO.ReviewDTO;
+import com.agileseven.codereview.client.DTO.UserDTO;
 import com.agileseven.codereview.client.utils;
+import java.awt.Font;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import org.json.JSONObject;
@@ -35,6 +36,19 @@ public class FrameReview extends javax.swing.JFrame {
         initComponents();
         CodeDTO code = service.getCodeById(codeId);
         textArea_ShowCode.setText(code.getCodeText());
+        
+        jLabel1.setText(code.getUserStoryId() + " - " + code.getUserStory().getTitle());
+        jLabel1.setFont(new Font("Arial", Font.PLAIN, 28));
+        jLabel1.setForeground(new java.awt.Color(51, 153, 255));
+        
+        jLabel2.setText(code.getComment());
+        jLabel2.setFont(new Font("Arial", Font.PLAIN, 18));
+               
+        
+        UserDTO user = code.getUser();
+        jLabel3.setText("Pushed by " +user.getFirstName() + " " + user.getLastName());
+        jLabel3.setFont(new Font("Arial", Font.PLAIN, 18));
+        
         startDate = new Date();
         
     }
@@ -53,10 +67,14 @@ public class FrameReview extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea_ShowCode = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
+        jButton_ConfirmApproved.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton_ConfirmApproved.setForeground(new java.awt.Color(0, 204, 0));
         jButton_ConfirmApproved.setText("Confirm");
         jButton_ConfirmApproved.addActionListener(new java.awt.event.ActionListener() {
@@ -69,6 +87,7 @@ public class FrameReview extends javax.swing.JFrame {
         textArea_ShowCode.setRows(5);
         jScrollPane1.setViewportView(textArea_ShowCode);
 
+        jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(204, 0, 51));
         jButton1.setText("Back");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -77,32 +96,49 @@ public class FrameReview extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("jLabel1");
+
+        jLabel2.setText("jLabel2");
+
+        jLabel3.setText("jLabel3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(140, 140, 140)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(148, 148, 148)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jButton_ConfirmApproved, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(75, Short.MAX_VALUE))
+                        .addGap(257, 257, 257)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(165, 165, 165)
+                        .addComponent(jButton_ConfirmApproved, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addGap(41, 41, 41)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_ConfirmApproved, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_ConfirmApproved, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         pack();
@@ -187,6 +223,9 @@ public class FrameReview extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton_ConfirmApproved;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea textArea_ShowCode;
     // End of variables declaration//GEN-END:variables
