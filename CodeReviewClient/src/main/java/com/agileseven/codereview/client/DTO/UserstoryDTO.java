@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.agileseven.codereviewserver.DTO;
+package com.agileseven.codereview.client.DTO;
 
 /**
  *
@@ -14,9 +14,9 @@ public class UserstoryDTO {
     private String description;
     private int projectid;
     private String title;
-    private int userstoryid;
+    private String userstoryid;
 
-    public UserstoryDTO(String description, int projectid, String title, int userstoryid) {
+    public UserstoryDTO(String description, int projectid, String title, String userstoryid) {
         this.description = description;
         this.projectid = projectid;
         this.title = title;
@@ -28,6 +28,9 @@ public class UserstoryDTO {
      */
     public String getDescription() {
         return description;
+    }
+
+    public UserstoryDTO() {
     }
 
     /**
@@ -68,14 +71,14 @@ public class UserstoryDTO {
     /**
      * @return the userstoryid
      */
-    public int getUserstoryid() {
+    public String getUserstoryid() {
         return userstoryid;
     }
 
     /**
      * @param userstoryid the userstoryid to set
      */
-    public void setUserstoryid(int userstoryid) {
+    public void setUserstoryid(String userstoryid) {
         this.userstoryid = userstoryid;
     }
 

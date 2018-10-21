@@ -5,6 +5,7 @@
  */
 package com.agileseven.codereviewserver.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 /**
@@ -17,9 +18,28 @@ public class CodeDTO {
     private String codeText;
     private String comment;
     private int numLines;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private Date pushDate;
     private int userId;
     private String userStoryId;
+    private UserstoryDTO userStory;
+    private UserDTO user;
+
+    public UserstoryDTO getUserStory() {
+        return userStory;
+    }
+
+    public void setUserStory(UserstoryDTO userStoryDTO) {
+        this.userStory = userStoryDTO;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO userDTO) {
+        this.user = userDTO;
+    }
 
     public CodeDTO(int codeid, String codetext, String comment, int numlines, Date pushdate, int userid, String userstoryid) {
         this.codeId = codeid;
@@ -116,7 +136,8 @@ public class CodeDTO {
      * @param userid the userid to set
      */
     public void setUserId(int userid) {
-        this.userId = userId;
+
+        this.userId = userid;
     }
 
     /**

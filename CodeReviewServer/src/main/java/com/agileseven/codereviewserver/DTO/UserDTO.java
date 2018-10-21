@@ -22,7 +22,7 @@ public class UserDTO {
     public UserDTO(){
 
     }
-    
+
     public UserDTO(int userId, String firstName, String lastName, String email, String photoPath, int positionId, int projectId) {
         this.userId = userId;
         this.firstName = firstName;
@@ -32,6 +32,8 @@ public class UserDTO {
         this.positionId = positionId;
         this.projectId = projectId;
     }
+    
+  
 
     /**
      * @return the email

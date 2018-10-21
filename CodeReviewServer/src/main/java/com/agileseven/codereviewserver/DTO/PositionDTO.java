@@ -11,31 +11,31 @@ package com.agileseven.codereviewserver.DTO;
  */
 public class PositionDTO {
 
-    private int positionid;
+    private int positionId;
     private String role;
 
     public PositionDTO(int positionid, String role) {
-        this.positionid = positionid;
+        this.positionId = positionid;
         this.role = role;
     }
 
+    
+
     public PositionDTO() {
-        this.positionid = positionid;
-        this.role = role;
     }
 
     /**
      * @return the positionid
      */
-    public int getPositionid() {
-        return positionid;
+    public int getPositionId() {
+        return positionId;
     }
 
     /**
      * @param positionid the positionid to set
      */
-    public void setPositionid(int positionid) {
-        this.positionid = positionid;
+    public void setPositionId(int positionid) {
+        this.positionId = positionId;
     }
 
     /**

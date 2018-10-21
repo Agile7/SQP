@@ -11,74 +11,63 @@ package com.agileseven.codereviewserver.DTO;
  */
 public class ReviewannotationDTO {
 
-    private int annotid;
-    private String annottext;
-    private int reviewid;
-    private int ruleid;
+    private int annotId;
+    private String annotText;
+    private int reviewId;
+    private int ruleId;
+    private ReviewDTO reviewDTO;
 
-    public ReviewannotationDTO(int annotid, String annottext, int reviewid, int ruleid) {
-        this.annotid = annotid;
-        this.annottext = annottext;
-        this.reviewid = reviewid;
-        this.ruleid = ruleid;
+    public ReviewannotationDTO(int annotid, String annottext, int reviewid, int ruleid, ReviewDTO reviewDTO) {
+        this.annotId = annotid;
+        this.annotText = annottext;
+        this.reviewId = reviewid;
+        this.ruleId = ruleid;
+        this.reviewDTO = reviewDTO;
     }
+
+    public int getAnnotId() {
+        return annotId;
+    }
+
+    public String getAnnotText() {
+        return annotText;
+    }
+
+    public int getReviewId() {
+        return reviewId;
+    }
+
+    public int getRuleId() {
+        return ruleId;
+    }
+
+    public ReviewDTO getReviewDTO() {
+        return reviewDTO;
+    }
+
+    public void setAnnotId(int annotId) {
+        this.annotId = annotId;
+    }
+
+    public void setAnnotText(String annotText) {
+        this.annotText = annotText;
+    }
+
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
+    }
+
+    public void setRuleId(int ruleId) {
+        this.ruleId = ruleId;
+    }
+
+    public void setReviewDTO(ReviewDTO reviewDTO) {
+        this.reviewDTO = reviewDTO;
+    }
+
+    
 
    
 
-    /**
-     * @return the annotid
-     */
-    public int getAnnotid() {
-        return annotid;
-    }
-
-    /**
-     * @param annotid the annotid to set
-     */
-    public void setAnnotid(int annotid) {
-        this.annotid = annotid;
-    }
-
-    /**
-     * @return the annottext
-     */
-    public String getAnnottext() {
-        return annottext;
-    }
-
-    /**
-     * @param annottext the annottext to set
-     */
-    public void setAnnottext(String annottext) {
-        this.annottext = annottext;
-    }
-
-    /**
-     * @return the reviewid
-     */
-    public int getReviewid() {
-        return reviewid;
-    }
-
-    /**
-     * @param reviewid the reviewid to set
-     */
-    public void setReviewid(int reviewid) {
-        this.reviewid = reviewid;
-    }
-
-    /**
-     * @return the ruleid
-     */
-    public int getRuleid() {
-        return ruleid;
-    }
-
-    /**
-     * @param ruleid the ruleid to set
-     */
-    public void setRuleid(int ruleid) {
-        this.ruleid = ruleid;
-    }
 
 }

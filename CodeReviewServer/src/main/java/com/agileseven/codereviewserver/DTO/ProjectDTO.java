@@ -11,45 +11,45 @@ package com.agileseven.codereviewserver.DTO;
  */
 public class ProjectDTO {
 
-    private int projectid;
-    private String projectname;
+    private int projectId;
+    private String projectName;
 
     public ProjectDTO(int projectid, String projectname) {
-        this.projectid = projectid;
-        this.projectname = projectname;
+        this.projectId = projectid;
+        this.projectName = projectname;
     }
 
+   
+
     public ProjectDTO() {
-        this.projectid = projectid;
-        this.projectname = projectname;
     }
 
     /**
      * @return the projectid
      */
-    public int getProjectid() {
-        return projectid;
+    public int getProjectId() {
+        return projectId;
     }
 
     /**
      * @param projectid the projectid to set
      */
-    public void setProjectid(int projectid) {
-        this.projectid = projectid;
+    public void setProjectId(int projectid) {
+        this.projectId = projectid;
     }
 
     /**
      * @return the projectname
      */
-    public String getProjectname() {
-        return projectname;
+    public String getProjectName() {
+        return projectName;
     }
 
     /**
      * @param projectname the projectname to set
      */
-    public void setProjectname(String projectname) {
-        this.projectname = projectname;
+    public void setProjectName(String projectname) {
+        this.projectName = projectname;
     }
 
 }

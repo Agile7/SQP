@@ -11,40 +11,43 @@ package com.agileseven.codereviewserver.DTO;
  */
 public class RuleDTO {
 
-    private int ruleid;
-    private String ruletext;
+    private int ruleId;
+    private String ruleText;
 
     public RuleDTO(int ruleid, String ruletext) {
-        this.ruleid = ruleid;
-        this.ruletext = ruletext;
+        this.ruleId = ruleid;
+        this.ruleText = ruletext;
     }
+    
+
+    
 
     /**
      * @return the ruleid
      */
     public int getRuleid() {
-        return ruleid;
+        return ruleId;
     }
 
     /**
      * @param ruleid the ruleid to set
      */
     public void setRuleid(int ruleid) {
-        this.ruleid = ruleid;
+        this.ruleId = ruleid;
     }
 
     /**
      * @return the ruletext
      */
     public String getRuletext() {
-        return ruletext;
+        return ruleText;
     }
 
     /**
      * @param ruletext the ruletext to set
      */
     public void setRuletext(String ruletext) {
-        this.ruletext = ruletext;
+        this.ruleText = ruletext;
     }
 
 }

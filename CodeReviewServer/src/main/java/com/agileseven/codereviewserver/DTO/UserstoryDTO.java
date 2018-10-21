@@ -12,16 +12,22 @@ package com.agileseven.codereviewserver.DTO;
 public class UserstoryDTO {
 
     private String description;
-    private int projectid;
+    private int projectId;
     private String title;
-    private String userstoryid;
+    private String userstoryId;
+    private ProjectDTO project;
 
     public UserstoryDTO(String description, int projectid, String title, String userstoryid) {
         this.description = description;
-        this.projectid = projectid;
+        this.projectId = projectid;
         this.title = title;
-        this.userstoryid = userstoryid;
+        this.userstoryId = userstoryid;
     }
+
+    public UserstoryDTO() {
+    }
+
+    
 
     /**
      * @return the description
@@ -41,14 +47,14 @@ public class UserstoryDTO {
      * @return the projectid
      */
     public int getProjectid() {
-        return projectid;
+        return projectId;
     }
 
     /**
      * @param projectid the projectid to set
      */
     public void setProjectid(int projectid) {
-        this.projectid = projectid;
+        this.projectId = projectid;
     }
 
     /**
@@ -69,14 +75,40 @@ public class UserstoryDTO {
      * @return the userstoryid
      */
     public String getUserstoryid() {
-        return userstoryid;
+        return userstoryId;
     }
 
     /**
      * @param userstoryid the userstoryid to set
      */
     public void setUserstoryid(String userstoryid) {
-        this.userstoryid = userstoryid;
+        this.userstoryId = userstoryid;
     }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public String getUserstoryId() {
+        return userstoryId;
+    }
+
+    public ProjectDTO getProject() {
+        return project;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    public void setUserstoryId(String userstoryId) {
+        this.userstoryId = userstoryId;
+    }
+
+    public void setProject(ProjectDTO project) {
+        this.project = project;
+    }
+    
+    
 
 }

@@ -11,6 +11,7 @@ import com.agileseven.codereviewserver.DTO.CodeDTO;
 import com.agileseven.codereviewserver.Utilities.EmailNotificationService;
 
 import java.util.ArrayList;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,9 +61,20 @@ public class CodeController {
         return 0;
     }
     
+    @RequestMapping(path = "/codes/test", method=RequestMethod.GET)
+    public int test(){
+        return 5;
+    }
+    
+    
     @RequestMapping(path = "/codes/unreviewed", method=RequestMethod.GET)
     public ArrayList<CodeDTO> getUnreadCode(){
         return codeDAO.getUnreadCodes();
+    }
+    
+    @RequestMapping(path = "/codes/{codeId}", method=RequestMethod.GET)
+    public CodeDTO getUnreadCode(@PathVariable int codeId){
+        return codeDAO.getCodeById(codeId);
     }
     
 

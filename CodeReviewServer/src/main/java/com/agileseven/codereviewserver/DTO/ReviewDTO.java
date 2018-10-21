@@ -5,7 +5,8 @@
  */
 package com.agileseven.codereviewserver.DTO;
 
-import java.sql.Time;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.sql.Date;
 
 /**
  *
@@ -14,112 +15,85 @@ import java.sql.Time;
 public class ReviewDTO {
 
     private int approved;
-    private int codeid;
-    private int reviewerid;
-    private int reviewid;
-    private Time starttime;
-    private Time submittime;
+    private int codeId;
+    private int reviewerId;
+    private int reviewId;
+    private String startTime;
+    private String submitTime;
+    private CodeDTO code;
 
-    public ReviewDTO(int approved, int codeid, int reviewerid, int reviewid, Time starttime, Time submittime) {
+    public ReviewDTO(int approved, int codeid, int reviewerid, int reviewid, String starttime, String submittime, CodeDTO codeDTO) {
         this.approved = approved;
-        this.codeid = codeid;
-        this.reviewerid = reviewerid;
-        this.reviewid = reviewid;
-        this.starttime = starttime;
-        this.submittime = submittime;
+        this.codeId = codeid;
+        this.reviewerId = reviewerid;
+        this.reviewId = reviewid;
+        this.startTime = starttime;
+        this.submitTime = submittime;
+        this.code = codeDTO;
     }
+   
+
+    
 
     public ReviewDTO() {
-        this.approved = approved;
-        this.codeid = codeid;
-        this.reviewerid = reviewerid;
-        this.reviewid = reviewid;
-        this.starttime = starttime;
-        this.submittime = submittime;
+    
     }
 
-    /**
-     * @return the approved
-     */
     public int getApproved() {
         return approved;
     }
 
-    /**
-     * @param approved the approved to set
-     */
+    public int getCodeId() {
+        return codeId;
+    }
+
+    public int getReviewerId() {
+        return reviewerId;
+    }
+
+    public int getReviewId() {
+        return reviewId;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getSubmitTime() {
+        return submitTime;
+    }
+
+    public CodeDTO getCode() {
+        return code;
+    }
+
     public void setApproved(int approved) {
         this.approved = approved;
     }
 
-    /**
-     * @return the codeid
-     */
-    public int getCodeid() {
-        return codeid;
+    public void setCodeId(int codeId) {
+        this.codeId = codeId;
     }
 
-    /**
-     * @param codeid the codeid to set
-     */
-    public void setCodeid(int codeid) {
-        this.codeid = codeid;
+    public void setReviewerId(int reviewerId) {
+        this.reviewerId = reviewerId;
     }
 
-    /**
-     * @return the reviewerid
-     */
-    public int getReviewerid() {
-        return reviewerid;
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
     }
 
-    /**
-     * @param reviewerid the reviewerid to set
-     */
-    public void setReviewerid(int reviewerid) {
-        this.reviewerid = reviewerid;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
-    /**
-     * @return the reviewid
-     */
-    public int getReviewid() {
-        return reviewid;
+    public void setSubmitTime(String submitTime) {
+        this.submitTime = submitTime;
     }
 
-    /**
-     * @param reviewid the reviewid to set
-     */
-    public void setReviewid(int reviewid) {
-        this.reviewid = reviewid;
+    public void setCode(CodeDTO code) {
+        this.code = code;
     }
 
-    /**
-     * @return the starttime
-     */
-    public Time getStarttime() {
-        return starttime;
-    }
-
-    /**
-     * @param starttime the starttime to set
-     */
-    public void setStarttime(Time starttime) {
-        this.starttime = starttime;
-    }
-
-    /**
-     * @return the submittime
-     */
-    public Time getSubmittime() {
-        return submittime;
-    }
-
-    /**
-     * @param submittime the submittime to set
-     */
-    public void setSubmittime(Time submittime) {
-        this.submittime = submittime;
-    }
-
+    
 }
