@@ -6,12 +6,15 @@
 package com.agileseven.codereview.client.views;
 
 import com.agileseven.codereview.client.DTO.CodeDTO;
+import com.agileseven.codereview.client.DTO.UserstoryDTO;
+import com.agileseven.codereview.client.ServiceConsumer;
+
 import javax.swing.JOptionPane;
-<<<<<<< HEAD
-import com.agileseven.codereviewserver.DTO.CodeDTO;
-=======
->>>>>>> 17c1d1974139019744e4d1c2016fbf851eccb677
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author Asus
@@ -47,7 +50,16 @@ public class FramePushCode extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1200, 800));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        // Retrieving the list of UserStory objects
+        ServiceConsumer consumer = new ServiceConsumer();
+        List<UserstoryDTO> userstoryDTOList = consumer.getUserStories();
+        List<String> userStoryIDs = new ArrayList<>();
+        for (UserstoryDTO us : userstoryDTOList) {
+            userStoryIDs.add(us.getUserstoryid());
+        }
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(userStoryIDs.toArray()));
+
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -175,17 +187,15 @@ public class FramePushCode extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-<<<<<<< HEAD
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
-=======
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         new FrameHomePage().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
->>>>>>> 17c1d1974139019744e4d1c2016fbf851eccb677
 
     
     
