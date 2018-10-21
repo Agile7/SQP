@@ -1,6 +1,7 @@
 package com.agileseven.codereview.client;
 
 import com.agileseven.codereviewserver.DTO.CodeDTO;
+import com.agileseven.codereviewserver.DTO.ProjectDTO;
 import java.util.ArrayList;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
@@ -55,6 +56,18 @@ public class ServiceConsumer implements CommandLineRunner {
 
         return codeList;
     }
-
-
+    
+    public ArrayList<ProjectDTO> getProjectList(){
+        
+        RestTemplate restTemplate = new RestTemplate();
+     
+        ArrayList<ProjectDTO> projectList = new ArrayList<ProjectDTO>();
+        final ResponseEntity<ProjectDTO[]> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/projects", ProjectDTO[].class);
+        for (ProjectDTO project : responseEntity.getBody()) {
+            projectList.add(project);
+        }
+        
+        return projectList;
+    }
 }
