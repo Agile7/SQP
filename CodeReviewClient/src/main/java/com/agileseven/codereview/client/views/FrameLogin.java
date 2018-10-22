@@ -5,6 +5,8 @@
  */
 package com.agileseven.codereview.client.views;
 
+import com.agileseven.codereview.client.DTO.ProjectDTO;
+import com.agileseven.codereview.client.DTO.UserDTO;
 import com.agileseven.codereview.client.ServiceConsumer;
 import java.util.ArrayList;
 
@@ -18,11 +20,32 @@ public class FrameLogin extends javax.swing.JFrame {
      * Creates new form FrameLogin
      */
     public FrameLogin() {
+        ServiceConsumer service = new ServiceConsumer();
         initComponents();
+        
+        ArrayList<ProjectDTO> listOfProject = service.getProjectList();
+        
+//        ArrayList<String> listOfProjectName = new ArrayList<String>();
+        
+        for(ProjectDTO p : listOfProject){
+            String name = p.getProjectName();
+//            listOfProjectName.add(name);
+            System.out.println(name);
+            jComboBox1.addItem(name);
+        }
+        
+        ArrayList<UserDTO> listOfUser = service.getUsersList();
+        
+//        ArrayList<String> listOfUserName = new ArrayList<String>();
+        
+        for(UserDTO u : listOfUser){
+            String fname = u.getFirstName();
+            String lname = u.getLastName();
+            String name = fname +" "+ lname;
+//            listOfProjectName.add(name);
+            jComboBox2.addItem(name);
+        }
     }
-    
-    ServiceConsumer sc = new ServiceConsumer();
-    ArrayList<String> listOfProjectName = new ArrayList<String>();
     
     
 
@@ -44,7 +67,6 @@ public class FrameLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -58,7 +80,6 @@ public class FrameLogin extends javax.swing.JFrame {
         jLabel2.setText("User");
 
         jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Confirm");

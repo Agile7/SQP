@@ -3,6 +3,7 @@ package com.agileseven.codereview.client;
 import com.agileseven.codereview.client.DTO.ProjectDTO;
 import com.agileseven.codereview.client.DTO.UserstoryDTO;
 import com.agileseven.codereview.client.DTO.CodeDTO;
+import com.agileseven.codereview.client.DTO.UserDTO;
 
 import java.util.ArrayList;
 
@@ -67,19 +68,7 @@ public class ServiceConsumer implements CommandLineRunner {
         return userStoryList;
     }
 
-    public ArrayList<ProjectDTO> getProjectList(){
-
-        RestTemplate restTemplate = new RestTemplate();
-        final ResponseEntity<ProjectDTO[]> responseEntity
-                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/projects", ProjectDTO[].class);
-
-        ArrayList<ProjectDTO> projectList = new ArrayList<ProjectDTO>();
-        for (ProjectDTO project : responseEntity.getBody()) {
-            projectList.add(project);
-        }
-        
-        return projectList;
-    }
+    
 
     public CodeDTO getCodeById(int codeId) {
         CodeDTO code = null;
@@ -112,6 +101,37 @@ public class ServiceConsumer implements CommandLineRunner {
         = restTemplate.postForEntity("http://localhost:9000/CodeReviewer/review", entity, Integer.class);
 
         return responseEntity.getBody();
+    }
+    
+    public ArrayList<UserDTO> getUsersList(){
+        
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<UserDTO[]> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/users", UserDTO[].class);
+        
+        ArrayList<UserDTO> usersList = new ArrayList<UserDTO>();
+        for (UserDTO user : responseEntity.getBody()) {
+            usersList.add(user);
+        }
+        
+        return usersList;
+    }
+    
+    public ArrayList<ProjectDTO> getProjectList(){
+
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<ProjectDTO[]> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/projects", ProjectDTO[].class);
+
+        ArrayList<ProjectDTO> projectList = new ArrayList<ProjectDTO>();
+        System.out.println("----------------");
+        for (ProjectDTO project : responseEntity.getBody()) {
+            System.out.println(project.getProjectName());
+            projectList.add(project);
+        }
+        System.out.println("----------------");
+        System.out.println("responseEntity.getBody().length: " + responseEntity.getBody()[0].getProjectName());
+        return projectList;
     }
 
 }

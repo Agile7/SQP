@@ -36,13 +36,10 @@ public class ProjectDAOImpl implements ProjectDAO{
             while (rs.next() == true) {
                 int projectid = rs.getInt(1);
                 String projectname = rs.getString(2);
-                
+                System.out.println(projectname);
                 ProjectDTO project = new ProjectDTO(projectid, projectname);
                 projectList.add(project);
                 
-                st.close();
-                rs.close();
-                con.close();
             }
         } catch (SQLException ex) {
             System.out.println(ex);

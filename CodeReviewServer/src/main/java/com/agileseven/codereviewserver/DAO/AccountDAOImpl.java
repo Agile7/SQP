@@ -96,9 +96,9 @@ public class AccountDAOImpl implements AccountDAO {
                 UserDTO user = new UserDTO(userid,fname,lastname,email,photo,positionId,projectId);
                 accountList.add(user);
                 
-                st.close();
-                rs.close();
-                con.close();
+//                st.close();
+//                rs.close();
+//                con.close();
             }
             } catch (SQLException ex) {
             System.out.println(ex);
