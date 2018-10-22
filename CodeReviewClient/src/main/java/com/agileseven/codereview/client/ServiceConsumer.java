@@ -1,7 +1,7 @@
 package com.agileseven.codereview.client;
 
+import com.agileseven.codereview.client.DTO.ProjectDTO;
 import com.agileseven.codereview.client.DTO.UserstoryDTO;
-import com.agileseven.codereviewserver.DTO.ProjectDTO;
 import com.agileseven.codereview.client.DTO.CodeDTO;
 
 import java.util.ArrayList;
