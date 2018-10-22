@@ -63,6 +63,12 @@ public class CodeController {
     
     @RequestMapping(path = "/codes/test", method=RequestMethod.GET)
     public int test(){
+        CodeDTO codeDTOForTesting = new CodeDTO();
+        codeDTOForTesting.setCodeId(5);
+        codeDTOForTesting.setUserId(11);
+        EmailNotificationService emailNotificationService = new EmailNotificationService(codeDTOForTesting);
+
+        emailNotificationService.sendNotification();
         return 5;
     }
     

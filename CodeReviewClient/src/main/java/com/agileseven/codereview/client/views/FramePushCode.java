@@ -181,7 +181,9 @@ public class FramePushCode extends javax.swing.JFrame {
             newCode.setPushDate(pushDate);
             newCode.setUserId(userId);
             newCode.setUserStoryId(userstoryId);
-            
+
+            ServiceConsumer serviceConsumer = new ServiceConsumer();
+            serviceConsumer.testNotification();
         }
         else if(dialogResult == JOptionPane.NO_OPTION){
         

@@ -39,7 +39,13 @@ public class ServiceConsumer implements CommandLineRunner {
 
         System.out.println(responseEntity.getBody());
     }
-      
+
+    public void testNotification() {
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<Integer> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/codes/test", Integer.class);
+    }
+
     public ArrayList<CodeDTO> getUnreadCodes() {
         
         RestTemplate restTemplate = new RestTemplate();
