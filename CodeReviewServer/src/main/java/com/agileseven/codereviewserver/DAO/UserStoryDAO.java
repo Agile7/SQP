@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface UserStoryDAO {
     public List<UserstoryDTO> getAllUserStories() throws ClassNotFoundException, SQLException;
+    public List<UserstoryDTO> getAllUserStoriesOfProject(int projectId) throws ClassNotFoundException, SQLException;
 }

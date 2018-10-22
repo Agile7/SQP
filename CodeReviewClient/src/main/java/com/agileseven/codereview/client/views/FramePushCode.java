@@ -8,6 +8,7 @@ package com.agileseven.codereview.client.views;
 import com.agileseven.codereview.client.DTO.CodeDTO;
 import com.agileseven.codereview.client.DTO.UserstoryDTO;
 import com.agileseven.codereview.client.ServiceConsumer;
+import com.agileseven.codereview.client.Session;
 
 import javax.swing.JOptionPane;
 
@@ -52,7 +53,7 @@ public class FramePushCode extends javax.swing.JFrame {
 
         // Retrieving the list of UserStory objects
         ServiceConsumer consumer = new ServiceConsumer();
-        List<UserstoryDTO> userstoryDTOList = consumer.getUserStories();
+        List<UserstoryDTO> userstoryDTOList = consumer.getUserStories(Session.currentProject.getProjectId());
         List<String> userStoryIDs = new ArrayList<>();
         for (UserstoryDTO us : userstoryDTOList) {
             userStoryIDs.add(us.getUserstoryid());

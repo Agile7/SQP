@@ -30,4 +30,23 @@ public class UserStoryDAOImpl implements UserStoryDAO {
         return userStories;
     }
 
+    @Override
+    public List<UserstoryDTO> getAllUserStoriesOfProject(int projectId) throws ClassNotFoundException, SQLException {
+        Connection connection = ConnectionFactory.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM user_story WHERE project_id = ?;");
+        statement.setInt(1, projectId);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<UserstoryDTO> userStories = new ArrayList<>();
+        while(resultSet.next()){
+            String userStoryId = resultSet.getString(1);
+            String description = resultSet.getString(3);
+            String title = resultSet.getString(4);
+
+            userStories.add(new UserstoryDTO(description, projectId, title, userStoryId));
+        }
+        System.out.println(userStories.size());
+        return userStories;
+    }
+
 }

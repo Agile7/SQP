@@ -68,7 +68,19 @@ public class ServiceConsumer implements CommandLineRunner {
         return userStoryList;
     }
 
-    
+    public ArrayList<UserstoryDTO> getUserStories(int projectId) {
+
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<UserstoryDTO[]> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/userStories/" + projectId, UserstoryDTO[].class);
+
+        ArrayList<UserstoryDTO> userStoryList = new ArrayList<>();
+        for (UserstoryDTO userStory : responseEntity.getBody()) {
+            userStoryList.add(userStory);
+        }
+
+        return userStoryList;
+    }
 
     public CodeDTO getCodeById(int codeId) {
         CodeDTO code = null;
@@ -116,7 +128,7 @@ public class ServiceConsumer implements CommandLineRunner {
         
         return usersList;
     }
-    
+
     public ArrayList<ProjectDTO> getProjectList(){
 
         RestTemplate restTemplate = new RestTemplate();
