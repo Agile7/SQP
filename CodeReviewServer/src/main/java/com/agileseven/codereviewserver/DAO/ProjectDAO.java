@@ -14,4 +14,5 @@ import java.util.ArrayList;
  */
 public interface ProjectDAO {
     public ArrayList<ProjectDTO> getProjectList();
+    public ProjectDTO getProjectById(String id);
 }

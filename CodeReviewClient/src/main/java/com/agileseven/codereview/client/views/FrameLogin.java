@@ -8,6 +8,8 @@ package com.agileseven.codereview.client.views;
 import com.agileseven.codereview.client.DTO.ProjectDTO;
 import com.agileseven.codereview.client.DTO.UserDTO;
 import com.agileseven.codereview.client.ServiceConsumer;
+import com.agileseven.codereview.client.Session;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 
 /**
@@ -19,31 +21,33 @@ public class FrameLogin extends javax.swing.JFrame {
     /**
      * Creates new form FrameLogin
      */
+    ServiceConsumer service = new ServiceConsumer();
+    ArrayList<ProjectDTO> listOfProject = service.getProjectList();
+    ArrayList<UserDTO> listOfUser = service.getUsersList();
+    
     public FrameLogin() {
         ServiceConsumer service = new ServiceConsumer();
         initComponents();
         
         ArrayList<ProjectDTO> listOfProject = service.getProjectList();
-        
-//        ArrayList<String> listOfProjectName = new ArrayList<String>();
+
         
         for(ProjectDTO p : listOfProject){
             String name = p.getProjectName();
-//            listOfProjectName.add(name);
-            System.out.println(name);
-            jComboBox1.addItem(name);
+            String id = ""+p.getProjectId();
+            jComboBox1.addItem(id + ". " + name);
         }
         
         ArrayList<UserDTO> listOfUser = service.getUsersList();
-        
-//        ArrayList<String> listOfUserName = new ArrayList<String>();
+
         
         for(UserDTO u : listOfUser){
+            String id = "" + u.getUserId();
             String fname = u.getFirstName();
             String lname = u.getLastName();
-            String name = fname +" "+ lname;
-//            listOfProjectName.add(name);
+            String name = id +". "+ fname +" "+ lname;
             jComboBox2.addItem(name);
+            
         }
     }
     
@@ -133,7 +137,18 @@ public class FrameLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        //ServiceConsumer service = new ServiceConsumer();
+        //String projectId = jComboBox1.getSelectedItem().toString();
+        int projectNum = jComboBox1.getSelectedIndex();
+        int userNum = jComboBox2.getSelectedIndex();
+        //Integer userId = Integer.parseInt(jComboBox2.getSelectedItem().toString().split(".")[0]);
+        
+        Session.currentProject = listOfProject.get(projectNum);
+        Session.currentUser = listOfUser.get(userNum);
+        //System.out.println(Session.currentProject.getProjectName());
+        //System.out.println(Session.currentUser.getFirstName());
+        new FrameHomePage().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

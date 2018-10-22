@@ -5,10 +5,14 @@
  */
 package com.agileseven.codereview.client;
 
+import com.agileseven.codereview.client.DTO.ProjectDTO;
+import com.agileseven.codereview.client.DTO.UserDTO;
+
 /**
  *
  * @author vilosh_na
  */
 public class Session {
-    
+    public static UserDTO currentUser;
+    public static ProjectDTO currentProject;
 }

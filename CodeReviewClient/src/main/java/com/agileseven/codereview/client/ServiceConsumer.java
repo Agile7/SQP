@@ -124,14 +124,36 @@ public class ServiceConsumer implements CommandLineRunner {
                 = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/projects", ProjectDTO[].class);
 
         ArrayList<ProjectDTO> projectList = new ArrayList<ProjectDTO>();
-        System.out.println("----------------");
+        //System.out.println("----------------");
         for (ProjectDTO project : responseEntity.getBody()) {
-            System.out.println(project.getProjectName());
+            //System.out.println(project.getProjectName());
             projectList.add(project);
         }
-        System.out.println("----------------");
-        System.out.println("responseEntity.getBody().length: " + responseEntity.getBody()[0].getProjectName());
+        //System.out.println("----------------");
+        //System.out.println("responseEntity.getBody().length: " + responseEntity.getBody()[0].getProjectName());
         return projectList;
+    }
+    
+    public ProjectDTO getProjectById(String projectId) {
+        ProjectDTO project = null;
+
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<ProjectDTO> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/project/"+projectId, ProjectDTO.class);
+
+        project = responseEntity.getBody();
+        return project;
+    }
+    
+    public UserDTO getUserById(int userId) {
+        UserDTO user = null;
+
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<UserDTO> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/user/"+userId, UserDTO.class);
+
+        user = responseEntity.getBody();
+        return user;
     }
 
 }

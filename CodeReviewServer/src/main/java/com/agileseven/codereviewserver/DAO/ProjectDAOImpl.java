@@ -36,7 +36,7 @@ public class ProjectDAOImpl implements ProjectDAO{
             while (rs.next() == true) {
                 int projectid = rs.getInt(1);
                 String projectname = rs.getString(2);
-                System.out.println(projectname);
+                
                 ProjectDTO project = new ProjectDTO(projectid, projectname);
                 projectList.add(project);
                 
@@ -45,6 +45,35 @@ public class ProjectDAOImpl implements ProjectDAO{
             System.out.println(ex);
         }
         return projectList;
+    }
+    
+    @Override
+    public ProjectDTO getProjectById(String id) {
+        ProjectDTO project = new ProjectDTO();
+        
+        Connection con = ConnectionFactory.getConnection();
+        ResultSet rs;
+        Statement st;
+        String query = "SELECT * FROM project"
+                        + "WHERE project_id = " + id;
+        
+        try {
+            
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+
+            while (rs.next() == true) {
+                int projectid = rs.getInt(1);
+                String projectname = rs.getString(2);
+                project.setProjectId(projectid);
+                project.setProjectName(projectname);
+                
+                
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return project;
     }
     
 }

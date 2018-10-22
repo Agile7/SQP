@@ -30,4 +30,16 @@ public class AccountController {
     public ArrayList<UserDTO> getAccountList(){
         return accountDAO.getAccountList();
     }
+    
+    @RequestMapping(path = "/user/{userId}", method=RequestMethod.GET)
+    public UserDTO getUserById(int userId){
+        try {
+            UserDTO user = accountDAO.getUserById(userId);
+            return user;
+        } catch (Exception e){
+            return null;
+        }
+    }
+    
+    
 }
