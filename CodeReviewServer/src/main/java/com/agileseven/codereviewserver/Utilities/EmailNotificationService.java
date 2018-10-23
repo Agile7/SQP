@@ -37,7 +37,6 @@ public class EmailNotificationService extends BaseNotificationService {
     public void sendNotification() {
 
         try {
-//            List<UserDTO> recipients = super.getNotificationRecipients();
             String emailHost = "smtp.gmail.com";
             Transport transport = mailSession.getTransport("smtp");
             transport.connect(emailHost, SENDER_EMAIL_ADDRESS, SENDER_EMAIL_PASSWORD);
@@ -96,7 +95,7 @@ public class EmailNotificationService extends BaseNotificationService {
                         us -> us.getUserstoryId().equals(super.getNotificationSource().getUserStoryId())
                         ).findFirst().get().getTitle() +
                 " was just pushed by " + source.getFirstName() + " " + source.getLastName().toUpperCase() +
-                ". Please do not forget to review it, and add your annotations (if you have any remarks) as soon as possible.\n\n" +
+                ". Please do not forget to review it as soon as possible.\n\n" +
                 "Have a nice day!\n\n" +
                 "--------------------\nThis is an auto-generated message, sent using the AgileSeven code review platform.";
 

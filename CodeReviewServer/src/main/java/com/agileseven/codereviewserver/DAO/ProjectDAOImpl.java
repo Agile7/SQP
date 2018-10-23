@@ -54,22 +54,19 @@ public class ProjectDAOImpl implements ProjectDAO{
         
         Connection con = ConnectionFactory.getConnection();
         ResultSet rs;
-        Statement st;
-        String query = "SELECT * FROM project"
-                        + "WHERE project_id = " + id;
-        
+
         try {
-            
-            st = con.createStatement();
-            rs = st.executeQuery(query);
+
+            PreparedStatement statement = con.prepareStatement("SELECT * FROM project WHERE project_id = ?;");
+            statement.setInt(1, id);
+            rs = statement.executeQuery();
 
             while (rs.next() == true) {
                 int projectid = rs.getInt(1);
                 String projectname = rs.getString(2);
                 project.setProjectId(projectid);
                 project.setProjectName(projectname);
-                
-                
+
             }
         } catch (SQLException ex) {
             System.out.println(ex);
