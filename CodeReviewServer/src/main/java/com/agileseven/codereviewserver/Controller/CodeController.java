@@ -65,7 +65,8 @@ public class CodeController {
     public int test(){
         CodeDTO codeDTOForTesting = new CodeDTO();
         codeDTOForTesting.setCodeId(5);
-        codeDTOForTesting.setUserId(11);
+        codeDTOForTesting.setUserId(10);
+        codeDTOForTesting.setUserStoryId("10");
         EmailNotificationService emailNotificationService = new EmailNotificationService(codeDTOForTesting);
 
         emailNotificationService.sendNotification();
