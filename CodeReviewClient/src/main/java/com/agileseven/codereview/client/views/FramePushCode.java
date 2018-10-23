@@ -1,3 +1,5 @@
+                 
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -53,7 +55,17 @@ public class FramePushCode extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1200, 900));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        // Retrieving the list of UserStory objects
+        ServiceConsumer consumer = new ServiceConsumer();
+        List<UserstoryDTO> userstoryDTOList = consumer.getUserStories(Session.currentProject.getProjectId());
+
+        // populating the user story combo box
+        List<String> userStoryIDs = new ArrayList<>();
+        for (UserstoryDTO us : userstoryDTOList) {
+            userStoryIDs.add(us.getUserstoryid());
+        }
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(userStoryIDs.toArray()));
+
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -178,6 +190,7 @@ public class FramePushCode extends javax.swing.JFrame {
             int numbLine = jTextArea1.getLineCount();
             Date pushDate = new Date();
             int userId = 3;
+            //int userId = Session.currentUser.getUserId();
             
             newCode.setCodeText(codeText);
             newCode.setComment(codeComment);
@@ -186,8 +199,20 @@ public class FramePushCode extends javax.swing.JFrame {
             newCode.setUserId(userId);
             newCode.setUserStoryId(userstoryId);
 
-            ServiceConsumer serviceConsumer = new ServiceConsumer();
-            serviceConsumer.testNotification();
+//            ServiceConsumer serviceConsumer = new ServiceConsumer();
+//            serviceConsumer.testNotification();
+            
+            ServiceConsumer sc = new ServiceConsumer();
+            Integer result = sc.sendCode(newCode);
+            System.out.println("-New code ID generated-");
+            System.out.println(result);
+            if (result > 0) {
+                Object[] options = { "OK" };
+                int dialogText = javax.swing.JOptionPane.showOptionDialog(null, "Your code is pushed! A notification is sent to all developers.", "Success!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        
+                if ((dialogText == 0) || (dialogText != -1)) {
+                }
+            }
         }
         else if(dialogResult == JOptionPane.NO_OPTION){
         
@@ -218,4 +243,5 @@ public class FramePushCode extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+
 }
