@@ -21,7 +21,7 @@ import java.util.Date;
  *
  * @author vilosh_na
  */
-public class UnreadCodeList extends javax.swing.JFrame {
+public class FrameUnreadCodes extends javax.swing.JFrame {
     
     ServiceConsumer service = new ServiceConsumer();
     
@@ -29,7 +29,7 @@ public class UnreadCodeList extends javax.swing.JFrame {
     /**
      * Creates new form UnreadCodeList
      */
-    public UnreadCodeList() {
+    public FrameUnreadCodes() {
         
         initComponents();
         GridLayout layout = new GridLayout(1,1);
@@ -103,15 +103,16 @@ public class UnreadCodeList extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UnreadCodeList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameUnreadCodes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
         
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            UnreadCodeList win =  new UnreadCodeList();
+            FrameUnreadCodes win =  new FrameUnreadCodes();
             win.setVisible(true);
             win.setSize(1200, 800);
         });

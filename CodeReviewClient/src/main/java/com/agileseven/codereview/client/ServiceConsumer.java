@@ -121,13 +121,13 @@ public class ServiceConsumer implements CommandLineRunner {
         return responseEntity.getBody();
     }
     
-    public ArrayList<UserDTO> getUsersList(){
+    public ArrayList<UserDTO> getUsersList(int projectId){
         
         RestTemplate restTemplate = new RestTemplate();
         final ResponseEntity<UserDTO[]> responseEntity
-                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/users", UserDTO[].class);
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/project/users/"+projectId, UserDTO[].class);
         
-        ArrayList<UserDTO> usersList = new ArrayList<UserDTO>();
+        ArrayList<UserDTO> usersList = new ArrayList<>();
         for (UserDTO user : responseEntity.getBody()) {
             usersList.add(user);
         }
@@ -173,5 +173,5 @@ public class ServiceConsumer implements CommandLineRunner {
         user = responseEntity.getBody();
         return user;
     }
-
+  
 }

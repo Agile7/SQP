@@ -8,6 +8,7 @@ package com.agileseven.codereviewserver.DAO;
 import com.agileseven.codereviewserver.DTO.ProjectDTO;
 import com.agileseven.codereviewserver.DTO.UserDTO;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -74,6 +75,31 @@ public class ProjectDAOImpl implements ProjectDAO{
             System.out.println(ex);
         }
         return project;
+    }
+    
+    @Override
+    public ArrayList<UserDTO> getUsersByProject(int projectId) throws SQLException {
+        
+        Connection con = ConnectionFactory.getConnection();
+
+        String query = "SELECT u.* from ";
+        PreparedStatement statement = con.prepareStatement("SELECT * FROM user u  WHERE project_id = ?");
+        statement.setInt(1, projectId);
+        ResultSet resultSet = statement.executeQuery();
+
+        ArrayList<UserDTO> users = new ArrayList<>();
+        while(resultSet.next()){
+            int userId = resultSet.getInt(1);
+            String firstName = resultSet.getString(2);
+            String lastName = resultSet.getString(3);
+            String email = resultSet.getString(4);
+            String photoPath = resultSet.getString(5);
+            int positionId = resultSet.getInt(6);
+            int pId = resultSet.getInt(7);
+
+            users.add(new UserDTO(userId, firstName, lastName, email, photoPath, positionId, pId));
+        }
+        return users;
     }
     
 }

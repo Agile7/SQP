@@ -8,6 +8,7 @@ package com.agileseven.codereview.client.views;
 import com.agileseven.codereview.client.ServiceConsumer;
 import com.agileseven.codereview.client.DTO.CodeDTO;
 import com.agileseven.codereview.client.DTO.UserDTO;
+import com.agileseven.codereview.client.Session;
 import com.agileseven.codereview.client.utils;
 import java.awt.Font;
 import java.util.Date;
@@ -151,7 +152,7 @@ public class FrameReview extends javax.swing.JFrame {
         JSONObject review = new JSONObject();
         
         review.put("codeId", this.codeId);
-        review.put("reviewerId",3);
+        review.put("reviewerId",Session.currentUser.getUserId());
         review.put("approved",1);
         review.put("startTime", utils.convertDatetoString(this.startDate,"yyyy-M-dd hh:mm:ss"));
         review.put("submitTime", utils.convertDatetoString(this.endDate,"yyyy-M-dd hh:mm:ss"));
@@ -161,12 +162,12 @@ public class FrameReview extends javax.swing.JFrame {
         if(review_id != -1){
             JOptionPane.showMessageDialog(this,"File has been successfully reviewed. Review_id : "+ review_id, "Success", JOptionPane.PLAIN_MESSAGE);
             this.setVisible(false);
-            new UnreadCodeList().setVisible(true);
+            new FrameUnreadCodes().setVisible(true);
         }
         else{
             JOptionPane.showMessageDialog(this,"Unable to save review. Please try later.", "Error", JOptionPane.INFORMATION_MESSAGE);
             this.setVisible(false);
-            new UnreadCodeList().setVisible(true);
+            new FrameUnreadCodes().setVisible(true);
         
         }
     }
@@ -211,7 +212,7 @@ public class FrameReview extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         this.setVisible(false);
-        new UnreadCodeList().setVisible(true);
+        new FrameUnreadCodes().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
