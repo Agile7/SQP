@@ -15,7 +15,7 @@ import java.util.Properties;
 
 /**
  * @author Mahmoud AL NAJAR
- * TODO: MODIFY THE EMAILS IN DB BEFORE TESTING
+ *
  */
 public class EmailNotificationService extends BaseNotificationService {
 

@@ -11,11 +11,8 @@ import com.agileseven.codereviewserver.DTO.CodeDTO;
 import com.agileseven.codereviewserver.Utilities.EmailNotificationService;
 
 import java.util.ArrayList;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * This class maps the URL to the methods to 
@@ -33,11 +30,11 @@ public class CodeController {
     private CodeDAO codeDAO = new CodeDAOImpl();
     
     @RequestMapping(path = "/code", method=RequestMethod.POST)
-    public int pushCode(CodeDTO code) {
+    public int pushCode(@RequestBody CodeDTO code) {
         try{
             // TODO: Implementation for receiving a push code request
+            System.out.println(code.getCodeText());
             int pushCodeResult = codeDAO.pushCodeToDB(code);
-
             // After the processing of the push code request,
             // a CodeDTO object of the new code must be created in order to send warning emails
             if(pushCodeResult > 0){
@@ -55,8 +52,9 @@ public class CodeController {
             }
         }
         catch(Exception ex){
-            System.err.println("Got an exception!");
-            System.err.println(ex.getMessage());
+//            System.err.println("Got an exception!");
+//            System.err.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return 0;
     }
