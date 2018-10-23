@@ -49,12 +49,11 @@ public class ServiceConsumer implements CommandLineRunner {
     public Integer sendCode(CodeDTO code)
     {
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<CodeDTO> entity = new HttpEntity<>(code, headers);
-        final ResponseEntity<Integer> responseEntity = restTemplate.postForEntity("http://localhost:9000/CodeReviewer/code/", entity, Integer.class);
-
-        return (Integer)responseEntity.getBody();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        HttpEntity<CodeDTO> entity = new HttpEntity<>(code, headers);
+        final ResponseEntity<Integer> responseEntity = restTemplate.postForEntity("http://localhost:9000/CodeReviewer/code", code, Integer.class);
+        return responseEntity.getBody();
     }
     
     public ArrayList<CodeDTO> getUnreadCodes() {
