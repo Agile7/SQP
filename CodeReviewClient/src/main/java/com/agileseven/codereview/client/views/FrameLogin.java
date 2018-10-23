@@ -25,8 +25,12 @@ public class FrameLogin extends javax.swing.JFrame {
     ArrayList<ProjectDTO> listOfProject;
     
     public FrameLogin() {
+        
+        
         listOfProject = service.getProjectList();
         initComponents();
+        
+        jComboBox1.addItem("Select");
        
         for(ProjectDTO p : listOfProject){
             jComboBox1.addItem(p.getProjectName());
@@ -133,21 +137,25 @@ public class FrameLogin extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
             
+        
         jComboBox2.removeAllItems();
         
-        listOfUser = service.getUsersList(listOfProject.get(jComboBox1.getSelectedIndex()).getProjectId());
-            
+        if(jComboBox1.getSelectedIndex() != 0 ){
+        
+            listOfUser = service.getUsersList(listOfProject.get(jComboBox1.getSelectedIndex()-1).getProjectId());
+
             for(UserDTO u : listOfUser){
-            
+
                 jComboBox2.addItem(u.getFirstName() +" "+ u.getLastName());
             }
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         //ServiceConsumer service = new ServiceConsumer();
         //String projectId = jComboBox1.getSelectedItem().toString();
-        int projectNum = jComboBox1.getSelectedIndex();
+        int projectNum = jComboBox1.getSelectedIndex() - 1;
         int userNum = jComboBox2.getSelectedIndex();
         //Integer userId = Integer.parseInt(jComboBox2.getSelectedItem().toString().split(".")[0]);
         
