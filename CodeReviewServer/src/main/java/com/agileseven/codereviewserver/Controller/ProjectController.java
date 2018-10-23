@@ -5,7 +5,9 @@ import com.agileseven.codereviewserver.DAO.ProjectDAOImpl;
 import com.agileseven.codereviewserver.DAO.UserStoryDAO;
 import com.agileseven.codereviewserver.DAO.UserStoryDAOImpl;
 import com.agileseven.codereviewserver.DTO.ProjectDTO;
+import com.agileseven.codereviewserver.DTO.UserDTO;
 import com.agileseven.codereviewserver.DTO.UserstoryDTO;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Mahmoud AL NAJAR
@@ -35,6 +39,19 @@ public class ProjectController {
             return null;
         }
 
+    }
+    
+    @RequestMapping(path = "/project/users/{projectId}", method=RequestMethod.GET)
+    public ArrayList<UserDTO> getUserListByProjectId(@PathVariable int projectId){
+        ArrayList<UserDTO> results = null;
+        
+        try {
+            results =  projectDAO.getUsersByProject(projectId);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return results;
     }
 
     @RequestMapping(path = "/userStories/{projectId}", method= RequestMethod.GET, produces = "application/json")

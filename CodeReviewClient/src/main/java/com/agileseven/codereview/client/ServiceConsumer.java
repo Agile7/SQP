@@ -46,6 +46,17 @@ public class ServiceConsumer implements CommandLineRunner {
                 = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/codes/test", Integer.class);
     }
 
+   public Integer sendCode(CodeDTO code)
+    {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<CodeDTO> entity = new HttpEntity<>(code, headers);
+        final ResponseEntity<Integer> responseEntity = restTemplate.postForEntity("http://localhost:9000/CodeReviewer/code/", entity, Integer.class);
+
+        return (Integer)responseEntity.getBody();
+    }
+    
     public ArrayList<CodeDTO> getUnreadCodes() {
         
         RestTemplate restTemplate = new RestTemplate();
@@ -121,13 +132,13 @@ public class ServiceConsumer implements CommandLineRunner {
         return responseEntity.getBody();
     }
     
-    public ArrayList<UserDTO> getUsersList(){
+    public ArrayList<UserDTO> getUsersList(int projectId){
         
         RestTemplate restTemplate = new RestTemplate();
         final ResponseEntity<UserDTO[]> responseEntity
-                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/users", UserDTO[].class);
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/project/users/"+projectId, UserDTO[].class);
         
-        ArrayList<UserDTO> usersList = new ArrayList<UserDTO>();
+        ArrayList<UserDTO> usersList = new ArrayList<>();
         for (UserDTO user : responseEntity.getBody()) {
             usersList.add(user);
         }
@@ -173,5 +184,5 @@ public class ServiceConsumer implements CommandLineRunner {
         user = responseEntity.getBody();
         return user;
     }
-
+  
 }

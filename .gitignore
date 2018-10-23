@@ -12,3 +12,4 @@ CodeReviewServer/.idea/libraries/R_User_Library.xml
 CodeReviewServer/.idea/misc.xml
 CodeReviewServer/.idea/vcs.xml
 CodeReviewServer/.idea/workspace.xml
+*.class

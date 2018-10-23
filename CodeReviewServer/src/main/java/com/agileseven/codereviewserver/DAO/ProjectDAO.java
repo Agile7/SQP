@@ -6,6 +6,8 @@
 package com.agileseven.codereviewserver.DAO;
 
 import com.agileseven.codereviewserver.DTO.ProjectDTO;
+import com.agileseven.codereviewserver.DTO.UserDTO;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -15,4 +17,5 @@ import java.util.ArrayList;
 public interface ProjectDAO {
     public ArrayList<ProjectDTO> getProjectList();
     public ProjectDTO getProjectById(String id);
+    public ArrayList<UserDTO> getUsersByProject(int projectId) throws SQLException;
 }

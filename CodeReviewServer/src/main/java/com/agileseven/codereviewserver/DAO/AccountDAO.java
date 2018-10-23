@@ -23,6 +23,6 @@ import java.util.List;
  */
 public interface AccountDAO {
     public UserDTO getUserById(int userId) throws SQLException;
+    public ArrayList<UserDTO> getUsersList();
     public List<UserDTO> getMembersOfProject(int projectId) throws SQLException;
-    public ArrayList<UserDTO> getAccountList();
 }
