@@ -35,7 +35,7 @@ public class FrameReview extends javax.swing.JFrame {
     public FrameReview(int codeId) {
         this.codeId = codeId;
         initComponents();
-        jLabel4.setText("Hi " + Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
+        jLabel4.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
         CodeDTO code = service.getCodeById(codeId);
         textArea_ShowCode.setText(code.getCodeText());
         

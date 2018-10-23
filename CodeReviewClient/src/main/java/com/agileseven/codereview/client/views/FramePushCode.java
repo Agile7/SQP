@@ -29,7 +29,7 @@ public class FramePushCode extends javax.swing.JFrame {
      */
     public FramePushCode() {
         initComponents();
-         jLabel4.setText("Hi " + Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
+         jLabel4.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
     }
 
     /**

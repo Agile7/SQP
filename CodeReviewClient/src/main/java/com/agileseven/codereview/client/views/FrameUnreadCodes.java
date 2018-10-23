@@ -37,7 +37,7 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
     public FrameUnreadCodes() {
         
         initComponents();
-        jLabel3.setText("Hi " + Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
+        jLabel3.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
         
         ArrayList<CodeDTO> codeList = service.getUnreadCodes(Session.currentProject.getProjectId());
         
@@ -148,7 +148,7 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
         jPanel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 153, 255));
+        jLabel2.setForeground(new java.awt.Color(255, 0, 51));
         jLabel2.setText("Pending Unreviewed Codes");
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
