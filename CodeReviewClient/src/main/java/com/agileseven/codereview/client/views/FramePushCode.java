@@ -189,14 +189,12 @@ public class FramePushCode extends javax.swing.JFrame {
             String userstoryId = jComboBox1.getSelectedItem().toString();
             int numbLine = jTextArea1.getLineCount();
             Date pushDate = new Date();
-            int userId = 3;
-            //int userId = Session.currentUser.getUserId();
-            
+           
             newCode.setCodeText(codeText);
             newCode.setComment(codeComment);
             newCode.setNumLines(numbLine);
             newCode.setPushDate(pushDate);
-            newCode.setUserId(userId);
+            newCode.setUserId(Session.currentUser.getUserId());
             newCode.setUserStoryId(userstoryId);
 
 //            ServiceConsumer serviceConsumer = new ServiceConsumer();

@@ -108,22 +108,17 @@ public class CodeDAOImpl implements CodeDAO{
     public int pushCodeToDB(CodeDTO code){
         int result = 0;
         Connection con = ConnectionFactory.getConnection();
-        long millis = System.currentTimeMillis();
-        java.sql.Date date = new java.sql.Date(millis);
-        Calendar calendar = Calendar.getInstance();
-        java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
-        String query = " INSERT INTO code (code_id, code_text, user_id, push_date, number_of_lines, user_story_id, comment)"
-        + " values (?, ?, ?, ?, ?, ?, ?)";
+        String query = " INSERT INTO code (code_text, user_id, number_of_lines, user_story_id, comment)"
+        + " values (?, ?, ?, ?, ?)";
         try {
       // create the mysql insert preparedstatement
             PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            stmt.setNull(1, NULL);
-            stmt.setString(2, code.getCodeText());
-            stmt.setInt(3, code.getUserId());
-            stmt.setDate(4, startDate);
-            stmt.setInt(5, code.getNumLines());
-            stmt.setString(6, "R2");
-            stmt.setString(7, code.getComment());
+           
+            stmt.setString(1, code.getCodeText());
+            stmt.setInt(2, code.getUserId());
+            stmt.setInt(3, code.getNumLines());
+            stmt.setString(4, code.getUserStoryId());
+            stmt.setString(5, code.getComment());
             
             stmt.executeUpdate();
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
