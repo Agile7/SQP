@@ -43,7 +43,7 @@ public class EmailNotificationService extends BaseNotificationService {
             transport.connect(emailHost, SENDER_EMAIL_ADDRESS, SENDER_EMAIL_PASSWORD);
 
             UserDTO source = accountDAO.getUserById(super.getNotificationSource().getUserId());
-            ProjectDTO project = projectDAO.getProjectById(String.valueOf(source.getProjectId()));
+            ProjectDTO project = projectDAO.getProjectById(source.getProjectId());
             for (UserDTO recipient: super.getNotificationRecipients()) {
                 MimeMessage emailMessage = draftEmailMessage(project, source, recipient);
                 transport.sendMessage(emailMessage, emailMessage.getAllRecipients());

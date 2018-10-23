@@ -49,7 +49,7 @@ public class ProjectDAOImpl implements ProjectDAO{
     }
     
     @Override
-    public ProjectDTO getProjectById(String id) {
+    public ProjectDTO getProjectById(int id) {
         ProjectDTO project = new ProjectDTO();
         
         Connection con = ConnectionFactory.getConnection();

@@ -16,6 +16,6 @@ import java.util.ArrayList;
  */
 public interface ProjectDAO {
     public ArrayList<ProjectDTO> getProjectList();
-    public ProjectDTO getProjectById(String id);
+    public ProjectDTO getProjectById(int id);
     public ArrayList<UserDTO> getUsersByProject(int projectId) throws SQLException;
 }

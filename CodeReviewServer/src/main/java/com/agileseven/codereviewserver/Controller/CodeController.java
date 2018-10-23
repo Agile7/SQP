@@ -32,17 +32,15 @@ public class CodeController {
     @RequestMapping(path = "/code", method=RequestMethod.POST)
     public int pushCode(@RequestBody CodeDTO code) {
         try{
-            // TODO: Implementation for receiving a push code request
-            System.out.println(code.getCodeText());
             int pushCodeResult = codeDAO.pushCodeToDB(code);
             // After the processing of the push code request,
             // a CodeDTO object of the new code must be created in order to send warning emails
             if(pushCodeResult > 0){
-                CodeDTO codeDTOForTesting = new CodeDTO();
-                //codeDTOForTesting.setCodeId(5); // CodeId = pushCodeResult;
-                codeDTOForTesting.setCodeId(pushCodeResult);
-                codeDTOForTesting.setUserId(10);
-                EmailNotificationService emailNotificationService = new EmailNotificationService(codeDTOForTesting);
+//                CodeDTO codeDTOForTesting = new CodeDTO();
+//                //codeDTOForTesting.setCodeId(5); // CodeId = pushCodeResult;
+//                codeDTOForTesting.setCodeId(pushCodeResult);
+//                codeDTOForTesting.setUserId(10);
+                EmailNotificationService emailNotificationService = new EmailNotificationService(code);
 
                 emailNotificationService.sendNotification();
                 return -1;
