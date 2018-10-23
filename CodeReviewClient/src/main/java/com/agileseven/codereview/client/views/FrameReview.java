@@ -105,7 +105,7 @@ public class FrameReview extends javax.swing.JFrame {
 
         jLabel3.setText("jLabel3");
 
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 204));
         jLabel4.setText("jLabel4");
 
@@ -114,7 +114,7 @@ public class FrameReview extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(1052, Short.MAX_VALUE)
+                .addContainerGap(1040, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(102, 102, 102))
             .addGroup(layout.createSequentialGroup()
@@ -153,7 +153,7 @@ public class FrameReview extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_ConfirmApproved, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         pack();
