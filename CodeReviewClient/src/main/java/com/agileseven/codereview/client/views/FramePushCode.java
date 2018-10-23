@@ -55,7 +55,17 @@ public class FramePushCode extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1200, 800));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        // Retrieving the list of UserStory objects
+        ServiceConsumer consumer = new ServiceConsumer();
+        List<UserstoryDTO> userstoryDTOList = consumer.getUserStories(Session.currentProject.getProjectId());
+
+        // populating the user story combo box
+        List<String> userStoryIDs = new ArrayList<>();
+        for (UserstoryDTO us : userstoryDTOList) {
+            userStoryIDs.add(us.getUserstoryid());
+        }
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(userStoryIDs.toArray()));
+
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
