@@ -85,4 +85,26 @@ public class AccountDAOImpl implements AccountDAO {
         }
         return accountList;
     }
+    
+    @Override
+    public List<UserDTO> getMembersOfProject(int projectId) throws SQLException {
+
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE project_id = ?;");
+        statement.setInt(1, projectId);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<UserDTO> users = new ArrayList<>();
+        while(resultSet.next()){
+            int userId = resultSet.getInt(1);
+            String firstName = resultSet.getString(2);
+            String lastName = resultSet.getString(3);
+            String email = resultSet.getString(4);
+            String photoPath = resultSet.getString(5);
+            int positionId = resultSet.getInt(6);
+            int pId = resultSet.getInt(7);
+
+            users.add(new UserDTO(userId, firstName, lastName, email, photoPath, positionId, pId));
+        }
+        return users;
+    }
 }

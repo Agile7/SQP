@@ -9,6 +9,7 @@ import com.agileseven.codereviewserver.DTO.UserDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This interface contains the methods to 
@@ -23,4 +24,5 @@ import java.util.ArrayList;
 public interface AccountDAO {
     public UserDTO getUserById(int userId) throws SQLException;
     public ArrayList<UserDTO> getUsersList();
+    public List<UserDTO> getMembersOfProject(int projectId) throws SQLException;
 }
