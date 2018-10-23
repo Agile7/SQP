@@ -37,7 +37,6 @@ public class EmailNotificationService extends BaseNotificationService {
     public void sendNotification() {
 
         try {
-//            List<UserDTO> recipients = super.getNotificationRecipients();
             String emailHost = "smtp.gmail.com";
             Transport transport = mailSession.getTransport("smtp");
             transport.connect(emailHost, SENDER_EMAIL_ADDRESS, SENDER_EMAIL_PASSWORD);
