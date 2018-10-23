@@ -34,7 +34,7 @@ public class CodeDAOImpl implements CodeDAO{
     
 
     @Override
-    public ArrayList<CodeDTO> getUnreadCodes() {
+    public ArrayList<CodeDTO> getUnreadCodes(int projectId) {
         
         ArrayList<CodeDTO> codeList = new ArrayList<CodeDTO>();
         
@@ -49,11 +49,13 @@ public class CodeDAOImpl implements CodeDAO{
                         "(Select 1 from review r " +
                         " where r.code_id = c.code_id " +
                         ") " +
+                        "AND us.project_id = ? " +
                         "order by c.push_date asc ";
         
         System.out.println(query);
            try {
                 PreparedStatement ps = con.prepareStatement(query);
+                 ps.setInt(1, projectId);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     codeList.add(buildCodeDTOfromResult(rs));

@@ -8,7 +8,11 @@ package com.agileseven.codereviewserver.Controller;
 import com.agileseven.codereviewserver.DAO.AccountDAO;
 import com.agileseven.codereviewserver.DAO.AccountDAOImpl;
 import com.agileseven.codereviewserver.DTO.UserDTO;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,14 +29,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path="/CodeReviewer")
 public class AccountController {
     private AccountDAO accountDAO = new AccountDAOImpl();
-    
-    @RequestMapping(path = "/users", method=RequestMethod.GET)
-    public ArrayList<UserDTO> getAccountList(){
-        return accountDAO.getAccountList();
-    }
+   
     
     @RequestMapping(path = "/user/{userId}", method=RequestMethod.GET)
-    public UserDTO getUserById(int userId){
+    public UserDTO getUserById(@PathVariable int userId){
         try {
             UserDTO user = accountDAO.getUserById(userId);
             return user;
