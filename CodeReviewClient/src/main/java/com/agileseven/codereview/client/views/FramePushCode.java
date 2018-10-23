@@ -184,6 +184,17 @@ public class FramePushCode extends javax.swing.JFrame {
 
             ServiceConsumer serviceConsumer = new ServiceConsumer();
             serviceConsumer.testNotification();
+            
+            
+            ServiceConsumer sc = new ServiceConsumer();
+            Integer result = sc.sendCode(newCode);
+            if (result > 0) {
+                Object[] options = { "OK" };
+                int dialogText = javax.swing.JOptionPane.showOptionDialog(null, "Your code is pushed! A notification is sent to all developers.", "Success!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        
+                if ((dialogText == 0) || (dialogText != -1)) {
+                }
+            }
         }
         else if(dialogResult == JOptionPane.NO_OPTION){
         
