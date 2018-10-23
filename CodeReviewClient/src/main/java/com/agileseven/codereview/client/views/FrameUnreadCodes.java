@@ -11,6 +11,7 @@ import com.agileseven.codereview.client.ServiceConsumer;
 import com.agileseven.codereview.client.listeners.CodeListMouseListener;
 import com.agileseven.codereview.client.utils;
 import com.agileseven.codereview.client.DTO.UserstoryDTO;
+import com.agileseven.codereview.client.Session;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Label;
@@ -32,13 +33,8 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
     public FrameUnreadCodes() {
         
         initComponents();
-        GridLayout layout = new GridLayout(1,1);
-        this.setLayout(layout);
-        this.setBackground(new java.awt.Color(255, 255, 255));
         
-      
-        
-        ArrayList<CodeDTO> codeList = service.getUnreadCodes();
+        ArrayList<CodeDTO> codeList = service.getUnreadCodes(Session.currentProject.getProjectId());
         
         if(codeList != null && codeList.size() > 0){
             
@@ -129,6 +125,7 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -138,19 +135,26 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(1200, 800));
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel1.setText("Pending Code Reviews");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -159,6 +163,7 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

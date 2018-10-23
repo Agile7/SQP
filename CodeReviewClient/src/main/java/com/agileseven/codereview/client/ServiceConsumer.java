@@ -29,8 +29,7 @@ public class ServiceConsumer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-         RestTemplate restTemplate = new RestTemplate();
-         getUnreadCodes();
+       
     }
     
     private void testmethod(RestTemplate restTemplate) {
@@ -57,11 +56,11 @@ public class ServiceConsumer implements CommandLineRunner {
         return (Integer)responseEntity.getBody();
     }
     
-    public ArrayList<CodeDTO> getUnreadCodes() {
+    public ArrayList<CodeDTO> getUnreadCodes(int projectId) {
         
         RestTemplate restTemplate = new RestTemplate();
         final ResponseEntity<CodeDTO[]> responseEntity
-                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/codes/unreviewed", CodeDTO[].class);
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/codes/unreviewed/"+projectId, CodeDTO[].class);
 
         ArrayList<CodeDTO> codeList = new ArrayList<CodeDTO>();
         for (CodeDTO code : responseEntity.getBody()) {

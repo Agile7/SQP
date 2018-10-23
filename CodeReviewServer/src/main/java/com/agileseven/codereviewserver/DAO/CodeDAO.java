@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public interface CodeDAO {
     
-    public ArrayList<CodeDTO> getUnreadCodes();
+    public ArrayList<CodeDTO> getUnreadCodes(int projectId);
     public int pushCodeToDB(CodeDTO code);
     public CodeDTO getCodeById(int codeId);
     

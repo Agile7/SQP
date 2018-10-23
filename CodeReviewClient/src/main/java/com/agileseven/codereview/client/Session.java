@@ -15,4 +15,10 @@ import com.agileseven.codereview.client.DTO.UserDTO;
 public class Session {
     public static UserDTO currentUser;
     public static ProjectDTO currentProject;
+
+    public Session() {
+    }
+
+      
+    
 }
