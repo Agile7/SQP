@@ -61,7 +61,7 @@ public class EmailNotificationService extends BaseNotificationService {
         emailProperties.put("mail.smtp.port", "587");
         emailProperties.put("mail.smtp.auth", "true");
         emailProperties.put("mail.smtp.starttls.enable", "true");
-        mailSession = Session.getDefaultInstance(emailProperties, new javax.mail.Authenticator() {
+        mailSession = Session.getInstance(emailProperties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(SENDER_EMAIL_ADDRESS, SENDER_EMAIL_PASSWORD);
             }
