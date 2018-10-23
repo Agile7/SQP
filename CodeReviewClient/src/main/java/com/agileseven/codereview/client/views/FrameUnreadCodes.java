@@ -12,11 +12,15 @@ import com.agileseven.codereview.client.listeners.CodeListMouseListener;
 import com.agileseven.codereview.client.utils;
 import com.agileseven.codereview.client.DTO.UserstoryDTO;
 import com.agileseven.codereview.client.Session;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  *
@@ -33,15 +37,16 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
     public FrameUnreadCodes() {
         
         initComponents();
+        jLabel3.setText("Hi " + Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
         
         ArrayList<CodeDTO> codeList = service.getUnreadCodes(Session.currentProject.getProjectId());
         
         if(codeList != null && codeList.size() > 0){
             
-            GridLayout listLayout = new GridLayout(codeList.size()*4,1,0,20);
+            GridLayout listLayout = new GridLayout(codeList.size()*4,1);
             jPanel1.setLayout(listLayout);
             Date currentDate = new Date();
-            codeList.stream().map((code) -> {
+            for(CodeDTO code : codeList) {
                 
                 UserDTO user = code.getUser();
                 UserstoryDTO userStory = code.getUserStory();
@@ -60,28 +65,30 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
                 jPanel1.add(title);
                 jPanel1.add(comment);
                 jPanel1.add(description);
-                
-                return code;
-            }).forEachOrdered((_item) -> {
-                jPanel1.add(new Label());
-                
-                
-                //jPanel1.add(panel);
-            });
-             
-            
-            
+
+            }
         }
         else{
             
-            GridLayout listLayout = new GridLayout(1,1);
-            jPanel1.setLayout(listLayout);
-            
-            Label info = new Label("No pending unreviewed code.");
-            info.setFont(new Font("Arial", Font.PLAIN, 24));
-            info.setForeground(new java.awt.Color(0,187,85));
-            this.add(info);
+            jLabel2.setText("No pending unreviewed code");
         }
+        
+        JPanel panel2 = new JPanel();
+        JButton back = new JButton();
+        
+        back.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        back.setForeground(new java.awt.Color(204, 0, 51));
+        back.setText("Back");
+        back.setSize(new Dimension(100,50));
+        
+        jPanel1.add(panel2);
+        panel2.add(back);
+        panel2.setBackground(Color.white);
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
         
     }
     
@@ -125,7 +132,9 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -135,35 +144,69 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(1200, 800));
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel1.setText("Pending Code Reviews");
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 153, 255));
+        jLabel2.setText("Pending Unreviewed Codes");
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 102, 204));
+        jLabel3.setText("jLabel3");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(93, 93, 93))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(49, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(15, 15, 15)))
+                .addGap(25, 25, 25))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1220, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
+ private void backActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+        
+        this.setVisible(false);
+        new FrameHomePage().setVisible(true);
+    }   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

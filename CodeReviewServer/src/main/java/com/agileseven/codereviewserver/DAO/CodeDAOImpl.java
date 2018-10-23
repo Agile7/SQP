@@ -106,32 +106,32 @@ public class CodeDAOImpl implements CodeDAO{
     public int pushCodeToDB(CodeDTO code){
         int result = 0;
         Connection con = ConnectionFactory.getConnection();
-//        String query = "INSERT INTO code VALUES(NULL," + code.getCodeText() + "," 
-//                     + code.getComment() + "," 
-//                     + code.getNumLines() + "," 
-//                     + code.getPushDate() + "," 
-//                     + code.getUserId()+ "," 
-//                     + code.getUserStoryId() + ")";
-        
-        String query = "INSERT INTO code VALUES(?,?,?,?,?,?)";
-
-        try { 
-            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, code.getCodeText());
-            ps.setString(2, code.getComment());
-            ps.setInt(3, code.getNumLines());
-            ps.setDate(4, (Date) code.getPushDate());
-            ps.setInt(5, code.getUserId());
-            ps.setString(6, code.getUserStoryId());
+        long millis = System.currentTimeMillis();
+        java.sql.Date date = new java.sql.Date(millis);
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
+        String query = " INSERT INTO code (code_id, code_text, user_id, push_date, number_of_lines, user_story_id, comment)"
+        + " values (?, ?, ?, ?, ?, ?, ?)";
+        try {
+      // create the mysql insert preparedstatement
+            PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setNull(1, NULL);
+            stmt.setString(2, code.getCodeText());
+            stmt.setInt(3, code.getUserId());
+            stmt.setDate(4, startDate);
+            stmt.setInt(5, code.getNumLines());
+            stmt.setString(6, "R2");
+            stmt.setString(7, code.getComment());
             
-            ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            if(rs.next()){
-                result = rs.getInt(1);
+            stmt.executeUpdate();
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return (int) generatedKeys.getLong(1);
+                }
+                else {
+                    throw new SQLException("Inserting code failed, no ID obtained.");
+                }
             }
-            
-            con.close();
-            return result; // If success => result > 0
         } catch (SQLException ex) {
             System.err.println("Got an exception!");
             System.err.println(ex.getMessage());
