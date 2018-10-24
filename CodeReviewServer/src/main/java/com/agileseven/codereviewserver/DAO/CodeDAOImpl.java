@@ -142,8 +142,10 @@ public class CodeDAOImpl implements CodeDAO{
          Connection con = ConnectionFactory.getConnection();
         String query = "SELECT c.code_id, c.comment, c.code_text, c.push_date, c.user_id, "
                         + "c.user_story_id, u.first_name, u.last_name, us.title "
-                        + "FROM code c, user u , user_story us " +
-                        "where code_id = "+codeId;
+                        + "FROM code c, user u , user_story us " 
+                        + "where code_id = "+codeId
+                        + " AND c.user_id = u.user_id "
+                        + "AND c.user_story_id = us.user_story_id";
         
         System.out.println(query);
            try {
