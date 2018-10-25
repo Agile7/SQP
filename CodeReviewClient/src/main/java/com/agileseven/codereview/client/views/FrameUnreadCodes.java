@@ -13,6 +13,7 @@ import com.agileseven.codereview.client.utils;
 import com.agileseven.codereview.client.DTO.UserstoryDTO;
 import com.agileseven.codereview.client.Session;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -21,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -37,58 +41,51 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
     public FrameUnreadCodes() {
         
         initComponents();
-        jLabel3.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
+        jLabel4.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
         
         ArrayList<CodeDTO> codeList = service.getUnreadCodes(Session.currentProject.getProjectId());
         
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(75);
+        jTable1.getColumnModel().getColumn(1).setWidth(300);
+        jTable1.getColumnModel().getColumn(2).setWidth(500);
+        jTable1.getColumnModel().getColumn(3).setWidth(500);
+        jTable1.getColumnModel().getColumn(4).setWidth(500);
+
+        
         if(codeList != null && codeList.size() > 0){
             
-            GridLayout listLayout = new GridLayout(codeList.size()*4,1);
-            jPanel1.setLayout(listLayout);
+             
             Date currentDate = new Date();
+            
             for(CodeDTO code : codeList) {
                 
                 UserDTO user = code.getUser();
                 UserstoryDTO userStory = code.getUserStory();
                 
-                Label title = new Label(code.getCodeId() + " - " +code.getUserStoryId() + " " + userStory.getTitle());
-                Label comment = new Label(code.getComment());
-                Label description = new Label("Pushed by " + user.getFirstName()+ " " + user.getLastName() + " "+ utils.dateDiff(code.getPushDate(),currentDate));
                 
-                title.addMouseListener(new CodeListMouseListener(code.getCodeId(), this));                
-                title.setFont(new Font("Arial", Font.BOLD, 32));
-                title.setForeground(new java.awt.Color(51, 153, 255));
-                
-                comment.setFont(new Font("Arial", Font.PLAIN, 24));
-                description.setFont(new Font("Arial", Font.PLAIN, 16));
-                
-                jPanel1.add(title);
-                jPanel1.add(comment);
-                jPanel1.add(description);
-
+                model.addRow(new Object[]{code.getCodeId(),code.getUserStoryId() + " " + userStory.getTitle(),
+                    user.getFirstName()+ " " + user.getLastName(),
+                    code.getComment() , utils.dateDiff(code.getPushDate(),currentDate)});
             }
         }
         else{
             
-            jLabel2.setText("No pending unreviewed code");
+           
         }
         
-        JPanel panel2 = new JPanel();
-        JButton back = new JButton();
-        
-        back.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        back.setForeground(new java.awt.Color(204, 0, 51));
-        back.setText("Back");
-        back.setSize(new Dimension(100,50));
-        
-        jPanel1.add(panel2);
-        panel2.add(back);
-        panel2.setBackground(Color.white);
-        back.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backActionPerformed(evt);
-            }
+        jTable1.getSelectionModel().addListSelectionListener((ListSelectionEvent event) -> {
+            changeScreen(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
         });
+        
+     
+        
+    }
+    
+    
+    public void changeScreen(int codeId){
+        new FrameReview(codeId).setVisible(true);
+        this.setVisible(false);
         
     }
     
@@ -131,66 +128,71 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setAlignmentX(0);
-        jPanel1.setPreferredSize(new java.awt.Dimension(1200, 800));
-        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 102, 255));
+        jLabel1.setText("Pending Code Reviews");
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 102, 255));
+        jLabel4.setText("jLabel4");
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 0, 51));
-        jLabel2.setText("Pending Unreviewed Codes");
+        jTable1.setAutoCreateRowSorter(true);
+        jTable1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 102, 204));
-        jLabel3.setText("jLabel3");
+            },
+            new String [] {
+                "Id", "User Story", "Developper", "Comment", "Pushed Since"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(93, 93, 93))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(15, 15, 15)))
-                .addGap(25, 25, 25))
-        );
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setColumnSelectionAllowed(false);
+        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
+        jTable1.setRowHeight(40);
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1220, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addGap(121, 121, 121))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(55, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 746, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4))
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
+                .addGap(65, 65, 65))
         );
 
         pack();
@@ -204,9 +206,9 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
     }   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
