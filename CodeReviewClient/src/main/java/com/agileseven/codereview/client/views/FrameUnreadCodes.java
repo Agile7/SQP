@@ -11,9 +11,15 @@ import com.agileseven.codereview.client.ServiceConsumer;
 import com.agileseven.codereview.client.utils;
 import com.agileseven.codereview.client.DTO.UserstoryDTO;
 import com.agileseven.codereview.client.Session;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -40,7 +46,10 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(2).setWidth(500);
         jTable1.getColumnModel().getColumn(3).setWidth(500);
         jTable1.getColumnModel().getColumn(4).setWidth(500);
-       
+        
+        
+        ColorRenderer cr=new ColorRenderer();
+        for (int i=0;i<5;i++) jTable1.getColumn(jTable1.getColumnName(i)).setCellRenderer(cr);
 
         
         if(codeList != null && codeList.size() > 0){
@@ -57,9 +66,9 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
                 model.addRow(new Object[]{code.getCodeId(),code.getUserStoryId() + " " + userStory.getTitle(),
                     user.getFirstName()+ " " + user.getLastName(),
                     code.getComment() , utils.dateDiff(code.getPushDate(),currentDate)});
-
-         
+ 
             }
+ 
         }
         else{
             jTable1.setVisible(false);
@@ -228,6 +237,38 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
         new FrameHomePage().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    class ColorRenderer extends JLabel implements TableCellRenderer
+    {
+        public ColorRenderer()
+        {
+            setOpaque(true);
+        }
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,boolean isSelected, boolean hasFocus, int row, int column)
+            {
+
+
+           setText(value !=null ? value.toString() : "");
+           setForeground(java.awt.Color.BLACK);        
+           setFont(new Font("Arial", Font.PLAIN, 18));
+           table.setShowGrid(true);
+           
+           
+
+           if(codeList.get(row).getUserId() == Session.currentUser.getUserId()){
+               setBackground(new Color(255, 207, 51));
+
+           }  
+           else if(row%2 != 0){
+               setBackground(new Color(255, 249, 230));
+           }
+           else{
+               setBackground(java.awt.Color.WHITE);
+           }
+
+            return this;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
