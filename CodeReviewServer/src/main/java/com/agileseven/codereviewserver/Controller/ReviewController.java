@@ -7,12 +7,15 @@ package com.agileseven.codereviewserver.Controller;
 
 import com.agileseven.codereviewserver.DAO.ReviewDAO;
 import com.agileseven.codereviewserver.DAO.ReviewDAOImpl;
+import com.agileseven.codereviewserver.DTO.CodeDTO;
 import com.agileseven.codereviewserver.DTO.PositionDTO;
 import com.agileseven.codereviewserver.DTO.ReviewDTO;
+import java.util.ArrayList;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -50,5 +53,12 @@ public class ReviewController {
       return reviewDAO.addReview(review);
         
         
+    }
+    
+    @RequestMapping(path = "/reviews", method=RequestMethod.GET)
+    public ArrayList<ReviewDTO> getReviewedCodeByUser(@RequestParam(value="userId", defaultValue="") int userId,
+                                                    @RequestParam(value="projectId", defaultValue="") int projectId)
+    {
+        return reviewDAO.getReviewedCodesByUser(userId, projectId);
     }
 }
