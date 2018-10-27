@@ -42,10 +42,6 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         jTable1.getColumnModel().getColumn(0).setMaxWidth(75);
-        jTable1.getColumnModel().getColumn(1).setWidth(300);
-        jTable1.getColumnModel().getColumn(2).setWidth(500);
-        jTable1.getColumnModel().getColumn(3).setWidth(500);
-        jTable1.getColumnModel().getColumn(4).setWidth(500);
         
         
         ColorRenderer cr=new ColorRenderer();

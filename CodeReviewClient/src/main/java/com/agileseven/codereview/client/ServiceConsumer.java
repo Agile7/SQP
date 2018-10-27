@@ -4,9 +4,11 @@ package com.agileseven.codereview.client;
 import com.agileseven.codereview.client.DTO.ProjectDTO;
 import com.agileseven.codereview.client.DTO.UserstoryDTO;
 import com.agileseven.codereview.client.DTO.CodeDTO;
+import com.agileseven.codereview.client.DTO.ReviewDTO;
 import com.agileseven.codereview.client.DTO.UserDTO;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
@@ -62,10 +64,8 @@ public class ServiceConsumer implements CommandLineRunner {
         final ResponseEntity<CodeDTO[]> responseEntity
                 = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/codes/unreviewed/"+projectId, CodeDTO[].class);
 
-        ArrayList<CodeDTO> codeList = new ArrayList<CodeDTO>();
-        for (CodeDTO code : responseEntity.getBody()) {
-            codeList.add(code);
-        }
+        ArrayList<CodeDTO> codeList = new ArrayList<>();
+        codeList.addAll(Arrays.asList(responseEntity.getBody()));
 
         return codeList;
     }
@@ -77,9 +77,7 @@ public class ServiceConsumer implements CommandLineRunner {
                 = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/userStories", UserstoryDTO[].class);
 
         ArrayList<UserstoryDTO> userStoryList = new ArrayList<>();
-        for (UserstoryDTO userStory : responseEntity.getBody()) {
-            userStoryList.add(userStory);
-        }
+        userStoryList.addAll(Arrays.asList(responseEntity.getBody()));
 
         return userStoryList;
     }
@@ -91,9 +89,7 @@ public class ServiceConsumer implements CommandLineRunner {
                 = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/userStories/" + projectId, UserstoryDTO[].class);
 
         ArrayList<UserstoryDTO> userStoryList = new ArrayList<>();
-        for (UserstoryDTO userStory : responseEntity.getBody()) {
-            userStoryList.add(userStory);
-        }
+        userStoryList.addAll(Arrays.asList(responseEntity.getBody()));
 
         return userStoryList;
     }
@@ -118,8 +114,7 @@ public class ServiceConsumer implements CommandLineRunner {
     }
       
     public int addReview(String review) {
-        System.out.println(review);
-
+        
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(review, headers);
@@ -138,9 +133,7 @@ public class ServiceConsumer implements CommandLineRunner {
                 = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/project/users/"+projectId, UserDTO[].class);
         
         ArrayList<UserDTO> usersList = new ArrayList<>();
-        for (UserDTO user : responseEntity.getBody()) {
-            usersList.add(user);
-        }
+        usersList.addAll(Arrays.asList(responseEntity.getBody()));
         
         return usersList;
     }
@@ -151,14 +144,10 @@ public class ServiceConsumer implements CommandLineRunner {
         final ResponseEntity<ProjectDTO[]> responseEntity
                 = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/projects", ProjectDTO[].class);
 
-        ArrayList<ProjectDTO> projectList = new ArrayList<ProjectDTO>();
-        //System.out.println("----------------");
-        for (ProjectDTO project : responseEntity.getBody()) {
-            //System.out.println(project.getProjectName());
-            projectList.add(project);
-        }
-        //System.out.println("----------------");
-        //System.out.println("responseEntity.getBody().length: " + responseEntity.getBody()[0].getProjectName());
+        ArrayList<ProjectDTO> projectList = new ArrayList<>();
+ 
+        projectList.addAll(Arrays.asList(responseEntity.getBody()));
+        
         return projectList;
     }
     
@@ -182,6 +171,21 @@ public class ServiceConsumer implements CommandLineRunner {
 
         user = responseEntity.getBody();
         return user;
+    }
+    
+   
+    public ArrayList<ReviewDTO> getReviewList(int userId, int projectId){
+
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<ReviewDTO[]> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/reviews?userId="+userId+"&projectId="+projectId
+                        , ReviewDTO[].class);
+
+        ArrayList<ReviewDTO> reviewList = new ArrayList<>();
+ 
+        reviewList.addAll(Arrays.asList(responseEntity.getBody()));
+        
+        return reviewList;
     }
   
 }
