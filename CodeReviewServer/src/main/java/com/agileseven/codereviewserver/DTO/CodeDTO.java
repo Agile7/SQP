@@ -24,6 +24,7 @@ public class CodeDTO {
     private String userStoryId;
     private UserstoryDTO userStory;
     private UserDTO user;
+    private String status;
 
     public UserstoryDTO getUserStory() {
         return userStory;
@@ -41,7 +42,7 @@ public class CodeDTO {
         this.user = userDTO;
     }
 
-    public CodeDTO(int codeid, String codetext, String comment, int numlines, Date pushdate, int userid, String userstoryid) {
+    public CodeDTO(int codeid, String codetext, String comment, int numlines, Date pushdate, int userid, String userstoryid, String status) {
         this.codeId = codeid;
         this.codeText = codetext;
         this.comment = comment;
@@ -49,10 +50,12 @@ public class CodeDTO {
         this.pushDate = pushdate;
         this.userId = userid;
         this.userStoryId = userstoryid;
+        this.status = status;
+
     }
 
     public CodeDTO() {
- 
+
     }
 
     /**
@@ -154,4 +157,24 @@ public class CodeDTO {
         this.userStoryId = userstoryid;
     }
 
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the status
+     */
+    /**
+     * @return the Status
+     */
 }
