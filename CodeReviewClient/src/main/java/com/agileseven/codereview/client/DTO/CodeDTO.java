@@ -35,10 +35,11 @@ public class CodeDTO {
         this.userId = userid;
         this.userStoryId = userstoryid;
         this.status = status;
+
     }
 
     public CodeDTO() {
- 
+
     }
 
     /**
@@ -168,7 +169,8 @@ public class CodeDTO {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-    
 
+    /**
+     * @return the status
+     */
 }
