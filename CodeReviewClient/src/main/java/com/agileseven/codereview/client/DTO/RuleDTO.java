@@ -11,10 +11,10 @@ package com.agileseven.codereview.client.DTO;
  */
 public class RuleDTO {
 
-    private int ruleid;
+    private String ruleid;
     private String ruletext;
 
-    public RuleDTO(int ruleid, String ruletext) {
+    public RuleDTO(String ruleid, String ruletext) {
         this.ruleid = ruleid;
         this.ruletext = ruletext;
     }
@@ -22,14 +22,14 @@ public class RuleDTO {
     /**
      * @return the ruleid
      */
-    public int getRuleid() {
+    public String getRuleid() {
         return ruleid;
     }
 
     /**
      * @param ruleid the ruleid to set
      */
-    public void setRuleid(int ruleid) {
+    public void setRuleid(String ruleid) {
         this.ruleid = ruleid;
     }
 
