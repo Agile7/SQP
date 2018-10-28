@@ -9,20 +9,22 @@ package com.agileseven.codereviewserver.DTO;
  *
  * @author S
  */
-public class ReviewannotationDTO {
+public class ReviewAnnotationDTO {
 
     private int annotId;
     private String annotText;
     private int reviewId;
-    private int ruleId;
+    private String ruleId;
     private ReviewDTO reviewDTO;
+    private RuleDTO ruleDTO;
 
-    public ReviewannotationDTO(int annotid, String annottext, int reviewid, int ruleid, ReviewDTO reviewDTO) {
+    public ReviewAnnotationDTO(int annotid, String annottext, int reviewid, String ruleid, ReviewDTO reviewDTO, RuleDTO ruleDTO) {
         this.annotId = annotid;
         this.annotText = annottext;
         this.reviewId = reviewid;
         this.ruleId = ruleid;
         this.reviewDTO = reviewDTO;
+        this.ruleDTO = ruleDTO;
     }
 
     public int getAnnotId() {
@@ -37,7 +39,7 @@ public class ReviewannotationDTO {
         return reviewId;
     }
 
-    public int getRuleId() {
+    public String getRuleId() {
         return ruleId;
     }
 
@@ -57,12 +59,20 @@ public class ReviewannotationDTO {
         this.reviewId = reviewId;
     }
 
-    public void setRuleId(int ruleId) {
+    public void setRuleId(String ruleId) {
         this.ruleId = ruleId;
     }
 
     public void setReviewDTO(ReviewDTO reviewDTO) {
         this.reviewDTO = reviewDTO;
+    }
+
+    public RuleDTO getRuleDTO() {
+        return ruleDTO;
+    }
+
+    public void setRuleDTO(RuleDTO ruleDTO) {
+        this.ruleDTO = ruleDTO;
     }
 
     

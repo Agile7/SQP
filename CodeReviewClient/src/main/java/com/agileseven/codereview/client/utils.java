@@ -49,7 +49,7 @@ public class utils {
        
 
         
-        return days + " days "+ hours + " Hrs "+ minutes + " mins ago.";
+        return days + " days "+ hours + " Hrs "+ minutes + " mins.";
         
     }
     

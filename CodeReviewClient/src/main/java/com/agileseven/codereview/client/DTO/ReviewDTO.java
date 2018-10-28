@@ -21,6 +21,7 @@ public class ReviewDTO {
     private String startTime;
     private String submitTime;
     private CodeDTO code;
+    private UserDTO reviewer;
 
     public ReviewDTO(int approved, int codeid, int reviewerid, int reviewid, String starttime, String submittime, CodeDTO codeDTO) {
         this.approved = approved;
@@ -38,6 +39,16 @@ public class ReviewDTO {
     public ReviewDTO() {
     
     }
+
+    public UserDTO getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(UserDTO reviewer) {
+        this.reviewer = reviewer;
+    }
+    
+    
 
     public int getApproved() {
         return approved;

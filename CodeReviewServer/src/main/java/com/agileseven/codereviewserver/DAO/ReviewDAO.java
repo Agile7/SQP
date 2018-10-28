@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package com.agileseven.codereviewserver.DAO;
+import com.agileseven.codereviewserver.DTO.CodeDTO;
 import com.agileseven.codereviewserver.DTO.ReviewDTO;
+import java.util.ArrayList;
 
 /**
  * This interface contains the methods
@@ -19,5 +21,6 @@ public interface ReviewDAO {
     
     public int approveCode(int review_id, int approved);
     public int addReview(ReviewDTO review);
+    public ArrayList<ReviewDTO> getReviewedCodesByUser(int userId,int projectId);
     
 }
