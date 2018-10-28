@@ -9,14 +9,14 @@ package com.agileseven.codereview.client.DTO;
  *
  * @author S
  */
-public class ReviewannotationDTO {
+public class ReviewAnnotationDTO {
 
     private int annotid;
     private String annottext;
     private int reviewid;
     private int ruleid;
 
-    public ReviewannotationDTO(int annotid, String annottext, int reviewid, int ruleid) {
+    public ReviewAnnotationDTO(int annotid, String annottext, int reviewid, int ruleid) {
         this.annotid = annotid;
         this.annottext = annottext;
         this.reviewid = reviewid;
