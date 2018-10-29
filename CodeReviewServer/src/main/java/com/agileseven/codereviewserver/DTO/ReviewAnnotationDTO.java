@@ -5,8 +5,6 @@
  */
 package com.agileseven.codereviewserver.DTO;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author S

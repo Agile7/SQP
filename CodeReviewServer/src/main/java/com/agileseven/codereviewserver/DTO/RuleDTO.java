@@ -18,9 +18,10 @@ public class RuleDTO {
         this.ruleId = ruleid;
         this.ruleText = ruletext;
     }
-    
 
-    
+    public RuleDTO() {
+    }
+   
 
     /**
      * @return the ruleid

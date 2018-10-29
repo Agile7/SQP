@@ -41,8 +41,14 @@ public class FrameAnnotations extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         jTable1.getColumnModel().getColumn(0).setMaxWidth(75);
         
+        jTable2.getColumnModel().getColumn(0).setMaxWidth(75);
+        jTable2.getColumnModel().getColumn(1).setMaxWidth(75);
+        
         ColorRenderer cr=new ColorRenderer();
         for (int i=0;i<5;i++) jTable1.getColumn(jTable1.getColumnName(i)).setCellRenderer(cr);
+
+        for (int i=0;i<3;i++) jTable2.getColumn(jTable2.getColumnName(i)).setCellRenderer(cr);
+
 
         
         if(reviewList != null && reviewList.size() > 0){
@@ -161,12 +167,10 @@ public class FrameAnnotations extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
+        jTable2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Line No", "Rule No", "Annotation"
@@ -204,8 +208,7 @@ public class FrameAnnotations extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(30, 30, 30)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel4))
                             .addComponent(jScrollPane3)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1373, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
@@ -271,7 +274,15 @@ public class FrameAnnotations extends javax.swing.JFrame {
          
          ArrayList<ReviewAnnotationDTO> annotationList = review.getAnnotationList();
          
+        
          DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+         
+         int rows = model.getRowCount();
+  
+        for(int i = rows - 1; i >=0; i--)
+        {
+           model.removeRow(i); 
+        }
          
           if(annotationList != null && annotationList.size() > 0){
             
@@ -279,8 +290,8 @@ public class FrameAnnotations extends javax.swing.JFrame {
                 
                     model.addRow(new Object[]{
                     20,
-                    annotation.getRuleid(),
-                    annotation.getAnnottext()
+                    annotation.getRuleId(),
+                    annotation.getAnnotText()
                 });
             }
           }
