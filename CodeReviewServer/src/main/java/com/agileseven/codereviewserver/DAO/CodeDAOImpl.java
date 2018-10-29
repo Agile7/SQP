@@ -9,16 +9,13 @@ import com.agileseven.codereviewserver.DTO.CodeDTO;
 import com.agileseven.codereviewserver.DTO.UserDTO;
 import com.agileseven.codereviewserver.DTO.UserstoryDTO;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import static java.sql.Types.NULL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,10 +44,7 @@ public class CodeDAOImpl implements CodeDAO{
                         "FROM code c, user u, user_story us " +
                         "where c.user_id = u.user_id " +
                         "AND c.user_story_id = us.user_story_id " +
-                        "AND NOT EXISTS " +
-                        "(Select 1 from review r " +
-                        " where r.code_id = c.code_id " +
-                        ") " +
+                        "AND c.status = 0 " +
                         "AND us.project_id = ? " +
                         "order by c.push_date asc ";
         
