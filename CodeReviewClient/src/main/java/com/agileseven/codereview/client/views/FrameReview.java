@@ -92,7 +92,7 @@ public class FrameReview extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(114, 114, 114)
+                .addGap(380, 380, 380)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
@@ -110,17 +110,14 @@ public class FrameReview extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(73, 39, 74));
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(73, 39, 74));
         jLabel1.setText("jLabel1");
 
         jLabel2.setBackground(new java.awt.Color(73, 39, 74));
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(73, 39, 74));
         jLabel2.setText("jLabel2");
 
         jLabel3.setBackground(new java.awt.Color(73, 39, 74));
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(73, 39, 74));
         jLabel3.setText("jLabel3");
 
         textArea_ShowCode.setColumns(20);
