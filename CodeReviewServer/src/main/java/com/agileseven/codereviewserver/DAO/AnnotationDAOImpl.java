@@ -25,14 +25,7 @@ public class AnnotationDAOImpl implements AnnotationDAO{
     public AnnotationDAOImpl() {
     }
     
-    /*
-    SELECT r.code_id, r.reviewer_id, r.approved, ra.annotation_text, ra.rule_id,
-        c.code_text, us.title, us.description
-    FROM code c, user_story us, review r, review_annotation ra
-    WHERE c.code_id = r.code_id
-        AND r.review_id = ra.review_id
-        AND c.user_story_id = us.user_story_id
-    */
+
     
     @Override
     public ArrayList<ReviewAnnotationDTO> getAnnotationsByReviewId(int reviewId){
@@ -42,7 +35,7 @@ public class AnnotationDAOImpl implements AnnotationDAO{
         ResultSet resultSet;
         Statement Statement;
         String query = "SELECT ra.annotation_id, ra.annotation_text,  "
-                     + "ra.rule_id, ra.review_id, rl.rule_text " 
+                     + "ra.rule_id, ra.review_id, rl.rule_text, ra.line_number " 
                      + "FROM review_annotation ra, rule rl "
                      + "WHERE ra.rule_id = rl.rule_id "
                      + "AND ra.review_id = " + reviewId;
@@ -61,6 +54,7 @@ public class AnnotationDAOImpl implements AnnotationDAO{
                 annotation.setAnnotId(resultSet.getInt("annotation_id"));
                 annotation.setAnnotText(resultSet.getString("annotation_text"));
                 annotation.setRuleId(resultSet.getString("rule_id"));
+                annotation.setLineNumber(resultSet.getInt("line_number"));
                 annotation.setReviewId(reviewId);
                 
                 RuleDTO ruleDTO = new RuleDTO(resultSet.getString("rule_id"), resultSet.getString("rule_text"));

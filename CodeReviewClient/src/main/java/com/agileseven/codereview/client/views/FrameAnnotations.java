@@ -13,6 +13,7 @@ import com.agileseven.codereview.client.DTO.UserDTO;
 import com.agileseven.codereview.client.DTO.UserstoryDTO;
 import com.agileseven.codereview.client.ServiceConsumer;
 import com.agileseven.codereview.client.Session;
+import com.agileseven.codereview.client.Utils;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -95,8 +96,6 @@ public class FrameAnnotations extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -164,6 +163,7 @@ public class FrameAnnotations extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Monospaced", 0, 15)); // NOI18N
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
@@ -179,11 +179,6 @@ public class FrameAnnotations extends javax.swing.JFrame {
         jTable2.setGridColor(new java.awt.Color(255, 255, 255));
         jTable2.setRowHeight(40);
         jScrollPane3.setViewportView(jTable2);
-
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel3.setText("Note: ");
-
-        jLabel4.setText("jLabel4");
 
         jButton1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(73, 39, 74));
@@ -204,12 +199,7 @@ public class FrameAnnotations extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(30, 30, 30)
-                                .addComponent(jLabel4))
-                            .addComponent(jScrollPane3)))
+                        .addComponent(jScrollPane3))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1373, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -227,12 +217,7 @@ public class FrameAnnotations extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8))
@@ -270,7 +255,7 @@ public class FrameAnnotations extends javax.swing.JFrame {
             review.setAnnotationList(service.getAnnotationsByReviewId(review.getReviewId()));
          }
          
-         jTextArea1.setText(review.getCode().getCodeText());
+         jTextArea1.setText(Utils.addLineNumbersToCodeString(review.getCode().getCodeText()));
          
          ArrayList<ReviewAnnotationDTO> annotationList = review.getAnnotationList();
          
@@ -289,7 +274,7 @@ public class FrameAnnotations extends javax.swing.JFrame {
             for(ReviewAnnotationDTO annotation : annotationList) {
                 
                     model.addRow(new Object[]{
-                    20,
+                    annotation.getLineNumber(),
                     annotation.getRuleId(),
                     annotation.getAnnotText()
                 });
@@ -382,8 +367,6 @@ public class FrameAnnotations extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
