@@ -8,7 +8,7 @@ package com.agileseven.codereview.client.views;
 import com.agileseven.codereview.client.DTO.CodeDTO;
 import com.agileseven.codereview.client.DTO.UserDTO;
 import com.agileseven.codereview.client.ServiceConsumer;
-import com.agileseven.codereview.client.utils;
+import com.agileseven.codereview.client.Utils;
 import com.agileseven.codereview.client.DTO.UserstoryDTO;
 import com.agileseven.codereview.client.Session;
 import java.awt.Color;
@@ -61,7 +61,7 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
                 
                 model.addRow(new Object[]{code.getCodeId(),code.getUserStoryId() + " " + userStory.getTitle(),
                     user.getFirstName()+ " " + user.getLastName(),
-                    code.getComment() , utils.dateDiff(code.getPushDate(),currentDate)});
+                    code.getComment() , Utils.dateDiff(code.getPushDate(),currentDate)});
  
             }
  
