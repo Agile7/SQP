@@ -7,17 +7,16 @@
 package com.agileseven.codereview.client.views;
 
 import com.agileseven.codereview.client.DTO.CodeDTO;
+import com.agileseven.codereview.client.DTO.ReviewAnnotationDTO;
 import com.agileseven.codereview.client.DTO.ReviewDTO;
 import com.agileseven.codereview.client.DTO.UserDTO;
 import com.agileseven.codereview.client.DTO.UserstoryDTO;
 import com.agileseven.codereview.client.ServiceConsumer;
 import com.agileseven.codereview.client.Session;
-import com.agileseven.codereview.client.utils;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +30,7 @@ import javax.swing.table.TableCellRenderer;
 public class FrameAnnotations extends javax.swing.JFrame {
     
     private final ServiceConsumer service = new ServiceConsumer();
-    private ArrayList<ReviewDTO> reviewList;
+    private final ArrayList<ReviewDTO> reviewList;
 
     /** Creates new form FrameAnnotations */
     public FrameAnnotations() {
@@ -264,7 +263,31 @@ public class FrameAnnotations extends javax.swing.JFrame {
          int selectedIndex = jTable1.getSelectedRow();
          ReviewDTO review = reviewList.get(selectedIndex);
          
+         if(review.getAnnotationList() == null){
+            review.setAnnotationList(service.getAnnotationsByReviewId(review.getReviewId()));
+         }
+         
          jTextArea1.setText(review.getCode().getCodeText());
+         
+         ArrayList<ReviewAnnotationDTO> annotationList = review.getAnnotationList();
+         
+         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+         
+          if(annotationList != null && annotationList.size() > 0){
+            
+            for(ReviewAnnotationDTO annotation : annotationList) {
+                
+                    model.addRow(new Object[]{
+                    20,
+                    annotation.getRuleid(),
+                    annotation.getAnnottext()
+                });
+            }
+          }
+
+         
+         
+         
     }//GEN-LAST:event_jTable1MouseClicked
 
     /**

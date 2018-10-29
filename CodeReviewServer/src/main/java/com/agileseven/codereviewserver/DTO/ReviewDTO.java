@@ -7,6 +7,7 @@ package com.agileseven.codereviewserver.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -22,6 +23,7 @@ public class ReviewDTO {
     private String submitTime;
     private CodeDTO code;
     private UserDTO reviewer;
+    private ArrayList<ReviewAnnotationDTO> annotationList;
 
     public ReviewDTO(int approved, int codeid, int reviewerid, int reviewid, String starttime, String submittime, CodeDTO codeDTO) {
         this.approved = approved;
@@ -105,6 +107,12 @@ public class ReviewDTO {
     }
     
     
+    public ArrayList<ReviewAnnotationDTO> getAnnotationList() {
+        return annotationList;
+    }
 
+    public void setAnnotationList(ArrayList<ReviewAnnotationDTO> annotationList) {
+        this.annotationList = annotationList;
+    }
     
 }

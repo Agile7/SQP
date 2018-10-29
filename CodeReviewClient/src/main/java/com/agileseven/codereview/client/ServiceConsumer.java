@@ -4,6 +4,7 @@ package com.agileseven.codereview.client;
 import com.agileseven.codereview.client.DTO.ProjectDTO;
 import com.agileseven.codereview.client.DTO.UserstoryDTO;
 import com.agileseven.codereview.client.DTO.CodeDTO;
+import com.agileseven.codereview.client.DTO.ReviewAnnotationDTO;
 import com.agileseven.codereview.client.DTO.ReviewDTO;
 import com.agileseven.codereview.client.DTO.UserDTO;
 
@@ -178,7 +179,7 @@ public class ServiceConsumer implements CommandLineRunner {
 
         RestTemplate restTemplate = new RestTemplate();
         final ResponseEntity<ReviewDTO[]> responseEntity
-                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/reviews?userId="+userId+"&projectId="+projectId
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/review/reviews?userId="+userId+"&projectId="+projectId
                         , ReviewDTO[].class);
 
         ArrayList<ReviewDTO> reviewList = new ArrayList<>();
@@ -186,6 +187,19 @@ public class ServiceConsumer implements CommandLineRunner {
         reviewList.addAll(Arrays.asList(responseEntity.getBody()));
         
         return reviewList;
+    }
+    
+    public ArrayList<ReviewAnnotationDTO> getAnnotationsByReviewId(int reviewId){
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<ReviewAnnotationDTO[]> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/review/annotations/"+reviewId
+                        , ReviewAnnotationDTO[].class);
+
+        ArrayList<ReviewAnnotationDTO> reviewAnnotationList = new ArrayList<>();
+ 
+        reviewAnnotationList.addAll(Arrays.asList(responseEntity.getBody()));
+        
+        return reviewAnnotationList;
     }
   
 }

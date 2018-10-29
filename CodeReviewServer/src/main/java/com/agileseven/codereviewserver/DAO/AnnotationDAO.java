@@ -5,10 +5,14 @@
  */
 package com.agileseven.codereviewserver.DAO;
 
+import com.agileseven.codereviewserver.DTO.ReviewAnnotationDTO;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 /**
  *
  * @author Jin Xutong
  */
 public interface AnnotationDAO {
-    
+    public ArrayList<ReviewAnnotationDTO> getAnnotationsByReviewId(int reviewId);
 }

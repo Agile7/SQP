@@ -5,6 +5,8 @@
  */
 package com.agileseven.codereviewserver.DTO;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author S
@@ -17,6 +19,7 @@ public class ReviewAnnotationDTO {
     private String ruleId;
     private ReviewDTO reviewDTO;
     private RuleDTO ruleDTO;
+    
 
     public ReviewAnnotationDTO(int annotid, String annottext, int reviewid, String ruleid, ReviewDTO reviewDTO, RuleDTO ruleDTO) {
         this.annotId = annotid;
@@ -26,6 +29,11 @@ public class ReviewAnnotationDTO {
         this.reviewDTO = reviewDTO;
         this.ruleDTO = ruleDTO;
     }
+
+    public ReviewAnnotationDTO() {
+    }
+    
+    
 
     public int getAnnotId() {
         return annotId;
@@ -74,6 +82,8 @@ public class ReviewAnnotationDTO {
     public void setRuleDTO(RuleDTO ruleDTO) {
         this.ruleDTO = ruleDTO;
     }
+
+    
 
     
 

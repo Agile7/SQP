@@ -5,10 +5,11 @@
  */
 package com.agileseven.codereviewserver.Controller;
 
+import com.agileseven.codereviewserver.DAO.AnnotationDAO;
+import com.agileseven.codereviewserver.DAO.AnnotationDAOImpl;
 import com.agileseven.codereviewserver.DAO.ReviewDAO;
 import com.agileseven.codereviewserver.DAO.ReviewDAOImpl;
-import com.agileseven.codereviewserver.DTO.CodeDTO;
-import com.agileseven.codereviewserver.DTO.PositionDTO;
+import com.agileseven.codereviewserver.DTO.ReviewAnnotationDTO;
 import com.agileseven.codereviewserver.DTO.ReviewDTO;
 import java.util.ArrayList;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,24 +42,24 @@ public class ReviewController {
     
     @RequestMapping(path = "/review", method= RequestMethod.POST)
     public int addReview(@RequestBody  ReviewDTO review){
-        
-        
-       System.out.println(review.getCodeId());
-       System.out.println(review.getReviewerId());
-       System.out.println(review.getApproved());
-       System.out.println(review.getReviewId());
-       System.out.println(review.getStartTime());
-       System.out.println(review.getSubmitTime());
-
+  
       return reviewDAO.addReview(review);
         
         
     }
     
-    @RequestMapping(path = "/reviews", method=RequestMethod.GET)
+    @RequestMapping(path = "/review/reviews", method=RequestMethod.GET)
     public ArrayList<ReviewDTO> getReviewedCodeByUser(@RequestParam(value="userId", defaultValue="") int userId,
                                                     @RequestParam(value="projectId", defaultValue="") int projectId)
     {
         return reviewDAO.getReviewedCodesByUser(userId, projectId);
+    }
+    
+    @RequestMapping(path = "/review/annotations/{reviewId}", method=RequestMethod.GET)
+    public ArrayList<ReviewAnnotationDTO> getAnnotationsByReviewId(@PathVariable int reviewId){
+        //Tested by postman
+       AnnotationDAO annotationDAO = new AnnotationDAOImpl();
+       
+       return annotationDAO.getAnnotationsByReviewId(reviewId);
     }
 }
