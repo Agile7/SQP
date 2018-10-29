@@ -44,7 +44,7 @@ public class ReviewController {
     }
     
     @RequestMapping(path = "/review", method= RequestMethod.POST)
-    public int addReview(@RequestBody  ReviewDTO review){
+    public int addReview(@RequestBody ReviewDTO review){
   
       return reviewDAO.addReview(review);
         

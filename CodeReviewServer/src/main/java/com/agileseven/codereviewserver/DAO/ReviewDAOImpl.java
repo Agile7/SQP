@@ -58,11 +58,8 @@ public class ReviewDAOImpl implements ReviewDAO {
         Connection con = ConnectionFactory.getConnection();
         int review_id = -1;
         
-        System.out.println("dhbcdh");
-        
         String query = "INSERT INTO review (code_id, reviewer_id, approved, start_time, submit_time) "
                     + " VALUES(?,?,?,STR_TO_DATE(?,'%Y-%m-%d %T'),STR_TO_DATE(?,'%Y-%m-%d %T'))";
-        
         
         try { 
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -82,7 +79,19 @@ public class ReviewDAOImpl implements ReviewDAO {
             if(rs.next()){
                 review_id = rs.getInt(1);
             }
-            
+
+            for (ReviewAnnotationDTO annotation: review.getAnnotationList()) {
+                String annQuery = "INSERT INTO review_annotation (annotation_text, rule_id, review_id, line_number) "
+                        + " VALUES(?,?,?,?)";
+                PreparedStatement annPS = con.prepareStatement(annQuery, Statement.RETURN_GENERATED_KEYS);
+                annPS.setString(1, annotation.getAnnotText());
+                annPS.setString(2, annotation.getRuleDTO().getRuleid());
+                annPS.setInt(3, review_id);
+                annPS.setInt(4, annotation.getLineNumber());
+                annPS.executeUpdate();
+            }
+
+
             con.close();
         } catch (SQLException ex) {
             System.err.println("Got an exception!");

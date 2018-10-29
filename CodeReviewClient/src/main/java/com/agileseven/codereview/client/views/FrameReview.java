@@ -5,13 +5,15 @@
  */
 package com.agileseven.codereview.client.views;
 
+import com.agileseven.codereview.client.DTO.*;
 import com.agileseven.codereview.client.ServiceConsumer;
-import com.agileseven.codereview.client.DTO.CodeDTO;
-import com.agileseven.codereview.client.DTO.UserDTO;
 import com.agileseven.codereview.client.Session;
-import com.agileseven.codereview.client.utils;
-import java.awt.Font;
+import com.agileseven.codereview.client.Utils;
+
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.json.JSONObject;
 
@@ -29,25 +31,38 @@ public class FrameReview extends javax.swing.JFrame {
     ServiceConsumer service = new ServiceConsumer();
     private Date startDate;
     private Date endDate;
+
+    private List<RuleDTO> rulesList;
+    private ArrayList<ReviewAnnotationDTO> annotationsList;
     /**
      * Creates new form JFrameReviewApprove
      */
     public FrameReview(int codeId) {
+        rulesList = service.getAllRules();
+        annotationsList = new ArrayList<>();
+
         this.codeId = codeId;
         initComponents();
         jLabel4.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
         CodeDTO code = service.getCodeById(codeId);
-        textArea_ShowCode.setText(code.getCodeText());
-        
+        textArea_ShowCode.setText(Utils.addLineNumbersToCodeString(code.getCodeText()));
+        textArea_ShowCode.setEditable(false);
+
         jLabel1.setText(code.getUserStoryId() + " - " + code.getUserStory().getTitle());
         jLabel2.setText(code.getComment());
-               
         
         UserDTO user = code.getUser();
         jLabel3.setText("Pushed by " +user.getFirstName() + " " + user.getLastName());
 
         startDate = new Date();
-        
+
+        ArrayList<String> rules = new ArrayList<>();
+        for (RuleDTO rule: rulesList) {
+            rules.add(rule.toString());
+        }
+
+        cbRules.setModel(new javax.swing.DefaultComboBoxModel(rules.toArray()));
+
     }
 
 
@@ -78,7 +93,7 @@ public class FrameReview extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         taAnnotation = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
-        bntAddAnnotation = new javax.swing.JButton();
+        btnAddAnnotation = new javax.swing.JButton();
         tfCodeLine = new java.awt.TextField();
         jLabel8 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -163,8 +178,11 @@ public class FrameReview extends javax.swing.JFrame {
         btnReject.setForeground(new java.awt.Color(204, 0, 51));
         btnReject.setText("Reject");
         btnReject.setActionCommand("Reject");
-
-        cbRules.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        btnReject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRejectActionPerformed(evt);
+            }
+        });
 
         taAnnotation.setColumns(20);
         taAnnotation.setRows(5);
@@ -173,16 +191,16 @@ public class FrameReview extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("Code line");
 
-        bntAddAnnotation.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        bntAddAnnotation.setForeground(new java.awt.Color(0, 204, 0));
-        bntAddAnnotation.setText("Add");
-        bntAddAnnotation.addActionListener(new java.awt.event.ActionListener() {
+        btnAddAnnotation.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnAddAnnotation.setForeground(new java.awt.Color(0, 204, 0));
+        btnAddAnnotation.setText("Add");
+        btnAddAnnotation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntAddAnnotationActionPerformed(evt);
+                btnAddAnnotationActionPerformed(evt);
             }
         });
 
-        tfCodeLine.setText("textField1");
+//        tfCodeLine.setText("");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -195,7 +213,7 @@ public class FrameReview extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(tfCodeLine, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bntAddAnnotation, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAddAnnotation, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
         );
         jPanel3Layout.setVerticalGroup(
@@ -206,7 +224,7 @@ public class FrameReview extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(1, 1, 1)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bntAddAnnotation, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                    .addComponent(btnAddAnnotation, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                     .addComponent(tfCodeLine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -322,20 +340,45 @@ public class FrameReview extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRejectActionPerformed(ActionEvent evt) {
+        if (this.annotationsList.size() > 0) {
+//            review.put("codeId", this.codeId);
+//            review.put("reviewerId",Session.currentUser.getUserId());
+//            review.put("approved", approved);
+//            review.put("startTime", Utils.convertDatetoString(this.startDate,"yyyy-M-dd hh:mm:ss"));
+//            review.put("submitTime", Utils.convertDatetoString(this.endDate,"yyyy-M-dd hh:mm:ss"));
+            endDate = new Date();
+            ReviewDTO reviewDTO = new ReviewDTO();
+            reviewDTO.setCodeId(this.codeId);
+            reviewDTO.setReviewerId(Session.currentUser.getUserId());
+            reviewDTO.setApproved(0);
+            reviewDTO.setStartTime(Utils.convertDatetoString(this.startDate,"yyyy-M-dd hh:mm:ss"));
+            reviewDTO.setSubmitTime(Utils.convertDatetoString(this.endDate,"yyyy-M-dd hh:mm:ss"));
+//            int review_id = service.addReview(createReviewJSON(0).toString());
+            reviewDTO.setAnnotationList(this.annotationsList);
+            int review_id = service.addReview(reviewDTO);
+            verifyReviewRequestIsSuccessful(review_id);
+        } else {
+            JOptionPane.showMessageDialog(this,"Cannot reject without annotating the code", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void jButton_ConfirmApprovedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ConfirmApprovedActionPerformed
-        
+//        int review_id = service.addReview(createReviewJSON(1).toString());
         endDate = new Date();
-        
-        JSONObject review = new JSONObject();
-        
-        review.put("codeId", this.codeId);
-        review.put("reviewerId",Session.currentUser.getUserId());
-        review.put("approved",1);
-        review.put("startTime", utils.convertDatetoString(this.startDate,"yyyy-M-dd hh:mm:ss"));
-        review.put("submitTime", utils.convertDatetoString(this.endDate,"yyyy-M-dd hh:mm:ss"));
-       
-        int review_id = service.addReview(review.toString());
-        
+        ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setCodeId(this.codeId);
+        reviewDTO.setReviewerId(Session.currentUser.getUserId());
+        reviewDTO.setApproved(1);
+        reviewDTO.setStartTime(Utils.convertDatetoString(this.startDate,"yyyy-M-dd hh:mm:ss"));
+        reviewDTO.setSubmitTime(Utils.convertDatetoString(this.endDate,"yyyy-M-dd hh:mm:ss"));
+//            int review_id = service.addReview(createReviewJSON(0).toString());
+        reviewDTO.setAnnotationList(this.annotationsList);
+        int review_id = service.addReview(reviewDTO);
+        verifyReviewRequestIsSuccessful(review_id);
+    }
+
+    private void verifyReviewRequestIsSuccessful(int review_id) {
         if(review_id != -1){
             JOptionPane.showMessageDialog(this,"File has been successfully reviewed. Review_id : "+ review_id, "Success", JOptionPane.PLAIN_MESSAGE);
             this.setVisible(false);
@@ -345,8 +388,19 @@ public class FrameReview extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Unable to save review. Please try later.", "Error", JOptionPane.INFORMATION_MESSAGE);
             this.setVisible(false);
             new FrameUnreadCodes().setVisible(true);
-        
         }
+    }
+
+    private JSONObject createReviewJSON(int approved){
+        endDate = new Date();
+        JSONObject review = new JSONObject();
+
+//        review.put("codeId", this.codeId);
+//        review.put("reviewerId",Session.currentUser.getUserId());
+//        review.put("approved", approved);
+//        review.put("startTime", Utils.convertDatetoString(this.startDate,"yyyy-M-dd hh:mm:ss"));
+//        review.put("submitTime", Utils.convertDatetoString(this.endDate,"yyyy-M-dd hh:mm:ss"));
+        return review;
     }
 
 /**
@@ -392,18 +446,27 @@ public class FrameReview extends javax.swing.JFrame {
         new FrameUnreadCodes().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void bntAddAnnotationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAddAnnotationActionPerformed
-        // TODO add your handling code here:
+    private void btnAddAnnotationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAddAnnotationActionPerformed
+
+        ReviewAnnotationDTO annotationDTO = new ReviewAnnotationDTO();
+        annotationDTO.setAnnotText(taAnnotation.getText());
+        annotationDTO.setRuleDTO(rulesList.get(cbRules.getSelectedIndex()));
+        annotationDTO.setLineNumber(Integer.parseInt(tfCodeLine.getText()));
+        annotationsList.add(annotationDTO);
+
+        taAllAnnotations.setText(taAllAnnotations.getText() + "\n" + createAnnotationDesc(annotationDTO));
     }//GEN-LAST:event_bntAddAnnotationActionPerformed
 
-    
+    private static String createAnnotationDesc(ReviewAnnotationDTO annotation) {
+        return "Line: " + annotation.getLineNumber() + " - Rule: " + annotation.getRuleDTO().getRuleid() +  ": " + annotation.getAnnotText();
+    }
+
     /**
      * @param args the command line arguments
      */
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntAddAnnotation;
+    private javax.swing.JButton btnAddAnnotation;
     private javax.swing.JButton btnReject;
     private javax.swing.JComboBox<String> cbRules;
     private javax.swing.JButton jButton1;

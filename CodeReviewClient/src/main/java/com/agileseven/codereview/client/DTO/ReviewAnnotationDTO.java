@@ -17,21 +17,20 @@ public class ReviewAnnotationDTO {
     private String ruleId;
     private ReviewDTO reviewDTO;
     private RuleDTO ruleDTO;
-    
+    private int lineNumber;
 
-    public ReviewAnnotationDTO(int annotid, String annottext, int reviewid, String ruleid, ReviewDTO reviewDTO, RuleDTO ruleDTO) {
+    public ReviewAnnotationDTO(int annotid, String annottext, int reviewid, String ruleid, ReviewDTO reviewDTO, RuleDTO ruleDTO, int lineNumber) {
         this.annotId = annotid;
         this.annotText = annottext;
         this.reviewId = reviewid;
         this.ruleId = ruleid;
         this.reviewDTO = reviewDTO;
         this.ruleDTO = ruleDTO;
+        this.lineNumber = lineNumber;
     }
 
     public ReviewAnnotationDTO() {
     }
-    
-    
 
     public int getAnnotId() {
         return annotId;
@@ -81,5 +80,12 @@ public class ReviewAnnotationDTO {
         this.ruleDTO = ruleDTO;
     }
 
-    
+    public int getLineNumber() {
+        return lineNumber;
+    }
+
+    public void setLineNumber(int lineNumber) {
+        this.lineNumber = lineNumber;
+    }
+
 }

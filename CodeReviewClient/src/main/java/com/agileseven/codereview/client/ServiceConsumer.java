@@ -38,12 +38,6 @@ public class ServiceConsumer implements CommandLineRunner {
         System.out.println(responseEntity.getBody());
     }
 
-    public void testNotification() {
-        RestTemplate restTemplate = new RestTemplate();
-        final ResponseEntity<Integer> responseEntity
-                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/codes/test", Integer.class);
-    }
-
    public Integer sendCode(CodeDTO code)
     {
         RestTemplate restTemplate = new RestTemplate();
@@ -109,15 +103,28 @@ public class ServiceConsumer implements CommandLineRunner {
         return responseEntity.getBody();
     }
       
-    public int addReview(String review) {
-        
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> entity = new HttpEntity<>(review, headers);
+//    public int addReview(String review) {
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        HttpEntity<String> entity = new HttpEntity<>(review, headers);
+//
+//        RestTemplate restTemplate = new RestTemplate();
+//        final ResponseEntity<Integer> responseEntity
+//        = restTemplate.postForEntity("http://localhost:9000/CodeReviewer/review", entity, Integer.class);
+//
+//        return responseEntity.getBody();
+//    }
+
+    public int addReview(ReviewDTO review) {
+
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        HttpEntity<String> entity = new HttpEntity<>(review, headers);
 
         RestTemplate restTemplate = new RestTemplate();
         final ResponseEntity<Integer> responseEntity
-        = restTemplate.postForEntity("http://localhost:9000/CodeReviewer/review", entity, Integer.class);
+                = restTemplate.postForEntity("http://localhost:9000/CodeReviewer/review", review, Integer.class);
 
         return responseEntity.getBody();
     }
