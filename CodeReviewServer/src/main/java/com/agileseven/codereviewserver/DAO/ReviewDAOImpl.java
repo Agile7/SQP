@@ -5,10 +5,8 @@
  */
 package com.agileseven.codereviewserver.DAO;
 
-import com.agileseven.codereviewserver.DTO.CodeDTO;
-import com.agileseven.codereviewserver.DTO.ReviewDTO;
-import com.agileseven.codereviewserver.DTO.UserDTO;
-import com.agileseven.codereviewserver.DTO.UserstoryDTO;
+import com.agileseven.codereviewserver.DTO.*;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -134,7 +132,30 @@ public class ReviewDAOImpl implements ReviewDAO {
         return reviewList;
       
     }
-    
+
+    @Override
+    public ArrayList<RuleDTO> getRulesList() {
+        ArrayList<RuleDTO> ruleList = new ArrayList<RuleDTO>();
+
+        Connection con = ConnectionFactory.getConnection();
+        String query = "SELECT * FROM rule; ";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ruleList.add(new RuleDTO(rs.getString(1), rs.getString(2)));
+            }
+            ps.close();
+            rs.close();
+            con.close();
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return ruleList;
+    }
+
     public ReviewDTO buildReviewDTOfromResult(ResultSet rs){
         
         ReviewDTO review = new ReviewDTO();

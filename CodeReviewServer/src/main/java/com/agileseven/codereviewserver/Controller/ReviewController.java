@@ -11,7 +11,10 @@ import com.agileseven.codereviewserver.DAO.ReviewDAO;
 import com.agileseven.codereviewserver.DAO.ReviewDAOImpl;
 import com.agileseven.codereviewserver.DTO.ReviewAnnotationDTO;
 import com.agileseven.codereviewserver.DTO.ReviewDTO;
+
 import java.util.ArrayList;
+
+import com.agileseven.codereviewserver.DTO.RuleDTO;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,4 +65,10 @@ public class ReviewController {
        
        return annotationDAO.getAnnotationsByReviewId(reviewId);
     }
+
+    @RequestMapping(path = "/review/rules", method=RequestMethod.GET)
+    public ArrayList<RuleDTO> getRulesList(){
+        return reviewDAO.getRulesList();
+    }
+
 }

@@ -1,12 +1,7 @@
 
 package com.agileseven.codereview.client;
 
-import com.agileseven.codereview.client.DTO.ProjectDTO;
-import com.agileseven.codereview.client.DTO.UserstoryDTO;
-import com.agileseven.codereview.client.DTO.CodeDTO;
-import com.agileseven.codereview.client.DTO.ReviewAnnotationDTO;
-import com.agileseven.codereview.client.DTO.ReviewDTO;
-import com.agileseven.codereview.client.DTO.UserDTO;
+import com.agileseven.codereview.client.DTO.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -200,6 +195,13 @@ public class ServiceConsumer implements CommandLineRunner {
         reviewAnnotationList.addAll(Arrays.asList(responseEntity.getBody()));
         
         return reviewAnnotationList;
+    }
+
+    public ArrayList<RuleDTO> getAllRules(){
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<RuleDTO[]> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/review/rules", RuleDTO[].class);
+        return new ArrayList<>(Arrays.asList(responseEntity.getBody()));
     }
   
 }

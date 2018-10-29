@@ -52,4 +52,9 @@ public class RuleDTO {
         this.ruleText = ruletext;
     }
 
+    @Override
+    public String toString() {
+        return ruleId + ": " + ruleText;
+    }
+
 }

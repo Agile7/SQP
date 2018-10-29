@@ -6,6 +6,8 @@
 package com.agileseven.codereviewserver.DAO;
 import com.agileseven.codereviewserver.DTO.CodeDTO;
 import com.agileseven.codereviewserver.DTO.ReviewDTO;
+import com.agileseven.codereviewserver.DTO.RuleDTO;
+
 import java.util.ArrayList;
 
 /**
@@ -22,5 +24,6 @@ public interface ReviewDAO {
     public int approveCode(int review_id, int approved);
     public int addReview(ReviewDTO review);
     public ArrayList<ReviewDTO> getReviewedCodesByUser(int userId,int projectId);
+    public ArrayList<RuleDTO> getRulesList();
     
 }
