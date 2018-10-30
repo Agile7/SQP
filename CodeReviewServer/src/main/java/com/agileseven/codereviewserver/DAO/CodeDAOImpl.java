@@ -157,4 +157,26 @@ public class CodeDAOImpl implements CodeDAO{
         
         return code;
     }
+    
+    @Override
+    public int changeStatusOfCode(int codeId, int status) {
+        Connection con = ConnectionFactory.getConnection();
+        
+        String query = "UPDATE code "
+                    + "SET Status = " + status + " "
+                    + "WHERE code_id = " + codeId;
+        
+        
+        try { 
+            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+          
+        } catch (SQLException ex) {
+            System.err.println("Got an exception!");
+            System.err.println(ex.getMessage());
+            return -1;
+        }
+        return 1;
+    }
 }

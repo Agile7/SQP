@@ -210,5 +210,15 @@ public class ServiceConsumer implements CommandLineRunner {
                 = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/review/rules", RuleDTO[].class);
         return new ArrayList<>(Arrays.asList(responseEntity.getBody()));
     }
+    
+    public int setCodeStatus(int codeId, int status) {
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<Integer> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/codes/status?codeId="
+                        +codeId+"&status="+status
+                        , Integer.class);
+
+        return responseEntity.getBody();
+    }
   
 }

@@ -23,5 +23,6 @@ public interface CodeDAO {
     public ArrayList<CodeDTO> getUnreadCodes(int projectId);
     public int pushCodeToDB(CodeDTO code);
     public CodeDTO getCodeById(int codeId);
+    public int changeStatusOfCode(int codeId, int status);
     
 }
