@@ -406,7 +406,7 @@
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\User\Documents\NetBeansProjects\SQP\CodeReviewClient\back.png"/>
+                  <Image iconType="3" name="/com/agileseven/codereview/client/images/back.png"/>
                 </Property>
               </Properties>
               <Events>
@@ -460,7 +460,7 @@
         <Component class="javax.swing.JLabel" name="jLabel11">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\User\Documents\NetBeansProjects\SQP\CodeReviewClient\add_button.png"/>
+              <Image iconType="3" name="/com/agileseven/codereview/client/images/add_button.png"/>
             </Property>
           </Properties>
           <Events>
