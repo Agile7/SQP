@@ -5,10 +5,16 @@
  */
 package com.agileseven.codereviewserver.Controller;
 
+import com.agileseven.codereviewserver.DAO.AccountDAO;
+import com.agileseven.codereviewserver.DAO.AccountDAOImpl;
 import com.agileseven.codereviewserver.DAO.CodeDAO;
 import com.agileseven.codereviewserver.DAO.CodeDAOImpl;
+import com.agileseven.codereviewserver.DAO.ProjectDAO;
+import com.agileseven.codereviewserver.DAO.ProjectDAOImpl;
 import com.agileseven.codereviewserver.DTO.CodeDTO;
+import com.agileseven.codereviewserver.DTO.ProjectDTO;
 import com.agileseven.codereviewserver.Utilities.EmailNotificationService;
+import com.agileseven.codereviewserver.Utilities.EmailReminderService;
 
 import java.util.ArrayList;
 
@@ -32,18 +38,21 @@ public class CodeController {
     @RequestMapping(path = "/code", method=RequestMethod.POST)
     public int pushCode(@RequestBody CodeDTO code) {
         try{
+//            ProjectDAO projectDAO = new ProjectDAOImpl();
+//            ArrayList<ProjectDTO> listProject = projectDAO.getProjectList();
+//            for( ProjectDTO pj: listProject){
+//                EmailReminderService emailReminderService = new EmailReminderService(pj);
+//                emailReminderService.sendReminder(pj);        
+//            }
+            
             int pushCodeResult = codeDAO.pushCodeToDB(code);
             // After the processing of the push code request,
             // a CodeDTO object of the new code must be created in order to send warning emails
             if(pushCodeResult > 0){
-//                CodeDTO codeDTOForTesting = new CodeDTO();
-//                //codeDTOForTesting.setCodeId(5); // CodeId = pushCodeResult;
-//                codeDTOForTesting.setCodeId(pushCodeResult);
-//                codeDTOForTesting.setUserId(10);
                 EmailNotificationService emailNotificationService = new EmailNotificationService(code);
-
                 emailNotificationService.sendNotification();
-                return -1;
+                
+                return pushCodeResult;
             }
             else{
                 

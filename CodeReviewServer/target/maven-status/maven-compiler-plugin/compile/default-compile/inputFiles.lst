@@ -1,6 +1,7 @@
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\ProjectDAO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\AnnotationDAOImpl.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\AccountDAOImpl.java
+D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\Utilities\EmailReminderService.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DTO\ProjectDTO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DTO\ProjectAssignDTO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\UserStoryDAOImpl.java
@@ -23,6 +24,7 @@ D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewse
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\Utilities\BaseNotificationService.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\Application.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\ProjectDAOImpl.java
+D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\Utilities\BaseReminderService.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\Utilities\EmailNotificationService.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\Controller\ProjectController.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\ReviewDAOImpl.java
