@@ -8,13 +8,10 @@ package com.agileseven.codereviewserver.DAO;
 import com.agileseven.codereviewserver.DTO.*;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,19 +88,76 @@ public class ReviewDAOImpl implements ReviewDAO {
                 annPS.executeUpdate();
             }
 
+            // Updating the reviewer's score
+            int reviewerId = review.getReviewerId();
+            int reviewerScore = 5;
+            reviewerScore += review.getAnnotationList().size();
 
+            String reviewerScoreQuery = "UPDATE user SET user_xp = user_xp + ? WHERE user_id = ?";
+            PreparedStatement statementReviewer = con.prepareStatement(reviewerScoreQuery);
+            statementReviewer.setInt(1, reviewerScore);
+            statementReviewer.setInt(2, reviewerId);
+            statementReviewer.executeUpdate();
+
+            // Updating the reviewer's gold (if needed)
+            String reviewerNewScoreQuery = "SELECT user_xp FROM user WHERE user_id = ?";
+            PreparedStatement statementReviewerNewScoreQuery = con.prepareStatement(reviewerNewScoreQuery);
+            statementReviewerNewScoreQuery.setInt(1, reviewerId);
+
+            ResultSet rsReviewerNewScore = statementReviewerNewScoreQuery.executeQuery();
+            rsReviewerNewScore.next();
+            int score = rsReviewerNewScore.getInt(1);
+
+            increaseUserGoldByOne(con, reviewerId, score);
+
+            // If the code was approved, increase the pusher's score by 10
+            if (review.getApproved() == 1) {
+
+                String sqlGetPusherId = "SELECT user_id from code WHERE code_id = ?";
+                PreparedStatement statement = con.prepareStatement(sqlGetPusherId);
+                statement.setInt(1, review.getCodeId());
+
+                statement.executeQuery();
+                ResultSet resultSet = statement.executeQuery();
+                resultSet.next();
+
+                int pusherId = resultSet.getInt(1);
+                String pusherScoreQuery = "UPDATE user SET user_xp = user_xp + 10 WHERE user_id = ?";
+                PreparedStatement statementPusher = con.prepareStatement(pusherScoreQuery);
+                statementPusher.setInt(1, pusherId);
+                statementPusher.executeUpdate();
+
+                // Updating the pusher's gold (if needed)
+                String pusherNewScoreQuery = "SELECT user_xp FROM user WHERE user_id = ?";
+                PreparedStatement statementPusherNewScoreQuery = con.prepareStatement(pusherNewScoreQuery);
+                statementPusherNewScoreQuery.setInt(1, reviewerId);
+
+                ResultSet rsPusherNewScore = statementPusherNewScoreQuery.executeQuery();
+                rsPusherNewScore.next();
+                int pusherScore = rsPusherNewScore.getInt(1);
+
+                increaseUserGoldByOne(con, pusherId, pusherScore);
+
+            }
             con.close();
         } catch (SQLException ex) {
             System.err.println("Got an exception!");
             System.err.println(ex.getMessage());
             return -1;
         } 
-        
-        
+
         return review_id;
     }
-    
-    
+
+    private void increaseUserGoldByOne(Connection con, int pusherId, int scorePusher) throws SQLException {
+        if (scorePusher % 50 == 0){
+            String pusherBonusGoldQuery = "UPDATE user SET user_gold = user_gold + 1 WHERE user_id = ?";
+            PreparedStatement statementPusherBonusGoldQuery = con.prepareStatement(pusherBonusGoldQuery);
+            statementPusherBonusGoldQuery.setInt(1, pusherId);
+            statementPusherBonusGoldQuery.executeUpdate();
+        }
+    }
+
     @Override
     public ArrayList<ReviewDTO> getReviewedCodesByUser(int userId, int projectId) {
         
