@@ -78,21 +78,21 @@ public class FrameHomePage extends javax.swing.JFrame {
 
 
 		
-		jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("images/push_button.png"))); // NOI18N
+		jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/push_button.png"))); // NOI18N
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 PushCodeClicked(evt);
             }
         });
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("images/reviews_button.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reviews_button.png"))); // NOI18N
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 PendingReviewsClicked(evt);
             }
         });
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("images/my_codes_button.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/my_codes_button.png"))); // NOI18N
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AnnotationsClicked(evt);
