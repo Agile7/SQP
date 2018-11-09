@@ -159,6 +159,11 @@ public class FrameReview extends javax.swing.JFrame {
         btnReject.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnReject.setForeground(new java.awt.Color(204, 0, 51));
         btnReject.setText("Reject");
+        btnReject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRejectActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -194,7 +199,7 @@ public class FrameReview extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("jLabel4");
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back.png"))); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("images/back.png")));
         jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BackClicked(evt);
@@ -243,7 +248,7 @@ public class FrameReview extends javax.swing.JFrame {
         taAllAnnotations.setRows(5);
         jScrollPane4.setViewportView(taAllAnnotations);
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_button.png"))); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("images/add_button.png")));
         jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddButtonClicked(evt);
@@ -369,29 +374,7 @@ public class FrameReview extends javax.swing.JFrame {
 
         taAllAnnotations.setText(taAllAnnotations.getText() + "\n" + createAnnotationDesc(annotationDTO));
     }                                                
-    
-    private void btnRejectActionPerformed(ActionEvent evt) {
-        if (this.annotationsList.size() > 0) {
-//            review.put("codeId", this.codeId);
-//            review.put("reviewerId",Session.currentUser.getUserId());
-//            review.put("approved", approved);
-//            review.put("startTime", Utils.convertDatetoString(this.startDate,"yyyy-M-dd hh:mm:ss"));
-//            review.put("submitTime", Utils.convertDatetoString(this.endDate,"yyyy-M-dd hh:mm:ss"));
-            endDate = new Date();
-            ReviewDTO reviewDTO = new ReviewDTO();
-            reviewDTO.setCodeId(this.codeId);
-            reviewDTO.setReviewerId(Session.currentUser.getUserId());
-            reviewDTO.setApproved(0);
-            reviewDTO.setStartTime(Utils.convertDatetoString(this.startDate,"yyyy-M-dd hh:mm:ss"));
-            reviewDTO.setSubmitTime(Utils.convertDatetoString(this.endDate,"yyyy-M-dd hh:mm:ss"));
-//            int review_id = service.addReview(createReviewJSON(0).toString());
-            reviewDTO.setAnnotationList(this.annotationsList);
-            int review_id = service.addReview(reviewDTO);
-            verifyReviewRequestIsSuccessful(review_id);
-        } else {
-            JOptionPane.showMessageDialog(this,"Cannot reject without annotating the code", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+
 
     private void jButton_ConfirmApprovedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ConfirmApprovedActionPerformed
 //        int review_id = service.addReview(createReviewJSON(1).toString());
@@ -485,6 +468,30 @@ public class FrameReview extends javax.swing.JFrame {
 
         taAllAnnotations.setText(taAllAnnotations.getText() + "\n" + createAnnotationDesc(annotationDTO));
     }//GEN-LAST:event_AddButtonClicked
+
+    private void btnRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRejectActionPerformed
+        System.out.println("clicked");
+        if (this.annotationsList.size() > 0) {
+//            review.put("codeId", this.codeId);
+//            review.put("reviewerId",Session.currentUser.getUserId());
+//            review.put("approved", approved);
+//            review.put("startTime", Utils.convertDatetoString(this.startDate,"yyyy-M-dd hh:mm:ss"));
+//            review.put("submitTime", Utils.convertDatetoString(this.endDate,"yyyy-M-dd hh:mm:ss"));
+            endDate = new Date();
+            ReviewDTO reviewDTO = new ReviewDTO();
+            reviewDTO.setCodeId(this.codeId);
+            reviewDTO.setReviewerId(Session.currentUser.getUserId());
+            reviewDTO.setApproved(0);
+            reviewDTO.setStartTime(Utils.convertDatetoString(this.startDate,"yyyy-M-dd hh:mm:ss"));
+            reviewDTO.setSubmitTime(Utils.convertDatetoString(this.endDate,"yyyy-M-dd hh:mm:ss"));
+//            int review_id = service.addReview(createReviewJSON(0).toString());
+            reviewDTO.setAnnotationList(this.annotationsList);
+            int review_id = service.addReview(reviewDTO);
+            verifyReviewRequestIsSuccessful(review_id);
+        } else {
+            JOptionPane.showMessageDialog(this,"Cannot reject without annotating the code", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRejectActionPerformed
 
     
 

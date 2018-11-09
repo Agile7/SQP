@@ -115,7 +115,7 @@ public class ReviewDAOImpl implements ReviewDAO {
             // If the code was approved, increase the pusher's score by 10
             if (review.getApproved() == 1) {
 
-                String sqlGetPusherId = "SELECT user_id from code WHERE code_id = ?";
+                String sqlGetPusherId = "SELECT user_id, version, number_of_lines from code WHERE code_id = ?";
                 PreparedStatement statement = con.prepareStatement(sqlGetPusherId);
                 statement.setInt(1, review.getCodeId());
 
@@ -124,10 +124,28 @@ public class ReviewDAOImpl implements ReviewDAO {
                 resultSet.next();
 
                 int pusherId = resultSet.getInt(1);
-                String pusherScoreQuery = "UPDATE user SET user_xp = user_xp + 10 WHERE user_id = ?";
+                int version = resultSet.getInt(2);
+                int numberOfLines = resultSet.getInt(3);
+                
+                int xp = 0;
+                if (version == 1){
+                    xp += Math.ceil(numberOfLines / 10.0);
+                } else if (version == 2){
+                    xp += Math.ceil(numberOfLines / 20.0);
+                } else {
+                    xp += (Math.ceil(numberOfLines / 20.0) - (version - 2));
+                }
+                
+                if (xp < 0){
+                    xp = 0;
+                }
+                
+                String pusherScoreQuery = "UPDATE user SET user_xp = user_xp + " + xp + " WHERE user_id = ?";
                 PreparedStatement statementPusher = con.prepareStatement(pusherScoreQuery);
                 statementPusher.setInt(1, pusherId);
                 statementPusher.executeUpdate();
+
+                
 
                 // Updating the pusher's gold (if needed)
                 String pusherNewScoreQuery = "SELECT user_xp FROM user WHERE user_id = ?";
