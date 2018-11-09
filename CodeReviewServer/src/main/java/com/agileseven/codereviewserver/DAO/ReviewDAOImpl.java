@@ -76,6 +76,8 @@ public class ReviewDAOImpl implements ReviewDAO {
             if(rs.next()){
                 review_id = rs.getInt(1);
             }
+            CodeDAO codeDAO = new CodeDAOImpl();
+            codeDAO.changeStatusOfCode(review.getCodeId(),2);
 
             for (ReviewAnnotationDTO annotation: review.getAnnotationList()) {
                 String annQuery = "INSERT INTO review_annotation (annotation_text, rule_id, review_id, line_number) "
