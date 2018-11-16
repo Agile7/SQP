@@ -74,7 +74,7 @@ public class CodeController {
         return codeDAO.getCodeById(codeId);
     }
     
-    @RequestMapping(path = "/codes/status", method=RequestMethod.PUT)
+    @RequestMapping(path = "/codes/status", method=RequestMethod.GET)
     public int setCodeReading(@RequestParam(value="codeId", defaultValue="") int codeId,
                                                     @RequestParam(value="status", defaultValue="") int status)
     {

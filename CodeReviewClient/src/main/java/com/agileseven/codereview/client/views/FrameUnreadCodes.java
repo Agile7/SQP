@@ -251,6 +251,7 @@ public class FrameUnreadCodes extends javax.swing.JFrame {
         
         if(codeList.get(selectedIndex).getUserId() != Session.currentUser.getUserId()){
             new FrameReview(Integer.parseInt(jTable1.getValueAt(selectedIndex, 0).toString())).setVisible(true);
+            service.setCodeStatus(codeList.get(selectedIndex).getCodeId(), 1);
             this.setVisible(false);
         }
     }//GEN-LAST:event_tableClicked

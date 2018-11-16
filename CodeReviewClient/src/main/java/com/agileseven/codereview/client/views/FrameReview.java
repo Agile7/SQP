@@ -455,6 +455,7 @@ public class FrameReview extends javax.swing.JFrame {
     private void BackClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackClicked
         // TODO add your handling code here:
           this.setVisible(false);
+          service.setCodeStatus(codeId, 0);
         new FrameUnreadCodes().setVisible(true);
     }//GEN-LAST:event_BackClicked
 
