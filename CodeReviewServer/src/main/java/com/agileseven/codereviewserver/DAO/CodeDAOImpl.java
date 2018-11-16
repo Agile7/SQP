@@ -35,7 +35,7 @@ public class CodeDAOImpl implements CodeDAO{
     @Override
     public ArrayList<CodeDTO> getUnreadCodes(int projectId) {
         
-        ArrayList<CodeDTO> codeList = new ArrayList<CodeDTO>();
+        ArrayList<CodeDTO> codeList = new ArrayList<>();
         
         Connection con = ConnectionFactory.getConnection();
         String query = "SELECT c.code_id,c.comment,c.user_id,c.user_story_id," +

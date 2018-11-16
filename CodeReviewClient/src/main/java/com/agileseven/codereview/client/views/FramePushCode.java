@@ -259,6 +259,8 @@ public class FramePushCode extends javax.swing.JFrame {
                 int dialogText = javax.swing.JOptionPane.showOptionDialog(null, "Your code is pushed! A notification is sent to all developers.", "Success!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
         
                 if ((dialogText == 0) || (dialogText != -1)) {
+                    this.setVisible(false);
+                    new FrameHomePage().setVisible(true);
                 }
             }
         }

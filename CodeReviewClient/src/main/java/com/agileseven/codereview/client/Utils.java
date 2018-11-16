@@ -5,9 +5,12 @@
  */
 package com.agileseven.codereview.client;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -56,6 +59,19 @@ public class Utils {
         
         return jsonDate;
     }
+    
+      public static Date convertStringToDate(String dateString, String format){
+        Date date = null;
+        SimpleDateFormat sdf = new SimpleDateFormat(format);;
+        try {
+            date = sdf.parse(dateString);
+        } catch (ParseException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return date;
+    }
+
 
     public static String addLineNumbersToCodeString(String code){
         int count = 1;

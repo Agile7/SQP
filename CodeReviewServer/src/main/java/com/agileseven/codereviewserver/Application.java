@@ -29,10 +29,12 @@ public class Application {
             Timer timer = new Timer();
             Calendar cal = Calendar.getInstance(); 
             int hour = cal.get(Calendar.HOUR_OF_DAY);//get the hour number of the day, from 0 to 23
-            int delayInHour = hour < 23 ? 23 - hour : 24 - (hour - 23);
+            int delayInHour = hour < 11 ? 11 - hour : 24 - (hour - 11);
             TimerTask tt = new TimerTask(){
                 public void run(){
-                    if(hour == 23){
+                    
+                    if(hour == 11){
+                        System.out.println("to here");
                         ProjectDAO projectDAO = new ProjectDAOImpl();
                         ArrayList<ProjectDTO> listProject = projectDAO.getProjectList();
                         listProject.forEach((pj) -> {
