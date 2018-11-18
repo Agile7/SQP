@@ -5,16 +5,31 @@
  */
 package com.agileseven.codereview.client.views;
 
+import com.agileseven.codereview.client.ServiceConsumer;
+import com.agileseven.codereview.client.Session;
 import com.agileseven.codereview.client.Utils;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Paint;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Properties;
 import javax.swing.JOptionPane;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -28,12 +43,17 @@ public class FrameDashBoard extends javax.swing.JFrame {
     
     private JDatePickerImpl datePickerFrom;
     private JDatePickerImpl datePickerTo;
+    private ServiceConsumer service = new ServiceConsumer();
+    private ChartPanel codePushChartPanel;
+    private ChartPanel linePushChartPanel;   
+  
    
     public FrameDashBoard() {
         initComponents();
         
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back.png"))); // NOI18N
         jLabel2.setText("");
+        jLabel2.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
         
         Properties p = new Properties();
 	p.put("text.today", "today");
@@ -42,16 +62,14 @@ public class FrameDashBoard extends javax.swing.JFrame {
 	
 	UtilDateModel model1 = new UtilDateModel();
 	JDatePanelImpl datePanel1 = new JDatePanelImpl(model1, p);
-        datePanel1.setBackground(new java.awt.Color(248, 238, 231));
+        datePanel1.setBackground(Color.WHITE);
 	datePickerFrom = new JDatePickerImpl(datePanel1, new DateComponentFormatter());
-        datePickerFrom.setBackground(new java.awt.Color(248, 238, 231));
         datePickerFrom.getJFormattedTextField().setPreferredSize(new Dimension(200, 40));
        
         UtilDateModel model2 = new UtilDateModel();
 	JDatePanelImpl datePanel2 = new JDatePanelImpl(model2, p);
-        datePanel2.setBackground(new java.awt.Color(248, 238, 231));
+        datePanel2.setBackground(Color.WHITE);
         datePickerTo = new JDatePickerImpl(datePanel2, new DateComponentFormatter());
-        datePickerTo.setBackground(new java.awt.Color(248, 238, 231));
         datePickerTo.getJFormattedTextField().setPreferredSize(new Dimension(200, 40));
            
         jPanel7.setLayout(new FlowLayout());
@@ -60,7 +78,11 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jPanel8.setLayout(new FlowLayout());
         jPanel8.add(datePickerTo);
         
-        jPanel2.setSize(100, 200);
+        //jPanel2.setSize(100, 200);
+        jButton1.setVisible(false);
+        jButton3.setVisible(false);
+        jPanel2.setLayout(new FlowLayout());
+        jPanel2.setBorder(null);
         
         
         
@@ -93,6 +115,9 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
+        jPanel13 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -106,10 +131,10 @@ public class FrameDashBoard extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(248, 238, 231));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(2634, 918));
 
-        jTabbedPane1.setBackground(new java.awt.Color(248, 238, 231));
+        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTabbedPane1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jTabbedPane1.setOpaque(true);
@@ -119,12 +144,12 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setDoubleBuffered(true);
 
-        jPanel4.setBackground(new java.awt.Color(248, 238, 231));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel11.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel11.setText("From: ");
 
-        jPanel7.setBackground(new java.awt.Color(248, 238, 231));
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -137,7 +162,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
             .addGap(0, 48, Short.MAX_VALUE)
         );
 
-        jPanel8.setBackground(new java.awt.Color(248, 238, 231));
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -168,35 +193,35 @@ public class FrameDashBoard extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setBackground(new java.awt.Color(248, 238, 231));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 730, Short.MAX_VALUE)
+            .addGap(0, 709, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 322, Short.MAX_VALUE)
         );
 
-        jPanel6.setBackground(new java.awt.Color(248, 238, 231));
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 700, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 381, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jPanel9.setBackground(new java.awt.Color(248, 238, 231));
+        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -210,7 +235,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
             .addGap(0, 367, Short.MAX_VALUE)
         );
 
-        jPanel10.setBackground(new java.awt.Color(248, 238, 231));
+        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
         jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -224,7 +249,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
             .addGap(0, 367, Short.MAX_VALUE)
         );
 
-        jPanel11.setBackground(new java.awt.Color(248, 238, 231));
+        jPanel11.setBackground(new java.awt.Color(255, 255, 255));
         jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
@@ -236,6 +261,47 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 429, Short.MAX_VALUE)
+        );
+
+        jPanel13.setBackground(new java.awt.Color(255, 255, 255));
+
+        jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(51, 102, 255));
+        jButton1.setText("Number of Lines");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(51, 102, 255));
+        jButton3.setText("Number of Codes");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addContainerGap(110, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(99, 99, 99)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(120, 120, 120))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -250,12 +316,10 @@ public class FrameDashBoard extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(140, 140, 140)
                         .addComponent(jLabel11)
@@ -270,7 +334,13 @@ public class FrameDashBoard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(49, 49, 49)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)))
                 .addContainerGap(120, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -297,21 +367,26 @@ public class FrameDashBoard extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jScrollPane1.setViewportView(jPanel4);
 
         jTabbedPane1.addTab("               Team   Dashboard               ", jScrollPane1);
 
-        jPanel5.setBackground(new java.awt.Color(248, 238, 231));
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -328,7 +403,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("               Team  Performance             ", jScrollPane4);
 
-        jPanel3.setBackground(new java.awt.Color(248, 238, 231));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -464,7 +539,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String dateFrom = datePickerFrom.getJFormattedTextField().getText();
         String dateTo = datePickerTo.getJFormattedTextField().getText();
-        String period = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
+        int period = jComboBox2.getSelectedIndex();
         
         Date from = Utils.convertStringToDate(dateFrom, "dd-MMM-yyyy");
         Date to = Utils.convertStringToDate(dateTo, "dd-MMM-yyyy");
@@ -477,16 +552,114 @@ public class FrameDashBoard extends javax.swing.JFrame {
         
         else{
             //Code to generate graphs
+            jPanel2.removeAll();
+            displayCodesPushedLineGraph(dateFrom,dateTo,period,Session.currentProject.getProjectId());
+            displayLinesPushedLineGraph(dateFrom,dateTo,period,Session.currentProject.getProjectId());
+            jPanel2.add(codePushChartPanel);
+            jButton1.setVisible(true);
+            jButton3.setVisible(true);
         }
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void displayCodesPushedLineGraph(String dateFrom, String dateTo, int period, int projectId){
+        
+        LinkedHashMap<String, Integer> map = service.getCountCodesPushedByTeam(dateFrom,dateTo,period,projectId);
+        
+       
+        JFreeChart lineChart = ChartFactory.createLineChart(
+         "Number of Codes Pushed",
+         "Date","Number of Codes",
+         createDataset(map,period),
+         PlotOrientation.VERTICAL,
+         true,true,false);
+        
+        CategoryPlot plot = (CategoryPlot) lineChart.getPlot();
+        plot.getRenderer().setSeriesPaint(0, Color.BLUE);
+        plot.setBackgroundPaint( Color.WHITE );
+        
+        codePushChartPanel = new ChartPanel( lineChart );
+        codePushChartPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
+        
+        
+        
+    }
+    
+    private void displayLinesPushedLineGraph(String dateFrom, String dateTo, int period, int projectId){
+        System.out.println("here");
+        
+        LinkedHashMap<String, Integer> map = service.getNumberLinesPushedByTeam(dateFrom,dateTo,period,projectId);
+        
+       
+        JFreeChart lineChart = ChartFactory.createLineChart(
+         "Total Lines Pushed",
+         "Date","Number of Lines",
+         createDataset(map, period),
+         PlotOrientation.VERTICAL,
+         true,true,false);
+        
+        CategoryPlot plot = (CategoryPlot) lineChart.getPlot();
+        plot.getRenderer().setSeriesPaint(0, Color.BLUE);
+        plot.setBackgroundPaint( Color.WHITE );
+        
+        linePushChartPanel = new ChartPanel( lineChart );
+        linePushChartPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
+        
+    }
+    
+    
+     private DefaultCategoryDataset createDataset(LinkedHashMap<String, Integer> map, int period) {
+      DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+      
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        
+      
+       for (Map.Entry<String, Integer> entry : map.entrySet()) {
+           
+           if(period ==1){
+               cal.set(Calendar.WEEK_OF_YEAR, Integer.parseInt(entry.getKey().substring(0, 2)));
+               System.out.println(entry.getKey());
+               dataset.addValue( entry.getValue() , "Codes" , formatter.format(cal.getTime()));
+           }
+           else{
+               dataset.addValue( entry.getValue() , "Codes" , entry.getKey());
+           }
 
+        }
+
+      return dataset;
+   }
+     
+     
+     
+     
     private void BackClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackClicked
         // TODO add your handling code here:
-          this.setVisible(false);
+        this.setVisible(false);
         new FrameHomePage().setVisible(true);
     }//GEN-LAST:event_BackClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        System.out.println("a");
+        jPanel2.removeAll();
+        System.out.println("b");
+        jPanel2.add(linePushChartPanel);
+        System.out.println("c");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        System.out.println("d");
+        jPanel2.removeAll();
+        System.out.println("e");
+        jPanel2.add(codePushChartPanel);
+        System.out.println("f");
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -525,7 +698,9 @@ public class FrameDashBoard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -539,6 +714,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

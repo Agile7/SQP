@@ -5,6 +5,9 @@ import com.agileseven.codereview.client.DTO.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
@@ -219,6 +222,35 @@ public class ServiceConsumer implements CommandLineRunner {
                         , Integer.class);
 
         return responseEntity.getBody();
+    }
+    
+    
+    public LinkedHashMap<String, Integer> getCountCodesPushedByTeam(String startDate, String endDate, int period, int projectId) {
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<LinkedHashMap> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/codePushed/?startDate="+startDate+"&endDate="+endDate+"&period="+period+"&projectId="+projectId, LinkedHashMap.class);
+        
+        LinkedHashMap<String, Integer> map = responseEntity.getBody();
+       
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey());
+        }
+        
+        
+        return map;
+    }
+    
+    public LinkedHashMap<String, Integer> getNumberLinesPushedByTeam(String startDate, String endDate, int period, int projectId) {
+        
+        System.out.println("csal;dmvsdvsdvsav");
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<LinkedHashMap> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/linesPushed/?startDate="+startDate+"&endDate="+endDate+"&period="+period+"&projectId="+projectId, LinkedHashMap.class);
+        
+        LinkedHashMap<String, Integer> map = responseEntity.getBody();
+        
+        
+        return map;
     }
   
 }
