@@ -16,9 +16,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -51,9 +53,11 @@ public class FrameDashBoard extends javax.swing.JFrame {
     public FrameDashBoard() {
         initComponents();
         
+    
+        
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back.png"))); // NOI18N
         jLabel2.setText("");
-        jLabel2.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
+        jLabel2.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName()    );
         
         Properties p = new Properties();
 	p.put("text.today", "today");
