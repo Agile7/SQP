@@ -57,7 +57,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
         
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back.png"))); // NOI18N
         jLabel2.setText("");
-        jLabel2.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName()    );
+        jLabel4.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName()    );
         
         Properties p = new Properties();
 	p.put("text.today", "today");
@@ -457,9 +457,9 @@ public class FrameDashBoard extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(462, 462, 462)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 588, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 504, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addGap(151, 151, 151))
+                .addGap(235, 235, 235))
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel12Layout.createSequentialGroup()
