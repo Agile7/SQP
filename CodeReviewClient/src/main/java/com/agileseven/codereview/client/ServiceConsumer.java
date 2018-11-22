@@ -252,5 +252,35 @@ public class ServiceConsumer implements CommandLineRunner {
         
         return map;
     }
+    
+    public LinkedHashMap<String, Integer> getNumberOfPersonalCodeRejected(String startDate, String endDate, int period, int userId) {
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<LinkedHashMap> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/numCodeRejected/?startDate="+startDate+"&endDate="+endDate+"&period="+period+"&userId="+userId, LinkedHashMap.class);
+        
+        LinkedHashMap<String, Integer> map = responseEntity.getBody();
+       
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey());
+        }
+        
+        
+        return map;
+    }
+    
+    public LinkedHashMap<String, Integer> getNumberOfPersonalCodeApproved(String startDate, String endDate, int period, int userId) {
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<LinkedHashMap> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/numCodeApproved/?startDate="+startDate+"&endDate="+endDate+"&period="+period+"&userId="+userId, LinkedHashMap.class);
+        
+        LinkedHashMap<String, Integer> map = responseEntity.getBody();
+       
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey());
+        }
+        
+        
+        return map;
+    }
   
 }

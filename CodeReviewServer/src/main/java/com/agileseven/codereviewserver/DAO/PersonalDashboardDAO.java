@@ -14,7 +14,7 @@ import java.util.LinkedHashMap;
  */
 public interface PersonalDashboardDAO {
     
-    public LinkedHashMap<String, Integer> getNumberOfPersonalCodeRejected(String startDate, String endDate, int period, int projectId, int userId);
-    public LinkedHashMap<String, Integer> getNumberOfPersonalCodeApproved(String startDate, String endDate, int period, int projectId, int userId);
+    public LinkedHashMap<String, Integer> getNumberOfPersonalCodeRejected(String startDate, String endDate, int period, int userId);
+    public LinkedHashMap<String, Integer> getNumberOfPersonalCodeApproved(String startDate, String endDate, int period, int userId);
     
 }
