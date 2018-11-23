@@ -63,4 +63,44 @@ public class GamificationController {
         
         return map;
     }
+    
+    @RequestMapping(path = "/codePushedByIndividual", method=RequestMethod.GET)
+    public LinkedHashMap<String, Integer> numberOfCodesPushedByIndividual(@RequestParam(value="startDate", defaultValue="") String startDate,
+                        @RequestParam(value="endDate", defaultValue="") String endDate,
+                        @RequestParam(value="period", defaultValue="") int period,
+                        @RequestParam(value="userId", defaultValue="") int userId) {
+        
+        LinkedHashMap<String, Integer> map = null;
+        try{
+           map = gamificationDAO.getNumberOfCodesPushedByIndividual(startDate, endDate, period, userId);
+       
+        }
+        catch(Exception ex){
+//            System.err.println("Got an exception!");
+//            System.err.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        
+        return map;
+    }
+    
+    @RequestMapping(path = "/linesPushedByIndividual", method=RequestMethod.GET)
+    public LinkedHashMap<String, Integer> numberOfLinesPushedByIndividual(@RequestParam(value="startDate", defaultValue="") String startDate,
+                        @RequestParam(value="endDate", defaultValue="") String endDate,
+                        @RequestParam(value="period", defaultValue="") int period,
+                        @RequestParam(value="userId", defaultValue="") int userId) {
+        
+        LinkedHashMap<String, Integer> map = null;
+        try{
+           map = gamificationDAO.getSumOfLinesPushedByIndividual(startDate, endDate, period, userId);
+           
+        }
+        catch(Exception ex){
+//            System.err.println("Got an exception!");
+//            System.err.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        
+        return map;
+    }
 }

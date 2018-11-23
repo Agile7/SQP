@@ -240,12 +240,40 @@ public class ServiceConsumer implements CommandLineRunner {
         return map;
     }
     
+        public LinkedHashMap<String, Integer> getCountCodesPushedByIndividual(String startDate, String endDate, int period, int userId) {
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<LinkedHashMap> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/codePushedByIndividual/?startDate="+startDate+"&endDate="+endDate+"&period="+period+"&userId="+userId, LinkedHashMap.class);
+        
+        LinkedHashMap<String, Integer> map = responseEntity.getBody();
+       
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey());
+        }
+        
+        
+        return map;
+    }
+    
     public LinkedHashMap<String, Integer> getNumberLinesPushedByTeam(String startDate, String endDate, int period, int projectId) {
         
         System.out.println("csal;dmvsdvsdvsav");
         RestTemplate restTemplate = new RestTemplate();
         final ResponseEntity<LinkedHashMap> responseEntity
                 = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/linesPushed/?startDate="+startDate+"&endDate="+endDate+"&period="+period+"&projectId="+projectId, LinkedHashMap.class);
+        
+        LinkedHashMap<String, Integer> map = responseEntity.getBody();
+        
+        
+        return map;
+    }
+    
+    public LinkedHashMap<String, Integer> getNumberLinesPushedByIndividual(String startDate, String endDate, int period, int userId) {
+        
+        System.out.println("csal;dmvsdvsdvsav");
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<LinkedHashMap> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/linesPushedByIndividual/?startDate="+startDate+"&endDate="+endDate+"&period="+period+"&userId="+userId, LinkedHashMap.class);
         
         LinkedHashMap<String, Integer> map = responseEntity.getBody();
         
