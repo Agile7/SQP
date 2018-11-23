@@ -50,6 +50,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private ChartPanel linePushChartPanel;  
     private ChartPanel codePushByIndividualChartPanel;
     private ChartPanel linePushByIndividualChartPanel;
+    private ChartPanel stackedBarIndividualRejectedApprovedPanel;
     
     private JDatePickerImpl datePickerFromPersonal;
     private JDatePickerImpl datePickerToPersonal;
@@ -947,6 +948,29 @@ public class FrameDashBoard extends javax.swing.JFrame {
         
     }
     
+//        private void displayNumOfRejectedApprovedCode(String dateFrom, String dateTo, int period, int userId){//doesnt finish yet
+//        
+//        LinkedHashMap<String, Integer> rejected = service.getNumberOfPersonalCodeRejected(dateFrom,dateTo,period,userId);
+//        LinkedHashMap<String, Integer> approved = service.getNumberOfPersonalCodeApproved(dateFrom,dateTo,period,userId);
+//        
+//       
+//        JFreeChart lineChart = ChartFactory.createLineChart(
+//         "Rejected/Approved Codes",
+//         "Date","Number of Codes",
+//         createDataset(,period),//how to make this dataset
+//         
+//         PlotOrientation.VERTICAL,
+//         true,true,false);
+//        
+//        CategoryPlot plot = (CategoryPlot) lineChart.getPlot();
+//        plot.getRenderer().setSeriesPaint(0, Color.BLUE);
+//        plot.setBackgroundPaint( Color.WHITE );
+//        
+//        stackedBarIndividualRejectedApprovedPanel = new ChartPanel( lineChart );//line chart?
+//        stackedBarIndividualRejectedApprovedPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );                
+//        
+//    }
+    
     
      private DefaultCategoryDataset createDataset(LinkedHashMap<String, Integer> map, int period) {
       DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
@@ -1040,6 +1064,12 @@ public class FrameDashBoard extends javax.swing.JFrame {
             linePushByIndividualChartPanel.setVisible(false);
             jButton5.setVisible(true);
             jButton6.setVisible(true);
+            
+//            jPanel18.removeAll();
+//            displayNumOfRejectedApprovedCode(dateFrom,dateTo,period,Session.currentUser.getUserId());
+//            jPanel18.add(stackedBarIndividualRejectedApprovedPanel);
+//            stackedBarIndividualRejectedApprovedPanel.setVisible(true);
+  
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
