@@ -12,7 +12,12 @@ import com.agileseven.codereviewserver.DAO.ReviewDAOImpl;
 import com.agileseven.codereviewserver.DTO.ReviewAnnotationDTO;
 import com.agileseven.codereviewserver.DTO.ReviewDTO;
 
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.agileseven.codereviewserver.DTO.RuleDTO;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,6 +74,75 @@ public class ReviewController {
     @RequestMapping(path = "/review/rules", method=RequestMethod.GET)
     public ArrayList<RuleDTO> getRulesList(){
         return reviewDAO.getRulesList();
+    }
+
+    @RequestMapping(path = "/review/project", method=RequestMethod.GET, produces = "application/json")
+    public ProjectReviewsResponse getReviewsOfProject(@RequestParam(value="projectId", defaultValue="") int projectId,
+                                                      @RequestParam(value="start", defaultValue="") String start,
+                                                    @RequestParam(value="end", defaultValue="") String end) {
+        try {
+            ReviewDAO reviewDAO = new ReviewDAOImpl();
+            List<ReviewDTO> reviews = reviewDAO.getReviewsOfProject(projectId, Date.valueOf(start), Date.valueOf(end));
+            long min = Long.MAX_VALUE;
+            long max = Long.MIN_VALUE;
+            long total = 0;
+
+            for (ReviewDTO r: reviews) {
+                long duration = getDateDiff(Timestamp.valueOf(r.getStartTime()), Timestamp.valueOf(r.getSubmitTime()), TimeUnit.SECONDS);
+                total += duration;
+                if (duration < min) min = duration;
+                if (duration > max) max = duration;
+            }
+
+            return new ProjectReviewsResponse(min, max, total);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static long getDateDiff(Timestamp date1, Timestamp date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
+    }
+
+    class ProjectReviewsResponse {
+        private double min;
+        private double max;
+        private double total;
+
+        public ProjectReviewsResponse(double min, double max, double total) {
+            this.min = min;
+            this.max = max;
+            this.total = total;
+        }
+
+        public ProjectReviewsResponse() {
+        }
+
+        public double getMin() {
+            return min;
+        }
+
+        public void setMin(double min) {
+            this.min = min;
+        }
+
+        public double getMax() {
+            return max;
+        }
+
+        public void setMax(double max) {
+            this.max = max;
+        }
+
+        public double getTotal() {
+            return total;
+        }
+
+        public void setTotal(double total) {
+            this.total = total;
+        }
     }
 
 }

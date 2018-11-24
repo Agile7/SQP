@@ -8,7 +8,10 @@ import com.agileseven.codereviewserver.DTO.CodeDTO;
 import com.agileseven.codereviewserver.DTO.ReviewDTO;
 import com.agileseven.codereviewserver.DTO.RuleDTO;
 
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This interface contains the methods
@@ -25,5 +28,7 @@ public interface ReviewDAO {
     public int addReview(ReviewDTO review);
     public ArrayList<ReviewDTO> getReviewedCodesByUser(int userId,int projectId);
     public ArrayList<RuleDTO> getRulesList();
-    
+    public List<ReviewDTO> getReviewsOfUser(int userID) throws SQLException;
+    public List<ReviewDTO> getReviewsOfProject(int projetcId, Date start, Date end) throws SQLException;
+
 }

@@ -7,12 +7,9 @@ package com.agileseven.codereviewserver.DAO;
 
 import com.agileseven.codereviewserver.DTO.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -280,5 +277,35 @@ public class ReviewDAOImpl implements ReviewDAO {
         
     }
 
+    @Override
+    public List<ReviewDTO> getReviewsOfUser(int userID) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public List<ReviewDTO> getReviewsOfProject(int projectId, Date start, Date end) throws SQLException {
+        Connection connection = ConnectionFactory.getConnection();
+
+        String sql = "SELECT * FROM `review` WHERE reviewer_id IN (SELECT user_id FROM user WHERE project_id = ?)" +
+                "AND start_time >= ? AND submit_time <= ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, projectId);
+        statement.setDate(2, start);
+        statement.setDate(3, end);
+        ResultSet resultSet = statement.executeQuery();
+        List<ReviewDTO> reviews = new ArrayList<>();
+
+        while (resultSet.next()){
+            ReviewDTO review = new ReviewDTO();
+            review.setReviewId(resultSet.getInt(1));
+            review.setCodeId(2);
+            review.setReviewerId(3);
+            review.setApproved(4);
+            review.setStartTime(resultSet.getString(5));
+            review.setSubmitTime(resultSet.getString(6));
+            reviews.add(review);
+        }
+        return reviews;
+    }
     
 }
