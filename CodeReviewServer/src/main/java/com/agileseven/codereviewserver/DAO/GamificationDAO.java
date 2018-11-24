@@ -5,8 +5,8 @@
  */
 package com.agileseven.codereviewserver.DAO;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  *
@@ -18,4 +18,6 @@ public interface GamificationDAO {
     public LinkedHashMap<String, Integer>  getSumOfLinesPushedByTeam(String startDate, String endDate, int period, int projectId);
     public LinkedHashMap<String, Integer>  getNumberOfCodesPushedByIndividual(String startDate, String endDate, int period, int userId);
     public LinkedHashMap<String, Integer>  getSumOfLinesPushedByIndividual(String startDate, String endDate, int period, int userId);
+    public List<GamificationDAOImpl.UserDTOWithXPGains> getXpGainOfProjectMembers(String startDate, String endDate, int period, int projectId);
+
 }

@@ -27,8 +27,9 @@ public interface ReviewDAO {
     public int approveCode(int review_id, int approved);
     public int addReview(ReviewDTO review);
     public ArrayList<ReviewDTO> getReviewedCodesByUser(int userId,int projectId);
+    public ArrayList<ReviewDTO> getReviewedCodesByUserBetweenDates(int userId,int projectId, String startDate, String endDate);
     public ArrayList<RuleDTO> getRulesList();
     public List<ReviewDTO> getReviewsOfUser(int userID) throws SQLException;
-    public List<ReviewDTO> getReviewsOfProject(int projetcId, Date start, Date end) throws SQLException;
+    public List<ReviewDTO> getReviewsOfProject(int projectId, Date start, Date end) throws SQLException;
 
 }

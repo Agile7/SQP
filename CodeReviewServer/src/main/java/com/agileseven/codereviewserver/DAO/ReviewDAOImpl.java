@@ -214,6 +214,44 @@ public class ReviewDAOImpl implements ReviewDAO {
     }
 
     @Override
+    public ArrayList<ReviewDTO> getReviewedCodesByUserBetweenDates(int userId, int projectId, String startDate, String endDate) {
+        ArrayList<ReviewDTO> reviewList = new ArrayList<ReviewDTO>();
+
+        Connection con = ConnectionFactory.getConnection();
+        String query = "SELECT c.code_id,c.code_text,c.user_story_id," +
+                "us.title, r.review_id, r.reviewer_id, u.first_name, u.last_name,"+
+                "r.approved, r.submit_time"+
+                "FROM code c, user u, user_story us, review r " +
+                "where r.reviewer_id = u.user_id " +
+                " AND c.user_story_id = us.user_story_id " +
+                " AND r.code_id = c.code_id " +
+                " AND us.project_id = ? " +
+                " AND c.user_id = ? " +
+                "AND r.submit_time BETWEEN ? AND ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            System.out.println(ps.toString());
+            ps.setInt(1, projectId);
+            ps.setInt(2, userId);
+            ps.setDate(3, Date.valueOf(startDate));
+            ps.setDate(4, Date.valueOf(endDate));
+            System.out.println(ps.toString());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                reviewList.add(buildReviewDTOfromResult(rs));
+            }
+            ps.close();
+            rs.close();
+            con.close();
+        }catch (SQLException ex) {
+
+        }
+
+        return reviewList;
+    }
+
+    @Override
     public ArrayList<RuleDTO> getRulesList() {
         ArrayList<RuleDTO> ruleList = new ArrayList<RuleDTO>();
 
