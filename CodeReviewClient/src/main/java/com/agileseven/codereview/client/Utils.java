@@ -5,6 +5,7 @@
  */
 package com.agileseven.codereview.client;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -82,6 +83,18 @@ public class Utils {
             count++;
         }
         return newCodeText.toString();
+    }
+
+    public static int[] splitToComponentTimes(BigDecimal biggy)
+    {
+        long longVal = biggy.longValue();
+        int hours = (int) longVal / 3600;
+        int remainder = (int) longVal - hours * 3600;
+        int mins = remainder / 60;
+        remainder = remainder - mins * 60;
+        int secs = remainder;
+
+        return new int[]{hours , mins , secs};
     }
 
 }

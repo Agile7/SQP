@@ -310,5 +310,12 @@ public class ServiceConsumer implements CommandLineRunner {
         
         return map;
     }
+
+    public ProjectReviewsResponse getProjectReviewsStatistics(int projectId, String start, String end){
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<ProjectReviewsResponse> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/review/project?projectId=" + projectId +"&start="+start+"&end="+end, ProjectReviewsResponse.class);
+        return responseEntity.getBody();
+    }
   
 }

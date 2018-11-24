@@ -9,10 +9,12 @@ import com.agileseven.codereview.client.DTO.UserDTO;
 import com.agileseven.codereview.client.ServiceConsumer;
 import com.agileseven.codereview.client.Session;
 import com.agileseven.codereview.client.Utils;
+import com.agileseven.codereview.client.ProjectReviewsResponse;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Paint;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -132,6 +134,13 @@ public class FrameDashBoard extends javax.swing.JFrame {
         for(UserDTO user : userList){
             jComboBox1.addItem(user.getFirstName() + " " + user.getLastName());
         }
+
+        jTextField1.setText("");
+        jTextField1.setEditable(false);
+        jTextField2.setText("");
+        jTextField2.setEditable(false);
+        jTextField3.setText("");
+        jTextField3.setEditable(false);
     }
 
     /**
@@ -832,6 +841,29 @@ public class FrameDashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel6BackButtonClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        //////////////
+
+        String start = datePickerFrom.getModel().getYear() + "-" + (datePickerFrom.getModel().getMonth() + 1) + "-" + datePickerFrom.getModel().getDay();
+        String end = datePickerTo.getModel().getYear() + "-" + (datePickerTo.getModel().getMonth() + 1) + "-" + datePickerTo.getModel().getDay();
+
+        ServiceConsumer consumer = new ServiceConsumer();
+        ProjectReviewsResponse reviewsResponse = consumer.getProjectReviewsStatistics(Session.currentProject.getProjectId(), start, end);
+
+        int[] min = Utils.splitToComponentTimes(BigDecimal.valueOf(reviewsResponse.getMin()));
+        int[] max = Utils.splitToComponentTimes(BigDecimal.valueOf(reviewsResponse.getMax()));
+        int[] total = Utils.splitToComponentTimes(BigDecimal.valueOf(reviewsResponse.getTotal()));
+
+        String minText = min[0] + "h " + min[1] +"m " + min[2] + "s";
+        String maxText = max[0] + "h " + max[1] +"m " + max[2] + "s";
+        String totalText = total[0] + "h " + total[1] +"m " + total[2] + "s";
+
+        jTextField1.setText(minText);
+        jTextField2.setText(maxText);
+        jTextField3.setText(totalText);
+
+        //////////////
+
         String dateFrom = datePickerFrom.getJFormattedTextField().getText();
         String dateTo = datePickerTo.getJFormattedTextField().getText();
         int period = jComboBox2.getSelectedIndex();
