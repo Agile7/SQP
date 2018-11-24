@@ -5,6 +5,7 @@
  */
 package com.agileseven.codereview.client.views;
 
+import com.agileseven.codereview.client.DTO.UserDTO;
 import com.agileseven.codereview.client.ServiceConsumer;
 import com.agileseven.codereview.client.Session;
 import com.agileseven.codereview.client.Utils;
@@ -13,6 +14,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Paint;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,16 +47,24 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private JDatePickerImpl datePickerTo;
     private ServiceConsumer service = new ServiceConsumer();
     private ChartPanel codePushChartPanel;
-    private ChartPanel linePushChartPanel;   
+    private ChartPanel linePushChartPanel;  
+    private ChartPanel codePushByIndividualChartPanel;
+    private ChartPanel linePushByIndividualChartPanel;
+    private ChartPanel stackedBarIndividualRejectedApprovedPanel;
+    
+    private JDatePickerImpl datePickerFromPersonal;
+    private JDatePickerImpl datePickerToPersonal;
   
    
     public FrameDashBoard() {
         initComponents();
-        
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back.png"))); // NOI18N
         jLabel2.setText("");
-        jLabel2.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
+        jLabel4.setText(Session.currentUser.getFirstName() + " " + Session.currentUser.getLastName());
         
+        if(Session.currentUser.getPositionId() !=2){
+            jComboBox1.setVisible(false);
+        }
         Properties p = new Properties();
 	p.put("text.today", "today");
 	p.put("text.month", "month");
@@ -86,7 +96,42 @@ public class FrameDashBoard extends javax.swing.JFrame {
         
         
         
-     
+        /*Personal Dashboard*//*Personal Dashboard*//*Personal Dashboard*/
+//      Properties p3 = new Properties();
+//	p3.put("text.today", "today");
+//	p3.put("text.month", "month");
+//	p3.put("text.year", "year");
+	
+//	UtilDateModel model3 = new UtilDateModel();
+//	JDatePanelImpl datePanel3 = new JDatePanelImpl(model3, p);
+//      datePanel3.setBackground(Color.WHITE);
+//      datePickerFromPersonal = new JDatePickerImpl(datePanel3, new DateComponentFormatter());
+//      datePickerFromPersonal.getJFormattedTextField().setPreferredSize(new Dimension(200, 40));
+        datePickerFromPersonal = new JDatePickerImpl(datePanel1, new DateComponentFormatter());
+        datePickerFromPersonal.getJFormattedTextField().setPreferredSize(new Dimension(200, 40));
+        jPanel14.setLayout(new FlowLayout());
+        jPanel14.add(datePickerFromPersonal);
+        
+//      UtilDateModel model4 = new UtilDateModel();
+//	JDatePanelImpl datePanel4 = new JDatePanelImpl(model4, p);
+//      datePanel4.setBackground(Color.WHITE);
+//      datePickerToPersonal = new JDatePickerImpl(datePanel4, new DateComponentFormatter());
+//      datePickerToPersonal.getJFormattedTextField().setPreferredSize(new Dimension(200, 40));
+        datePickerToPersonal = new JDatePickerImpl(datePanel2, new DateComponentFormatter());
+        datePickerToPersonal.getJFormattedTextField().setPreferredSize(new Dimension(200, 40));
+        jPanel15.setLayout(new FlowLayout());
+        jPanel15.add(datePickerToPersonal);
+        
+        jButton5.setVisible(false);
+        jButton6.setVisible(false);
+        jPanel17.setLayout(new FlowLayout());
+        jPanel17.setBorder(null);
+        
+        ArrayList<UserDTO> userList = service.getUsersList(Session.currentProject.getProjectId());
+        
+        for(UserDTO user : userList){
+            jComboBox1.addItem(user.getFirstName() + " " + user.getLastName());
+        }
     }
 
     /**
@@ -128,6 +173,19 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel14 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jButton4 = new javax.swing.JButton();
+        jPanel16 = new javax.swing.JPanel();
+        jPanel17 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -189,6 +247,11 @@ public class FrameDashBoard extends javax.swing.JFrame {
 
         jComboBox2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Daily", "Weekly", "Monthly" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(51, 204, 0));
@@ -457,15 +520,195 @@ public class FrameDashBoard extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
+        jComboBox1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel7.setText("From:");
+
+        jPanel14.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel14.setPreferredSize(new java.awt.Dimension(265, 48));
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 244, Short.MAX_VALUE)
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel8.setText("To:");
+
+        jPanel15.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel15.setPreferredSize(new java.awt.Dimension(265, 48));
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 265, Short.MAX_VALUE)
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel9.setText("Period:");
+
+        jComboBox3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Daily", "Weekly", "Monthly" }));
+
+        jButton4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(51, 204, 0));
+        jButton4.setText("Ok");
+        jButton4.setMaximumSize(new java.awt.Dimension(59, 31));
+        jButton4.setMinimumSize(new java.awt.Dimension(59, 31));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jPanel16.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel16.setPreferredSize(new java.awt.Dimension(1400, 1300));
+
+        jPanel17.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel17.setPreferredSize(new java.awt.Dimension(706, 520));
+        jPanel17.setRequestFocusEnabled(false);
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 698, Short.MAX_VALUE)
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel18.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel18.setPreferredSize(new java.awt.Dimension(706, 520));
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 698, Short.MAX_VALUE)
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 518, Short.MAX_VALUE)
+        );
+
+        jButton5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(51, 102, 255));
+        jButton5.setText("Number of Codes");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(51, 102, 255));
+        jButton6.setText("Number of Lines");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(135, 135, 135)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(722, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1621, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel8)
+                        .addGap(29, 29, 29)
+                        .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 1414, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(305, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1448, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jComboBox3)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)))
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanel3);
@@ -505,9 +748,9 @@ public class FrameDashBoard extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(462, 462, 462)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 588, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 455, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addGap(151, 151, 151))
+                .addGap(284, 284, 284))
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel12Layout.createSequentialGroup()
@@ -608,6 +851,8 @@ public class FrameDashBoard extends javax.swing.JFrame {
             displayCodesPushedLineGraph(dateFrom,dateTo,period,Session.currentProject.getProjectId());
             displayLinesPushedLineGraph(dateFrom,dateTo,period,Session.currentProject.getProjectId());
             jPanel2.add(codePushChartPanel);
+            jPanel2.add(linePushChartPanel);
+            linePushChartPanel.setVisible(false);
             jButton1.setVisible(true);
             jButton3.setVisible(true);
         }
@@ -628,13 +873,34 @@ public class FrameDashBoard extends javax.swing.JFrame {
          true,true,false);
         
         CategoryPlot plot = (CategoryPlot) lineChart.getPlot();
-        plot.getRenderer().setSeriesPaint(0, Color.BLUE);
+        plot.getRenderer().setSeriesPaint(0, Color.RED);
         plot.setBackgroundPaint( Color.WHITE );
         
         codePushChartPanel = new ChartPanel( lineChart );
         codePushChartPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
         
         
+        
+    }
+    
+    private void displayCodesPushedByIndividualLineGraph(String dateFrom, String dateTo, int period, int userId){
+        
+        LinkedHashMap<String, Integer> map = service.getCountCodesPushedByIndividual(dateFrom,dateTo,period,userId);
+        
+       
+        JFreeChart lineChart = ChartFactory.createLineChart(
+         "Number of Codes Pushed",
+         "Date","Number of Codes",
+         createDataset(map,period),
+         PlotOrientation.VERTICAL,
+         true,true,false);
+        
+        CategoryPlot plot = (CategoryPlot) lineChart.getPlot();
+        plot.getRenderer().setSeriesPaint(0, Color.RED);
+        plot.setBackgroundPaint( Color.WHITE );
+        
+        codePushByIndividualChartPanel = new ChartPanel( lineChart );
+        codePushByIndividualChartPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
         
     }
     
@@ -652,13 +918,58 @@ public class FrameDashBoard extends javax.swing.JFrame {
          true,true,false);
         
         CategoryPlot plot = (CategoryPlot) lineChart.getPlot();
-        plot.getRenderer().setSeriesPaint(0, Color.BLUE);
+        plot.getRenderer().setSeriesPaint(0, new Color(11,102,35));
         plot.setBackgroundPaint( Color.WHITE );
         
         linePushChartPanel = new ChartPanel( lineChart );
         linePushChartPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
         
     }
+    
+    private void displayLinesPushedByIndividualLineGraph(String dateFrom, String dateTo, int period, int userId){
+        System.out.println("here");
+        
+        LinkedHashMap<String, Integer> map = service.getNumberLinesPushedByIndividual(dateFrom,dateTo,period,userId);
+        
+       
+        JFreeChart lineChart = ChartFactory.createLineChart(
+         "Total Lines Pushed",
+         "Date","Number of Lines",
+         createDataset(map, period),
+         PlotOrientation.VERTICAL,
+         true,true,false);
+        
+        CategoryPlot plot = (CategoryPlot) lineChart.getPlot();
+        plot.getRenderer().setSeriesPaint(0, new Color(11,102,35));
+        plot.setBackgroundPaint( Color.WHITE );
+        
+        linePushByIndividualChartPanel = new ChartPanel( lineChart );
+        linePushByIndividualChartPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
+        
+    }
+    
+//        private void displayNumOfRejectedApprovedCode(String dateFrom, String dateTo, int period, int userId){//doesnt finish yet
+//        
+//        LinkedHashMap<String, Integer> rejected = service.getNumberOfPersonalCodeRejected(dateFrom,dateTo,period,userId);
+//        LinkedHashMap<String, Integer> approved = service.getNumberOfPersonalCodeApproved(dateFrom,dateTo,period,userId);
+//        
+//       
+//        JFreeChart lineChart = ChartFactory.createLineChart(
+//         "Rejected/Approved Codes",
+//         "Date","Number of Codes",
+//         createDataset(,period),//how to make this dataset
+//         
+//         PlotOrientation.VERTICAL,
+//         true,true,false);
+//        
+//        CategoryPlot plot = (CategoryPlot) lineChart.getPlot();
+//        plot.getRenderer().setSeriesPaint(0, Color.BLUE);
+//        plot.setBackgroundPaint( Color.WHITE );
+//        
+//        stackedBarIndividualRejectedApprovedPanel = new ChartPanel( lineChart );//line chart?
+//        stackedBarIndividualRejectedApprovedPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );                
+//        
+//    }
     
     
      private DefaultCategoryDataset createDataset(LinkedHashMap<String, Integer> map, int period) {
@@ -697,21 +1008,74 @@ public class FrameDashBoard extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        System.out.println("a");
-        jPanel2.removeAll();
-        System.out.println("b");
-        jPanel2.add(linePushChartPanel);
-        System.out.println("c");
+        codePushChartPanel.setVisible(false);
+        linePushChartPanel.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        System.out.println("d");
-        jPanel2.removeAll();
-        System.out.println("e");
-        jPanel2.add(codePushChartPanel);
-        System.out.println("f");
+        codePushChartPanel.setVisible(true);
+        linePushChartPanel.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        codePushByIndividualChartPanel.setVisible(false);
+        linePushByIndividualChartPanel.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        codePushByIndividualChartPanel.setVisible(true);
+        linePushByIndividualChartPanel.setVisible(false);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String dateFrom = datePickerFrom.getJFormattedTextField().getText();
+        String dateTo = datePickerTo.getJFormattedTextField().getText();
+        int period = jComboBox3.getSelectedIndex();
+        int userNumber = jComboBox1.getSelectedIndex();
+        ArrayList<UserDTO> userList = service.getUsersList(Session.currentProject.getProjectId());
+
+        Date from = Utils.convertStringToDate(dateFrom, "dd-MMM-yyyy");
+        Date to = Utils.convertStringToDate(dateTo, "dd-MMM-yyyy");
+
+        if(from.compareTo(to) > 0){
+
+            JOptionPane.showMessageDialog(this,"The end date should be greater than start date!",
+                "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        else{
+            //Code to generate graphs
+            jPanel17.removeAll();
+
+            if(Session.currentUser.getPositionId() == 2){
+                displayCodesPushedByIndividualLineGraph(dateFrom,dateTo,period,userList.get(userNumber).getUserId());
+                displayLinesPushedByIndividualLineGraph(dateFrom,dateTo,period,userList.get(userNumber).getUserId());
+            }else{
+                displayCodesPushedByIndividualLineGraph(dateFrom,dateTo,period,Session.currentUser.getUserId());
+                displayLinesPushedByIndividualLineGraph(dateFrom,dateTo,period,Session.currentUser.getUserId());
+            }
+            jPanel17.add(codePushByIndividualChartPanel);
+            jPanel17.add(linePushByIndividualChartPanel);
+            linePushByIndividualChartPanel.setVisible(false);
+            jButton5.setVisible(true);
+            jButton6.setVisible(true);
+            
+//            jPanel18.removeAll();
+//            displayNumOfRejectedApprovedCode(dateFrom,dateTo,period,Session.currentUser.getUserId());
+//            jPanel18.add(stackedBarIndividualRejectedApprovedPanel);
+//            stackedBarIndividualRejectedApprovedPanel.setVisible(true);
+  
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -753,7 +1117,12 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -765,11 +1134,19 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
