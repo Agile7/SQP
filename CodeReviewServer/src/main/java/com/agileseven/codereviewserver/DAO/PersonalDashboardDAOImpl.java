@@ -5,10 +5,7 @@
  */
 package com.agileseven.codereviewserver.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import org.json.JSONObject;
@@ -28,8 +25,7 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
                         "where r.code_id = c.code_id" +
                         "and c.user_id = u.user_id" +
                         "AND u.user_id = ?" +
-                        "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
-                        "AND STR_TO_DATE(?,'%d-%M-%Y') "+
+                        "AND c.push_date BETWEEN ? AND ?"+
                         "AND r.approved = 1";
         
         switch (period) {
@@ -56,8 +52,8 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
            try {
                 PreparedStatement ps = con.prepareStatement(query);
                 ps.setInt(1, userId);
-                ps.setString(2, startDate);
-                ps.setString(3, endDate);
+                ps.setDate(2, Date.valueOf(startDate));
+                ps.setDate(3, Date.valueOf(endDate));
                 ResultSet rs = ps.executeQuery();
                 
               System.out.println(ps);
@@ -86,8 +82,7 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
                         "where r.code_id = c.code_id" +
                         "and c.user_id = u.user_id" +
                         "AND u.user_id = ?" +
-                        "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
-                        "AND STR_TO_DATE(?,'%d-%M-%Y') "+
+                        "AND c.push_date BETWEEN ? AND ?"+
                         "AND r.approved = 1";
         
         switch (period) {
@@ -114,8 +109,8 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
            try {
                 PreparedStatement ps = con.prepareStatement(query);
                 ps.setInt(1, userId);
-                ps.setString(2, startDate);
-                ps.setString(3, endDate);
+                ps.setDate(2, Date.valueOf(startDate));
+                ps.setDate(3, Date.valueOf(endDate));
                 ResultSet rs = ps.executeQuery();
                 
               System.out.println(ps);

@@ -5,10 +5,7 @@
  */
 package com.agileseven.codereviewserver.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import org.json.JSONObject;
@@ -26,8 +23,7 @@ public class GamificationDAOImpl implements GamificationDAO{
         String query = "from code c, user u "+
                         "where c.user_id = u.user_id "+
                         "and u.project_id = ? "+
-                        "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
-                        "AND STR_TO_DATE(?,'%d-%M-%Y') ";
+                        "AND c.push_date BETWEEN ? AND ?";
         
         switch (period) {
             case 2:
@@ -54,8 +50,8 @@ public class GamificationDAOImpl implements GamificationDAO{
            try {
                 PreparedStatement ps = con.prepareStatement(query);
                 ps.setInt(1, projectId);
-                ps.setString(2, startDate);
-                ps.setString(3, endDate);
+                ps.setDate(2, Date.valueOf(startDate));
+                ps.setDate(3, Date.valueOf(endDate));
                 ResultSet rs = ps.executeQuery();
                 
               System.out.println(ps);
@@ -81,8 +77,7 @@ public class GamificationDAOImpl implements GamificationDAO{
         String query = "from code c, user u "+
                         "where c.user_id = u.user_id "+
                         "and u.project_id = ? "+
-                        "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
-                        "AND STR_TO_DATE(?,'%d-%M-%Y') ";
+                        "AND c.push_date BETWEEN ? AND ?";
         
         switch (period) {
             case 2:
@@ -109,8 +104,8 @@ public class GamificationDAOImpl implements GamificationDAO{
            try {
                 PreparedStatement ps = con.prepareStatement(query);
                 ps.setInt(1, projectId);
-                ps.setString(2, startDate);
-                ps.setString(3, endDate);
+                ps.setDate(2, Date.valueOf(startDate));
+                ps.setDate(3, Date.valueOf(endDate));
                 ResultSet rs = ps.executeQuery();
                 System.out.println(ps);
               
@@ -134,8 +129,7 @@ public class GamificationDAOImpl implements GamificationDAO{
         
         String query = "from code c "+
                         "where c.user_id = ? "+
-                        "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
-                        "AND STR_TO_DATE(?,'%d-%M-%Y') ";
+                        "AND c.push_date BETWEEN ? AND ?";
         
         switch (period) {
             case 2:
@@ -162,8 +156,8 @@ public class GamificationDAOImpl implements GamificationDAO{
            try {
                 PreparedStatement ps = con.prepareStatement(query);
                 ps.setInt(1, userId);
-                ps.setString(2, startDate);
-                ps.setString(3, endDate);
+                ps.setDate(2, Date.valueOf(startDate));
+                ps.setDate(3, Date.valueOf(endDate));
                 ResultSet rs = ps.executeQuery();
                 
               System.out.println(ps);
@@ -188,8 +182,7 @@ public class GamificationDAOImpl implements GamificationDAO{
         
         String query = "from code c "+
                         "where c.user_id = ? "+
-                        "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
-                        "AND STR_TO_DATE(?,'%d-%M-%Y') ";
+                        "AND c.push_date BETWEEN ? AND ? ";
         
         switch (period) {
             case 2:
@@ -216,8 +209,8 @@ public class GamificationDAOImpl implements GamificationDAO{
            try {
                 PreparedStatement ps = con.prepareStatement(query);
                 ps.setInt(1, userId);
-                ps.setString(2, startDate);
-                ps.setString(3, endDate);
+                ps.setDate(2, Date.valueOf(startDate));
+                ps.setDate(3, Date.valueOf(endDate));
                 ResultSet rs = ps.executeQuery();
                 System.out.println(ps);
               

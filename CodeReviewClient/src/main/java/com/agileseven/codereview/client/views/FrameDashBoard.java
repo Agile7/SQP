@@ -864,12 +864,13 @@ public class FrameDashBoard extends javax.swing.JFrame {
 
         //////////////
 
-        String dateFrom = datePickerFrom.getJFormattedTextField().getText();
-        String dateTo = datePickerTo.getJFormattedTextField().getText();
+        String dateFrom = start;
+        String dateTo = end;
+
         int period = jComboBox2.getSelectedIndex();
         
-        Date from = Utils.convertStringToDate(dateFrom, "dd-MMM-yyyy");
-        Date to = Utils.convertStringToDate(dateTo, "dd-MMM-yyyy");
+        Date from = Utils.convertStringToDate(dateFrom, "yyyy-MM-dd");
+        Date to = Utils.convertStringToDate(dateTo, "yyyy-MM-dd");
         
         if(from.compareTo(to) > 0){
             
@@ -1065,14 +1066,14 @@ public class FrameDashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String dateFrom = datePickerFrom.getJFormattedTextField().getText();
-        String dateTo = datePickerTo.getJFormattedTextField().getText();
+        String dateFrom = datePickerFrom.getModel().getYear() + "-" + (datePickerFrom.getModel().getMonth() + 1) + "-" + datePickerFrom.getModel().getDay();;
+        String dateTo = datePickerTo.getModel().getYear() + "-" + (datePickerTo.getModel().getMonth() + 1) + "-" + datePickerTo.getModel().getDay();;
         int period = jComboBox3.getSelectedIndex();
         int userNumber = jComboBox1.getSelectedIndex();
         ArrayList<UserDTO> userList = service.getUsersList(Session.currentProject.getProjectId());
 
-        Date from = Utils.convertStringToDate(dateFrom, "dd-MMM-yyyy");
-        Date to = Utils.convertStringToDate(dateTo, "dd-MMM-yyyy");
+        Date from = Utils.convertStringToDate(dateFrom, "yyyy-MM-dd");
+        Date to = Utils.convertStringToDate(dateTo, "yyyy-MM-dd");
 
         if(from.compareTo(to) > 0){
 
