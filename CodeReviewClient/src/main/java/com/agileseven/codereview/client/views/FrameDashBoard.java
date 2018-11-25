@@ -55,6 +55,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private ChartPanel codePushByIndividualChartPanel;
     private ChartPanel linePushByIndividualChartPanel;
     private ChartPanel stackedBarIndividualRejectedApprovedPanel;
+    private ChartPanel stackedBarTeamRejectedApprovedPanel;
     
     private JDatePickerImpl datePickerFromPersonal;
     private JDatePickerImpl datePickerToPersonal;
@@ -132,6 +133,8 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jPanel17.setBorder(null);
         jPanel18.setLayout(new FlowLayout());
         jPanel18.setBorder(null);
+        jPanel6.setLayout(new FlowLayout());
+        jPanel6.setBorder(null);
         
         ArrayList<UserDTO> userList = service.getUsersList(Session.currentProject.getProjectId());
         
@@ -884,10 +887,13 @@ public class FrameDashBoard extends javax.swing.JFrame {
         else{
             //Code to generate graphs
             jPanel2.removeAll();
+            jPanel6.removeAll();
             displayCodesPushedLineGraph(dateFrom,dateTo,period,Session.currentProject.getProjectId());
             displayLinesPushedLineGraph(dateFrom,dateTo,period,Session.currentProject.getProjectId());
+            displayNumOfRejectedApprovedCodeOfTeam(dateFrom, dateTo, period, Session.currentProject.getProjectId());
             jPanel2.add(codePushChartPanel);
             jPanel2.add(linePushChartPanel);
+            jPanel6.add(stackedBarTeamRejectedApprovedPanel);
             linePushChartPanel.setVisible(false);
             jButton1.setVisible(true);
             jButton3.setVisible(true);
@@ -990,7 +996,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
         LinkedHashMap<String, Integer> rejected = service.getNumberOfPersonalCodeRejected(dateFrom, dateTo, period, userId);
         
         JFreeChart stackBarChart = ChartFactory.createStackedBarChart(
-         "Rejected/Approved Codes",
+         "Approved/Rejected Codes",
          "Date","Number of Codes",
          createStackedBarChartDataset(approved, rejected, period),
          PlotOrientation.VERTICAL,
@@ -1004,6 +1010,29 @@ public class FrameDashBoard extends javax.swing.JFrame {
   
         stackedBarIndividualRejectedApprovedPanel = new ChartPanel( stackBarChart );
         stackedBarIndividualRejectedApprovedPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
+        
+    }
+    
+    private void displayNumOfRejectedApprovedCodeOfTeam(String dateFrom, String dateTo, int period, int projectId){
+        
+        LinkedHashMap<String, Integer> approved = service.getNumberOfTeamCodeApproved(dateFrom, dateTo, period, projectId);
+        LinkedHashMap<String, Integer> rejected = service.getNumberOfTeamCodeRejected(dateFrom, dateTo, period, projectId);
+        
+        JFreeChart stackBarChart = ChartFactory.createStackedBarChart(
+         "Approved/Rejected Codes",
+         "Date","Number of Codes",
+         createStackedBarChartDataset(approved, rejected, period),
+         PlotOrientation.VERTICAL,
+         true,true,false);
+        
+        CategoryPlot plot = (CategoryPlot) stackBarChart.getPlot();
+        plot.getRenderer().setSeriesPaint(0, new Color(11,102,35));
+        plot.getRenderer().setSeriesPaint(1, Color.ORANGE);
+        plot.setBackgroundPaint( Color.WHITE );
+        
+        
+        stackedBarTeamRejectedApprovedPanel = new ChartPanel( stackBarChart );
+        stackedBarTeamRejectedApprovedPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
         
     }
     

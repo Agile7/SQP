@@ -16,5 +16,7 @@ public interface PersonalDashboardDAO {
     
     public LinkedHashMap<String, Integer> getNumberOfPersonalCodeRejected(String startDate, String endDate, int period, int userId);
     public LinkedHashMap<String, Integer> getNumberOfPersonalCodeApproved(String startDate, String endDate, int period, int userId);
+    public LinkedHashMap<String, Integer> getNumberOfTeamCodeRejected(String startDate, String endDate, int period, int projectId);
+    public LinkedHashMap<String, Integer> getNumberOfTeamCodeApproved(String startDate, String endDate, int period, int projectId);
     
 }
