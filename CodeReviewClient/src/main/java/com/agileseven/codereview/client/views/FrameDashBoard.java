@@ -33,7 +33,9 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DatasetUtilities;
 
 /**
  *
@@ -128,6 +130,8 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jButton6.setVisible(false);
         jPanel17.setLayout(new FlowLayout());
         jPanel17.setBorder(null);
+        jPanel18.setLayout(new FlowLayout());
+        jPanel18.setBorder(null);
         
         ArrayList<UserDTO> userList = service.getUsersList(Session.currentProject.getProjectId());
         
@@ -980,29 +984,74 @@ public class FrameDashBoard extends javax.swing.JFrame {
         
     }
     
-//        private void displayNumOfRejectedApprovedCode(String dateFrom, String dateTo, int period, int userId){//doesnt finish yet
-//        
-//        LinkedHashMap<String, Integer> rejected = service.getNumberOfPersonalCodeRejected(dateFrom,dateTo,period,userId);
-//        LinkedHashMap<String, Integer> approved = service.getNumberOfPersonalCodeApproved(dateFrom,dateTo,period,userId);
-//        
-//       
-//        JFreeChart lineChart = ChartFactory.createLineChart(
-//         "Rejected/Approved Codes",
-//         "Date","Number of Codes",
-//         createDataset(,period),//how to make this dataset
-//         
-//         PlotOrientation.VERTICAL,
-//         true,true,false);
-//        
-//        CategoryPlot plot = (CategoryPlot) lineChart.getPlot();
-//        plot.getRenderer().setSeriesPaint(0, Color.BLUE);
-//        plot.setBackgroundPaint( Color.WHITE );
-//        
-//        stackedBarIndividualRejectedApprovedPanel = new ChartPanel( lineChart );//line chart?
-//        stackedBarIndividualRejectedApprovedPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );                
-//        
-//    }
+    private void displayNumOfRejectedApprovedCode(String dateFrom, String dateTo, int period, int userId){
+        
+        LinkedHashMap<String, Integer> approved = service.getNumberOfPersonalCodeApproved(dateFrom, dateTo, period, userId);
+        LinkedHashMap<String, Integer> rejected = service.getNumberOfPersonalCodeRejected(dateFrom, dateTo, period, userId);
+        
+        JFreeChart stackBarChart = ChartFactory.createStackedBarChart(
+         "Rejected/Approved Codes",
+         "Date","Number of Codes",
+         createStackedBarChartDataset(approved, rejected, period),
+         PlotOrientation.VERTICAL,
+         true,true,false);
+        
+        CategoryPlot plot = (CategoryPlot) stackBarChart.getPlot();
+        plot.getRenderer().setSeriesPaint(0, Color.RED);
+        plot.getRenderer().setSeriesPaint(1, new Color(11,102,35));
+        plot.setBackgroundPaint( Color.WHITE );
+        
+  
+        stackedBarIndividualRejectedApprovedPanel = new ChartPanel( stackBarChart );
+        stackedBarIndividualRejectedApprovedPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
+        
+                System.out.println("hereererereere \n" + approved);
+    }
     
+
+    private DefaultCategoryDataset createStackedBarChartDataset(LinkedHashMap<String, Integer> approved, LinkedHashMap<String, Integer> rejected, int period) {
+        
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        
+        double[][] data = new double[][]{
+        {210, 300, 320, 265, 299, 200},
+        {200, 304, 201, 201, 340, 300},
+        };
+        
+        for (Map.Entry<String, Integer> entry : approved.entrySet()) {
+           
+           if(period ==1){
+               cal.set(Calendar.WEEK_OF_YEAR, Integer.parseInt(entry.getKey().substring(0, 2)));
+               System.out.println(entry.getKey());
+               dataset.addValue( entry.getValue() , "Approved" , formatter.format(cal.getTime()));
+           }
+           else{
+               dataset.addValue( entry.getValue() , "Approved" , entry.getKey());
+           }
+        }
+        
+        for (Map.Entry<String, Integer> entry : rejected.entrySet()) {
+           
+           if(period ==1){
+               cal.set(Calendar.WEEK_OF_YEAR, Integer.parseInt(entry.getKey().substring(0, 2)));
+               System.out.println(entry.getKey());
+               dataset.addValue( entry.getValue() , "rejected" , formatter.format(cal.getTime()));
+           }
+           else{
+               dataset.addValue( entry.getValue() , "rejected" , entry.getKey());
+           }
+        }
+        dataset.addValue(1, "Codes(rejected)", "1");
+        dataset.addValue(2, "Codes(approved)", "1");
+        dataset.addValue(3, "Codes(rejected)", "2");
+        dataset.addValue(4, "Codes(approved)", "2");
+        
+        return dataset;
+    }
     
      private DefaultCategoryDataset createDataset(LinkedHashMap<String, Integer> map, int period) {
       DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
@@ -1083,17 +1132,22 @@ public class FrameDashBoard extends javax.swing.JFrame {
         else{
             //Code to generate graphs
             jPanel17.removeAll();
+            jPanel18.removeAll();
 
             if(Session.currentUser.getPositionId() == 2){
                 displayCodesPushedByIndividualLineGraph(dateFrom,dateTo,period,userList.get(userNumber).getUserId());
                 displayLinesPushedByIndividualLineGraph(dateFrom,dateTo,period,userList.get(userNumber).getUserId());
+                displayNumOfRejectedApprovedCode(dateFrom,dateTo,period,userList.get(userNumber).getUserId());
             }else{
                 displayCodesPushedByIndividualLineGraph(dateFrom,dateTo,period,Session.currentUser.getUserId());
                 displayLinesPushedByIndividualLineGraph(dateFrom,dateTo,period,Session.currentUser.getUserId());
+                displayNumOfRejectedApprovedCode(dateFrom,dateTo,period,Session.currentUser.getUserId());
             }
             jPanel17.add(codePushByIndividualChartPanel);
             jPanel17.add(linePushByIndividualChartPanel);
+            jPanel18.add(stackedBarIndividualRejectedApprovedPanel);
             linePushByIndividualChartPanel.setVisible(false);
+            //stackedBarIndividualRejectedApprovedPanel.setVisible(true);
             jButton5.setVisible(true);
             jButton6.setVisible(true);
             
