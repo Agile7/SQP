@@ -997,15 +997,14 @@ public class FrameDashBoard extends javax.swing.JFrame {
          true,true,false);
         
         CategoryPlot plot = (CategoryPlot) stackBarChart.getPlot();
-        plot.getRenderer().setSeriesPaint(0, Color.RED);
-        plot.getRenderer().setSeriesPaint(1, new Color(11,102,35));
+        plot.getRenderer().setSeriesPaint(0, new Color(11,102,35));
+        plot.getRenderer().setSeriesPaint(1, Color.ORANGE);
         plot.setBackgroundPaint( Color.WHITE );
         
   
         stackedBarIndividualRejectedApprovedPanel = new ChartPanel( stackBarChart );
         stackedBarIndividualRejectedApprovedPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
         
-                System.out.println("hereererereere \n" + approved);
     }
     
 
@@ -1017,10 +1016,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         
-        double[][] data = new double[][]{
-        {210, 300, 320, 265, 299, 200},
-        {200, 304, 201, 201, 340, 300},
-        };
+        
         
         for (Map.Entry<String, Integer> entry : approved.entrySet()) {
            
@@ -1045,10 +1041,6 @@ public class FrameDashBoard extends javax.swing.JFrame {
                dataset.addValue( entry.getValue() , "rejected" , entry.getKey());
            }
         }
-        dataset.addValue(1, "Codes(rejected)", "1");
-        dataset.addValue(2, "Codes(approved)", "1");
-        dataset.addValue(3, "Codes(rejected)", "2");
-        dataset.addValue(4, "Codes(approved)", "2");
         
         return dataset;
     }

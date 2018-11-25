@@ -29,7 +29,7 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
                         "AND c.user_id = ? " +
                         "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
                         "AND STR_TO_DATE(?,'%d-%M-%Y') "+
-                        "AND r.approved = 0";
+                        "AND r.approved = 0 ";
         
         switch (period) {
             case 2:
@@ -86,7 +86,7 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
                         "AND c.user_id = ? " +
                         "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
                         "AND STR_TO_DATE(?,'%d-%M-%Y') "+
-                        "AND r.approved = 1";
+                        "AND r.approved = 1 ";
         
         switch (period) {
             case 2:
@@ -128,7 +128,6 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
             }catch (SQLException ex) {
                 
             }
-        
         return map;
         
     }
