@@ -56,6 +56,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private ChartPanel linePushByIndividualChartPanel;
     private ChartPanel stackedBarIndividualRejectedApprovedPanel;
     private ChartPanel stackedBarTeamRejectedApprovedPanel;
+    private ChartPanel codesRejectedByTeamAreaPanel;
     
     private JDatePickerImpl datePickerFromPersonal;
     private JDatePickerImpl datePickerToPersonal;
@@ -1012,7 +1013,27 @@ public class FrameDashBoard extends javax.swing.JFrame {
         stackedBarIndividualRejectedApprovedPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
         
     }
-    
+     private void displayRejectedCodesPercentAreaGraph(String dateFrom, String dateTo, int period, int userId) {
+        System.out.println("here");
+
+        LinkedHashMap<String, Integer> map = service.getNumberOfTeamCodeRejected(dateFrom, dateTo, period, userId);
+
+          
+        JFreeChart chart = ChartFactory.createAreaChart(
+        "Codes Rejected",
+        "Date", 
+        "Percentage(%)",
+        createDataset(map, period),PlotOrientation.VERTICAL,
+                true, true, false);
+
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        plot.getRenderer().setSeriesPaint(0, new Color(11, 102, 35));
+        plot.setBackgroundPaint(Color.WHITE);
+
+        codesRejectedByTeamAreaPanel = new ChartPanel(chart);
+        codesRejectedByTeamAreaPanel.setPreferredSize(new java.awt.Dimension(700, 500));
+
+    }
     private void displayNumOfRejectedApprovedCodeOfTeam(String dateFrom, String dateTo, int period, int projectId){
         
         LinkedHashMap<String, Integer> approved = service.getNumberOfTeamCodeApproved(dateFrom, dateTo, period, projectId);
