@@ -136,6 +136,8 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jPanel18.setBorder(null);
         jPanel6.setLayout(new FlowLayout());
         jPanel6.setBorder(null);
+        jPanel11.setLayout(new FlowLayout());
+        jPanel11.setBorder(null);
         
         ArrayList<UserDTO> userList = service.getUsersList(Session.currentProject.getProjectId());
         
@@ -889,12 +891,15 @@ public class FrameDashBoard extends javax.swing.JFrame {
             //Code to generate graphs
             jPanel2.removeAll();
             jPanel6.removeAll();
+            jPanel11.removeAll();
             displayCodesPushedLineGraph(dateFrom,dateTo,period,Session.currentProject.getProjectId());
             displayLinesPushedLineGraph(dateFrom,dateTo,period,Session.currentProject.getProjectId());
             displayNumOfRejectedApprovedCodeOfTeam(dateFrom, dateTo, period, Session.currentProject.getProjectId());
+            displayRejectedCodesPercentAreaGraph(dateFrom, dateTo, period, Session.currentProject.getProjectId());
             jPanel2.add(codePushChartPanel);
             jPanel2.add(linePushChartPanel);
             jPanel6.add(stackedBarTeamRejectedApprovedPanel);
+            jPanel11.add(codesRejectedByTeamAreaPanel);
             linePushChartPanel.setVisible(false);
             jButton1.setVisible(true);
             jButton3.setVisible(true);
@@ -1013,12 +1018,28 @@ public class FrameDashBoard extends javax.swing.JFrame {
         stackedBarIndividualRejectedApprovedPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
         
     }
-     private void displayRejectedCodesPercentAreaGraph(String dateFrom, String dateTo, int period, int userId) {
+     private void displayRejectedCodesPercentAreaGraph(String dateFrom, String dateTo, int period, int projectId) {
         System.out.println("here");
 
-        LinkedHashMap<String, Integer> map = service.getNumberOfTeamCodeRejected(dateFrom, dateTo, period, userId);
-
-          
+        LinkedHashMap<String, Integer> rejected = service.getNumberOfTeamCodeRejected(dateFrom, dateTo, period, projectId);
+        LinkedHashMap<String, Integer> pushed = service.getCountCodesPushedByTeam(dateFrom, dateTo, period, projectId);
+        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
+        
+        for(HashMap.Entry<String, Integer> rejectedEntry : rejected.entrySet()){
+            System.out.println("reject\n"+ rejectedEntry);
+            for(HashMap.Entry<String, Integer> pushedEntry : pushed.entrySet()){
+                //String periodPush = ""+pushedEntry.getKey();
+                //String periodReject = ""+rejectedEntry.getKey();
+                //System.out.println("push\n"+pushedEntry);
+                if(pushedEntry.getKey() == rejectedEntry.getKey()){
+                    Integer percentage = rejectedEntry.getValue() * 100 / pushedEntry.getValue() ;
+                    //System.out.println("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeee111\n"+percentage);
+                    map.put(pushedEntry.getKey(), percentage);
+                }
+            }
+        }
+        
+        //System.out.println("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n"+map);
         JFreeChart chart = ChartFactory.createAreaChart(
         "Codes Rejected",
         "Date", 
@@ -1119,7 +1140,32 @@ public class FrameDashBoard extends javax.swing.JFrame {
 
       return dataset;
    }
-     
+     /*
+     private DefaultCategoryDataset createAreaChartDataset(LinkedHashMap<String, Double> map, int period) {
+      DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+      
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        
+      
+       for (Map.Entry<String, Double> entry : map.entrySet()) {
+           
+           if(period ==1){
+               cal.set(Calendar.WEEK_OF_YEAR, Integer.parseInt(entry.getKey().substring(0, 2)));
+               System.out.println(entry.getKey());
+               dataset.addValue( entry.getValue() , "Codes" , formatter.format(cal.getTime()));
+           }
+           else{
+               dataset.addValue( entry.getValue() , "Codes" , entry.getKey());
+           }
+
+        }
+
+      return dataset;
+   }
+     */
      
      
      
