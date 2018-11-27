@@ -362,15 +362,15 @@ public class ReviewDAOImpl implements ReviewDAO {
                 " AND r.code_id = c.code_id " +
                 " AND us.project_id = ? " +
                 " AND c.user_id = ? " +
-                "AND r.submit_time BETWEEN ? AND ?";
+                "AND r.submit_time BETWEEN STR_TO_DATE(?,'%d-%M-%Y') AND STR_TO_DATE(?,'%d-%M-%Y')";
 
         try {
             PreparedStatement ps = con.prepareStatement(query);
             System.out.println(ps.toString());
             ps.setInt(1, projectId);
             ps.setInt(2, userId);
-            ps.setDate(3, Date.valueOf(startDate));
-            ps.setDate(4, Date.valueOf(endDate));
+            ps.setString(3, startDate);
+            ps.setString(4, endDate);
             System.out.println(ps.toString());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

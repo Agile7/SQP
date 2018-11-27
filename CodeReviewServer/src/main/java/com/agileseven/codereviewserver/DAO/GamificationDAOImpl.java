@@ -14,6 +14,8 @@ import java.util.List;
 
 import com.agileseven.codereviewserver.DTO.*;
 import com.agileseven.codereviewserver.Utilities.XpCalculator;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import org.json.JSONObject;
 
 /**
@@ -359,9 +361,11 @@ public class GamificationDAOImpl implements GamificationDAO{
 
                 List<CodeDTO> listOfCodePushedByUserBetweenDates = codeDAO.getListOfCodePushedByUserBetweenDates(userId, startDate, endDate);
                 ArrayList<ReviewDTO> reviewedCodesByUserBetweenDates = reviewDAO.getReviewedCodesByUserBetweenDates(userId, user.getProjectId(), startDate, endDate);
-
-                LocalDate start = Date.valueOf(startDate).toLocalDate();
-                LocalDate end = Date.valueOf(endDate).toLocalDate();
+                
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MMM-yyyy");
+	
+                LocalDate start = LocalDate.parse(startDate, formatter);
+                LocalDate end =  LocalDate.parse(endDate, formatter);
 
                 List<LocalDate> dates = new ArrayList<>();
 

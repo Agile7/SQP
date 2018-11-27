@@ -183,11 +183,11 @@ public class CodeDAOImpl implements CodeDAO{
     public List<CodeDTO> getListOfCodePushedByUserBetweenDates(int userId, String startDate, String endDate) throws SQLException {
         List<CodeDTO> codeList = new ArrayList<>();
         Connection connection = ConnectionFactory.getConnection();
-        String sql = "SELECT * FROM code WHERE user_id = ? AND push_date BETWEEN ? AND ?;";
+        String sql = "SELECT * FROM code WHERE user_id = ? AND push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') AND STR_TO_DATE(?,'%d-%M-%Y');";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, userId);
-        statement.setDate(2, Date.valueOf(startDate));
-        statement.setDate(3, Date.valueOf(endDate));
+        statement.setString(2, startDate);
+        statement.setString(3, endDate);
 //        System.out.println(statement);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()){
