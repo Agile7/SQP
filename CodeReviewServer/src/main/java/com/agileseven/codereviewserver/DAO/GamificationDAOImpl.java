@@ -239,11 +239,18 @@ public class GamificationDAOImpl implements GamificationDAO{
     public Integer getTotalLineReviewed(String startDate, String endDate, int projectId) {
         Connection con = ConnectionFactory.getConnection();
         int totalLineReviewed = 0;
-        String query = "SELECT SUM(DISTINCT number_of_lines)" + 
-                        "FROM code c, user u, review r "+
-                        "WHERE u.project_id = ? "+
+        String query = "SELECT SUM(DISTINCT number_of_lines) " + 
+                        "FROM code c, review r, user_story us "+
+                        "WHERE us.project_id = ? "+
+                        "AND c.user_story_id = us.user_story_id " +
                         "AND c.code_id IN (SELECT DISTINCT code_id FROM review rv WHERE rv.submit_time BETWEEN STR_TO_DATE(?,'%d-%M-%Y') " +
                         "AND STR_TO_DATE(?,'%d-%M-%Y'))";
+        
+//        String query = "SELECT SUM(DISTINCT number_of_lines)" + 
+//                        "FROM code c, review r, user_story us  "+
+//                        "WHERE us.project_id = ? "+
+//                        "AND c.user_story_id = us.user_story_id " +
+//                        "AND c.code_id IN (SELECT DISTINCT code_id FROM review rv )";
         
            try {
                 PreparedStatement ps = con.prepareStatement(query);
@@ -270,13 +277,20 @@ public class GamificationDAOImpl implements GamificationDAO{
     public Integer getTotalAnnotation(String startDate, String endDate, int projectId) {
         Connection con = ConnectionFactory.getConnection();
         int totalAnnotation = 0;
-        String query = "SELECT COUNT(DISTINCT annotation_id)" + 
-                        "FROM code c, user u, review r, review_annotation ra, user_story us "+
+        String query = "SELECT COUNT(DISTINCT annotation_id) " + 
+                        "FROM code c, review r, review_annotation ra, user_story us "+
                         "WHERE us.project_id = ? "+
-                        "AND c.code_id = r.code_id" +
-                        "AND c.user_story_id = us.user_story_id" +
+                        "AND c.code_id = r.code_id " +
+                        "AND c.user_story_id = us.user_story_id " +
                         "AND r.review_id IN (SELECT DISTINCT review_id FROM review rv WHERE rv.submit_time BETWEEN STR_TO_DATE(?,'%d-%M-%Y') " +
                         "AND STR_TO_DATE(?,'%d-%M-%Y'))";
+        
+//        String query = "SELECT COUNT(DISTINCT annotation_id)" + 
+//                        "FROM code c, review r, review_annotation ra, user_story us "+
+//                        "WHERE us.project_id = ? "+
+//                        "AND c.user_story_id = us.user_story_id " +
+//                        "AND c.code_id = r.code_id " +
+//                        "AND ra.review_id IN (SELECT DISTINCT review_id FROM review rv)";
                   
            try {
                 PreparedStatement ps = con.prepareStatement(query);
@@ -303,14 +317,22 @@ public class GamificationDAOImpl implements GamificationDAO{
     public LinkedHashMap<String, Integer> getListRuleCount(String startDate, String endDate, int projectId) {
         Connection con = ConnectionFactory.getConnection();
         LinkedHashMap<String, Integer> listData = new LinkedHashMap<String, Integer>();
-        String query = "SELECT DISTINCT(rule_id) as ruleID, COUNT(*) as nbOfRule" + 
-                        "FROM code c, user u, review r, review_annotation ra, user_story us "+
+        String query = "SELECT DISTINCT(rule_id) as ruleID, COUNT(*) as nbOfRule " + 
+                        "FROM code c, review r, review_annotation ra, user_story us "+
                         "WHERE us.project_id = ? "+
-                        "AND c.code_id = r.code_id" +
-                        "AND c.user_story_id = us.user_story_id" +
+                        "AND c.code_id = r.code_id " +
+                        "AND c.user_story_id = us.user_story_id " +
                         "AND ra.review_id IN (SELECT DISTINCT review_id FROM review rv WHERE rv.submit_time BETWEEN STR_TO_DATE(?,'%d-%M-%Y') " +
-                        "AND STR_TO_DATE(?,'%d-%M-%Y'))" +
+                        "AND STR_TO_DATE(?,'%d-%M-%Y')) " +
                         "GROUP BY rule_id";
+        
+//        String query = "SELECT DISTINCT(rule_id) as ruleID, COUNT(*) as nbOfRule " + 
+//                        "FROM code c, review r, review_annotation ra, user_story us "+
+//                        "WHERE us.project_id = ? "+
+//                        "AND c.code_id = r.code_id " +
+//                        "AND c.user_story_id = us.user_story_id " +
+//                        "AND ra.review_id IN (SELECT DISTINCT review_id FROM review rv ) " +
+//                        "GROUP BY rule_id";
         
            try {
                 PreparedStatement ps = con.prepareStatement(query);
@@ -321,6 +343,7 @@ public class GamificationDAOImpl implements GamificationDAO{
                 System.out.println(ps);
               
                 while (rs.next()) {
+                    System.out.println(rs.getString("ruleID") + " | " + rs.getInt("nbOfRule") + " /// ");
                     listData.put(rs.getString("ruleID"), rs.getInt("nbOfRule"));
                 }
                 ps.close();

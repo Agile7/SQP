@@ -32,10 +32,13 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DatasetUtilities;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.util.Rotation;
 
 /**
  *
@@ -57,6 +60,8 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private ChartPanel stackedBarIndividualRejectedApprovedPanel;
     private ChartPanel stackedBarTeamRejectedApprovedPanel;
     private ChartPanel codesRejectedByTeamAreaPanel;
+    
+    private ChartPanel annotationChartPanel;
     
     private JDatePickerImpl datePickerFromPersonal;
     private JDatePickerImpl datePickerToPersonal;
@@ -138,19 +143,24 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jPanel6.setBorder(null);
         jPanel11.setLayout(new FlowLayout());
         jPanel11.setBorder(null);
+        jPanel19.setLayout(new FlowLayout());
+        jPanel19.setBorder(null);
+        jPanel10.setBorder(null);
+        jPanel9.setBorder(null);
         
+        jPanel19.setVisible(false);
+        lbTotalAnnotation.setVisible(false);
+        lbTotalLineReviewed.setVisible(false);
+        lbPercentage.setVisible(false);
+        jLabel14.setVisible(false);
+        jLabel15.setVisible(false);
+        jLabel16.setVisible(false);
         ArrayList<UserDTO> userList = service.getUsersList(Session.currentProject.getProjectId());
         
         for(UserDTO user : userList){
             jComboBox1.addItem(user.getFirstName() + " " + user.getLastName());
         }
 
-        jTextField1.setText("");
-        jTextField1.setEditable(false);
-        jTextField2.setText("");
-        jTextField2.setEditable(false);
-        jTextField3.setText("");
-        jTextField3.setEditable(false);
     }
 
     /**
@@ -177,13 +187,20 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
+        lbTotalAnnotation = new javax.swing.JLabel();
+        lbTotalLineReviewed = new javax.swing.JLabel();
+        lbPercentage = new javax.swing.JLabel();
+        lbValueTotalAnnotation = new javax.swing.JLabel();
+        lbValueTotalLineReviewed = new javax.swing.JLabel();
+        lbValuePercentage = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        totalTimeReviewed = new javax.swing.JLabel();
+        maxTimeReviewed = new javax.swing.JLabel();
+        minTimeReviewed = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -312,74 +329,123 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        lbTotalAnnotation.setText("Number of Annotations in Total:");
+
+        lbTotalLineReviewed.setText("Number of Lines reviewed in Total:");
+
+        lbPercentage.setText("Percentage of Annotation per line:");
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 547, Short.MAX_VALUE)
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 272, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 706, Short.MAX_VALUE)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(177, 177, 177)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbTotalLineReviewed)
+                            .addComponent(lbTotalAnnotation)
+                            .addComponent(lbPercentage))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbValueTotalAnnotation)
+                            .addComponent(lbValueTotalLineReviewed)
+                            .addComponent(lbValuePercentage)))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 367, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTotalAnnotation)
+                    .addComponent(lbValueTotalAnnotation))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTotalLineReviewed)
+                    .addComponent(lbValueTotalLineReviewed))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbPercentage)
+                    .addComponent(lbValuePercentage))
+                .addContainerGap())
         );
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
         jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel14.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel14.setText("Total Review Time:");
 
-        jLabel15.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel15.setText("MIN:");
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel15.setText("MIN: ");
 
-        jLabel16.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel16.setText("MAX:");
 
-        jTextField1.setText("jTextField1");
+        totalTimeReviewed.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
-        jTextField2.setText("jTextField1");
+        maxTimeReviewed.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
-        jTextField3.setText("jTextField1");
+        minTimeReviewed.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(175, 175, 175)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(150, 150, 150)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(minTimeReviewed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(145, 145, 145)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addGap(145, 145, 145)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(totalTimeReviewed, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(maxTimeReviewed, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(74, 74, 74)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(totalTimeReviewed, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(183, Short.MAX_VALUE))
+                    .addComponent(maxTimeReviewed, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(minTimeReviewed, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
@@ -853,7 +919,9 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         //////////////
-
+        jLabel14.setVisible(true);
+        jLabel15.setVisible(true);
+        jLabel16.setVisible(true);
         String start = datePickerFrom.getModel().getYear() + "-" + (datePickerFrom.getModel().getMonth() + 1) + "-" + datePickerFrom.getModel().getDay();
         String end = datePickerTo.getModel().getYear() + "-" + (datePickerTo.getModel().getMonth() + 1) + "-" + datePickerTo.getModel().getDay();
 
@@ -868,10 +936,12 @@ public class FrameDashBoard extends javax.swing.JFrame {
         String maxText = max[0] + "h " + max[1] +"m " + max[2] + "s";
         String totalText = total[0] + "h " + total[1] +"m " + total[2] + "s";
 
-        jTextField1.setText(minText);
-        jTextField2.setText(maxText);
-        jTextField3.setText(totalText);
-
+        totalTimeReviewed.setText(totalText);
+        maxTimeReviewed.setText(maxText);
+        minTimeReviewed.setText(minText);
+        
+        
+        
         //////////////
 
         String dateFrom = datePickerFrom.getJFormattedTextField().getText();
@@ -888,14 +958,20 @@ public class FrameDashBoard extends javax.swing.JFrame {
         }
         
         else{
+            
             //Code to generate graphs
             jPanel2.removeAll();
             jPanel6.removeAll();
             jPanel11.removeAll();
+            jPanel19.setVisible(true);
+            jPanel19.removeAll();
             displayCodesPushedLineGraph(dateFrom,dateTo,period,Session.currentProject.getProjectId());
             displayLinesPushedLineGraph(dateFrom,dateTo,period,Session.currentProject.getProjectId());
             displayNumOfRejectedApprovedCodeOfTeam(dateFrom, dateTo, period, Session.currentProject.getProjectId());
             displayRejectedCodesPercentAreaGraph(dateFrom, dateTo, period, Session.currentProject.getProjectId());
+            // PIECHART FOR ANNOTATION
+            displayAnnotationPieChart(dateFrom ,dateTo, Session.currentProject.getProjectId());
+            jPanel19.add(annotationChartPanel);
             jPanel2.add(codePushChartPanel);
             jPanel2.add(linePushChartPanel);
             jPanel6.add(stackedBarTeamRejectedApprovedPanel);
@@ -903,10 +979,53 @@ public class FrameDashBoard extends javax.swing.JFrame {
             linePushChartPanel.setVisible(false);
             jButton1.setVisible(true);
             jButton3.setVisible(true);
+            
+            lbTotalAnnotation.setVisible(true);
+            lbTotalLineReviewed.setVisible(true);
+            lbPercentage.setVisible(true);
+            // TEXT FOR ANNOTATION
+            Integer nbOfAnnotation = consumer.getNumberOfAnnotation(dateFrom, dateTo, Session.currentProject.getProjectId());
+            Integer nbOfLineReviewed = consumer.getNumberOfLineReviewed(dateFrom, dateTo, Session.currentProject.getProjectId());
+            lbValueTotalAnnotation.setText(nbOfAnnotation.toString());
+            lbValueTotalLineReviewed.setText(nbOfLineReviewed.toString());
+            float percentageAnnotationPerLine = (float) ((float)nbOfAnnotation*100.0 / (float)nbOfLineReviewed);
+            String numberAsString = String.format ("%.2f", percentageAnnotationPerLine) + " %";
+            lbValuePercentage.setText(numberAsString);
+            
+            //annotationChartPanel.setVisible(true);
         }
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void displayAnnotationPieChart(String dateFrom, String dateTo, int projectId){
+        LinkedHashMap<String, Integer> mapRule = service.getNumberOfRuleAnnotation(dateFrom, dateTo, projectId);
+        int totalNbOfRule = 0;
+        DefaultPieDataset ds = new DefaultPieDataset();
+        for (Map.Entry<String, Integer> entry : mapRule.entrySet()) {
+            totalNbOfRule += entry.getValue();
+        }
+        System.out.println("totalNbOfRule: " + totalNbOfRule);
+        for (Map.Entry<String, Integer> entry : mapRule.entrySet()) {
+            ds.setValue(entry.getKey(), entry.getValue()*100 / totalNbOfRule);
+        }
+        JFreeChart pieChart = ChartFactory.createPieChart3D(
+            "Percentage of Rules used in Annotation", 
+            ds,   // data
+            true,  // include legend
+            true,
+            false
+        );
+
+        PiePlot3D plot = (PiePlot3D) pieChart.getPlot();
+        plot.setStartAngle(290);
+        plot.setDirection(Rotation.CLOCKWISE);
+        plot.setForegroundAlpha(0.5f);
+        
+        annotationChartPanel = new ChartPanel(pieChart);
+        annotationChartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+    }
+   
     
     private void displayCodesPushedLineGraph(String dateFrom, String dateTo, int period, int projectId){
         
@@ -1052,7 +1171,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
         plot.setBackgroundPaint(Color.WHITE);
 
         codesRejectedByTeamAreaPanel = new ChartPanel(chart);
-        codesRejectedByTeamAreaPanel.setPreferredSize(new java.awt.Dimension(700, 500));
+        codesRejectedByTeamAreaPanel.setPreferredSize(new java.awt.Dimension(1100, 500));
 
     }
     private void displayNumOfRejectedApprovedCodeOfTeam(String dateFrom, String dateTo, int period, int projectId){
@@ -1321,6 +1440,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1333,8 +1453,14 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel lbPercentage;
+    private javax.swing.JLabel lbTotalAnnotation;
+    private javax.swing.JLabel lbTotalLineReviewed;
+    private javax.swing.JLabel lbValuePercentage;
+    private javax.swing.JLabel lbValueTotalAnnotation;
+    private javax.swing.JLabel lbValueTotalLineReviewed;
+    private javax.swing.JLabel maxTimeReviewed;
+    private javax.swing.JLabel minTimeReviewed;
+    private javax.swing.JLabel totalTimeReviewed;
     // End of variables declaration//GEN-END:variables
 }
