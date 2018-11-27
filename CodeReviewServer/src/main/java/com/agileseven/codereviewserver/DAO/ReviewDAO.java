@@ -30,5 +30,7 @@ public interface ReviewDAO {
     public ArrayList<RuleDTO> getRulesList();
     public List<ReviewDTO> getReviewsOfUser(int userID) throws SQLException;
     public List<ReviewDTO> getReviewsOfProject(int projetcId, Date start, Date end) throws SQLException;
+    public List<ReviewDTO> getReviewsOfUserCodes(int devId);
+    public ArrayList<ReviewDTO> getReviewedCodesByUserBetweenDates(int userId,int projectId, String startDate, String endDate);
 
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.boot.Banner;
@@ -376,4 +377,13 @@ public class ServiceConsumer implements CommandLineRunner {
         }
         return mapRule;
     }
+    
+    public List<UserDTOWithXPGains> getUserXpGainsList(int projectId, String start, String end, int period){
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<UserDTOWithXPGains[]> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/usersXpList"
+                + "?projectId=" + projectId +"&start="+start+"&end="+end+"&period="+period, UserDTOWithXPGains[].class);
+        return new ArrayList<>(Arrays.asList(responseEntity.getBody()));
+    }
+    
 }

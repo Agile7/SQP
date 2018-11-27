@@ -22,15 +22,13 @@ import java.util.ArrayList;
  */
 public class AnnotationDAOImpl implements AnnotationDAO{
 
+    Connection con = ConnectionFactory.getConnection();
+
     public AnnotationDAOImpl() {
     }
     
-
-    
     @Override
     public ArrayList<ReviewAnnotationDTO> getAnnotationsByReviewId(int reviewId){
-        
-        Connection con = ConnectionFactory.getConnection();
         
         ResultSet resultSet;
         Statement Statement;

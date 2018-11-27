@@ -9,6 +9,9 @@ import com.agileseven.codereviewserver.DAO.GamificationDAO;
 import com.agileseven.codereviewserver.DAO.GamificationDAOImpl;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
+
+import com.agileseven.codereviewserver.DTO.UserDTOWithXPGains;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -157,5 +160,13 @@ public class GamificationController {
         }
         
         return mapRule;
+    }
+
+    @RequestMapping(path = "/usersXpList", method=RequestMethod.GET, produces = "application/json")
+    public List<UserDTOWithXPGains> userXpList(@RequestParam(value="start", defaultValue="") String startDate,
+                                               @RequestParam(value="end", defaultValue="") String endDate,
+                                               @RequestParam(value="period", defaultValue="") int period,
+                                               @RequestParam(value="projectId", defaultValue="") int projectId) {
+        return gamificationDAO.getXpGainOfProjectMembers(startDate, endDate, period, projectId);
     }
 }

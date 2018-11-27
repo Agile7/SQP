@@ -8,14 +8,12 @@ package com.agileseven.codereviewserver.DAO;
 import com.agileseven.codereviewserver.DTO.CodeDTO;
 import com.agileseven.codereviewserver.DTO.UserDTO;
 import com.agileseven.codereviewserver.DTO.UserstoryDTO;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,7 +37,7 @@ public class CodeDAOImpl implements CodeDAO{
         
         Connection con = ConnectionFactory.getConnection();
         String query = "SELECT c.code_id,c.comment,c.user_id,c.user_story_id," +
-                        "STR_TO_DATE(c.push_date,'%Y-%m-%d %T') as push_date,c.code_text, "+
+                        "STR_TO_DATE(c.push_date,'%Y-%m-%d %T') as push_date,c.code_text, c.version, "+
                         "u.first_name, u.last_name, us.title "+
                         "FROM code c, user u, user_story us " +
                         "where c.user_id = u.user_id " +
@@ -76,8 +74,9 @@ public class CodeDAOImpl implements CodeDAO{
              code.setUserStoryId(rs.getString("user_story_id"));
              code.setUserId(rs.getInt("user_id"));
              code.setPushDate(rs.getDate("push_date"));
-             code.setPushDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("push_date")));  
-             
+             code.setPushDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("push_date")));
+             code.setVersion(rs.getInt("version"));
+
              UserDTO user = new UserDTO();
              user.setUserId(rs.getInt("code_id"));
              user.setFirstName(rs.getString("first_name"));
@@ -134,7 +133,7 @@ public class CodeDAOImpl implements CodeDAO{
     public CodeDTO getCodeById(int codeId) {
         CodeDTO code = null;
          Connection con = ConnectionFactory.getConnection();
-        String query = "SELECT c.code_id, c.comment, c.code_text, c.push_date, c.user_id, "
+        String query = "SELECT c.code_id, c.comment, c.code_text, c.push_date, c.user_id, c.version, "
                         + "c.user_story_id, u.first_name, u.last_name, us.title "
                         + "FROM code c, user u , user_story us " 
                         + "where code_id = "+codeId
@@ -178,5 +177,22 @@ public class CodeDAOImpl implements CodeDAO{
             return -1;
         }
         return 1;
+    }
+
+    @Override
+    public List<CodeDTO> getListOfCodePushedByUserBetweenDates(int userId, String startDate, String endDate) throws SQLException {
+        List<CodeDTO> codeList = new ArrayList<>();
+        Connection connection = ConnectionFactory.getConnection();
+        String sql = "SELECT * FROM code WHERE user_id = ? AND push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') AND STR_TO_DATE(?,'%d-%M-%Y');";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, userId);
+        statement.setString(2, startDate);
+        statement.setString(3, endDate);
+//        System.out.println(statement);
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()){
+            codeList.add(buildCodeDTOfromResult(resultSet));
+        }
+        return codeList;
     }
 }

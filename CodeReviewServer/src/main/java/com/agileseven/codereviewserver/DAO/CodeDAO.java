@@ -6,7 +6,10 @@
 package com.agileseven.codereviewserver.DAO;
 
 import com.agileseven.codereviewserver.DTO.CodeDTO;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This interface contains the methods
@@ -24,5 +27,7 @@ public interface CodeDAO {
     public int pushCodeToDB(CodeDTO code);
     public CodeDTO getCodeById(int codeId);
     public int changeStatusOfCode(int codeId, int status);
+
+    public List<CodeDTO> getListOfCodePushedByUserBetweenDates(int userId, String startDate, String endDate) throws SQLException;
     
 }

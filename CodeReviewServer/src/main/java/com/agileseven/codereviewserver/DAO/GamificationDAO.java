@@ -5,7 +5,10 @@
  */
 package com.agileseven.codereviewserver.DAO;
 
+import com.agileseven.codereviewserver.DTO.UserDTOWithXPGains;
+
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  *
@@ -21,4 +24,6 @@ public interface GamificationDAO {
     public Integer getTotalLineReviewed(String startDate, String endDate, int projectId);
     public Integer getTotalAnnotation(String startDate, String endDate, int projectId);
     public LinkedHashMap<String, Integer> getListRuleCount(String startDate, String endDate, int projectId);
+
+    public List<UserDTOWithXPGains> getXpGainOfProjectMembers(String startDate, String endDate, int period, int projectId);
 }

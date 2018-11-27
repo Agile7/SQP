@@ -5,12 +5,17 @@
  */
 package com.agileseven.codereviewserver.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
+
+import com.agileseven.codereviewserver.DTO.*;
+import com.agileseven.codereviewserver.Utilities.XpCalculator;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import org.json.JSONObject;
 
 /**
@@ -354,6 +359,79 @@ public class GamificationDAOImpl implements GamificationDAO{
             }
         
         return listData;
+    }
+
+    public List<UserDTOWithXPGains> getXpGainOfProjectMembers(String startDate, String endDate, int period, int projectId) {
+        /*
+        Get project users
+        for each:
+            add user to list
+            Get codes pushed/reviews
+            for each time interval:
+                Use XpCalculator to calculate XP gain
+         */
+
+        try {
+
+            AccountDAO accountDAO = new AccountDAOImpl();
+            CodeDAO codeDAO = new CodeDAOImpl();
+            ReviewDAO reviewDAO = new ReviewDAOImpl();
+            List<UserDTOWithXPGains> listUserDTOWithXPGains = new ArrayList<>();
+
+            for (UserDTO user : accountDAO.getMembersOfProject(projectId)){
+
+                int userId = user.getUserId();
+
+                List<CodeDTO> listOfCodePushedByUserBetweenDates = codeDAO.getListOfCodePushedByUserBetweenDates(userId, startDate, endDate);
+                ArrayList<ReviewDTO> reviewedCodesByUserBetweenDates = reviewDAO.getReviewedCodesByUserBetweenDates(userId, user.getProjectId(), startDate, endDate);
+                
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MMM-yyyy");
+	
+                LocalDate start = LocalDate.parse(startDate, formatter);
+                LocalDate end =  LocalDate.parse(endDate, formatter);
+
+                List<LocalDate> dates = new ArrayList<>();
+
+                if (period == 2){
+                    for (LocalDate date = start; date.isBefore(end) || date.isEqual(end); date = date.plusMonths(1)){
+                        dates.add(date);
+                    }
+                } else if (period == 1){
+//                    System.out.println("dates: " + dates.size());
+                    for (LocalDate date = start; date.isBefore(end) || date.isEqual(end); date = date.plusWeeks(1)){
+                        dates.add(date);
+                    }
+                } else{
+                    for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)){
+                        dates.add(date);
+                    }
+                }
+
+                XpCalculator calculator = new XpCalculator(userId, listOfCodePushedByUserBetweenDates, reviewedCodesByUserBetweenDates);
+
+                UserDTOWithXPGains userWithXp = new UserDTOWithXPGains();
+                userWithXp.setUserId(user.getUserId());
+                userWithXp.setFirstName(user.getFirstName());
+                userWithXp.setLastName(user.getLastName());
+                userWithXp.setXpGainIntervalsList(new ArrayList<>());
+
+                for (int i = 0; i < dates.size() - 1; i++){
+                    LocalDate intervalStart = dates.get(i);
+                    LocalDate intervalEnd = dates.get(i + 1);
+                    // TODO:: Change date string format in response
+                    userWithXp.getXpGainIntervalsList().add(
+                            new UserXpSingleInterval(calculator.calculateXpGainBetweenDates(intervalStart, intervalEnd),
+                                    intervalStart.toString(), intervalEnd.toString())
+                    );
+                }
+                listUserDTOWithXPGains.add(userWithXp);
+            }
+            return listUserDTOWithXPGains;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 }
