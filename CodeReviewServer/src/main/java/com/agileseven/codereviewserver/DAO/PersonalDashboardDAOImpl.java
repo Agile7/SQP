@@ -24,13 +24,12 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
     public LinkedHashMap<String, Integer> getNumberOfPersonalCodeRejected(String startDate, String endDate, int period, int userId) {
         Connection con = ConnectionFactory.getConnection();
         
-        String query = "from review r, code c, user u" +
-                        "where r.code_id = c.code_id" +
-                        "and c.user_id = u.user_id" +
-                        "AND u.user_id = ?" +
+        String query = "from review r, code c " +
+                        "where r.code_id = c.code_id " +
+                        "AND c.user_id = ? " +
                         "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
                         "AND STR_TO_DATE(?,'%d-%M-%Y') "+
-                        "AND r.approved = 1";
+                        "AND r.approved = 0 ";
         
         switch (period) {
             case 2:
@@ -77,18 +76,73 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
         
     }
     
+    @Override
+    public LinkedHashMap<String, Integer> getNumberOfTeamCodeRejected(String startDate, String endDate, int period, int projectId) {
+        Connection con = ConnectionFactory.getConnection();
+        
+        String query = "from review r, code c, user u " +
+                        "where r.code_id = c.code_id " +
+                        "AND c.user_id = u.user_id " +
+                        "AND u.project_id = ? " +
+                        "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
+                        "AND STR_TO_DATE(?,'%d-%M-%Y') "+
+                        "AND r.approved = 0 ";
+        
+        switch (period) {
+            case 2:
+                //monthly
+                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(c.push_date, '%m-%Y') AS date_period " +query;
+                query = query + "GROUP BY DATE_FORMAT(c.push_date, '%m-%Y') ";
+                break;
+            case 1:
+                //weekly
+                query = "select count(*) AS count_rejectedCodes, concat(WEEK(c.push_date),'-',YEAR(c.push_date)) AS date_period " +query;
+                query = query + "GROUP BY concat(WEEK(c.push_date),'-',YEAR(c.push_date)) ";
+                break;
+            default:
+                //daily
+                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(c.push_date,'%d-%m-%Y') AS date_period " +query;
+                query = query + "GROUP BY DATE_FORMAT(c.push_date,'%d-%m-%Y') ";
+                break;
+        }
+        query = query + " ORDER BY DATE(c.push_date) ASC";
+        
+        LinkedHashMap<String, Integer> map = new LinkedHashMap();
+        
+           try {
+                PreparedStatement ps = con.prepareStatement(query);
+                ps.setInt(1, projectId);
+                ps.setString(2, startDate);
+                ps.setString(3, endDate);
+                ResultSet rs = ps.executeQuery();
+                
+              System.out.println(ps);
+                
+                while (rs.next()) {
+                    System.out.println(rs.getString("date_period"));
+                    map.put(rs.getString("date_period"),rs.getInt("count_rejectedCodes")) ;
+                }
+                ps.close();
+                rs.close();
+                con.close();
+            }catch (SQLException ex) {
+                
+            }
+        
+        return map;
+        
+    }
     //Number of approved codes
     @Override
     public LinkedHashMap<String, Integer> getNumberOfPersonalCodeApproved(String startDate, String endDate, int period, int userId) {
         Connection con = ConnectionFactory.getConnection();
         
-        String query = "from review r, code c, user u" +
-                        "where r.code_id = c.code_id" +
-                        "and c.user_id = u.user_id" +
-                        "AND u.user_id = ?" +
+        String query = "from review r, code c " +
+                        "where r.code_id = c.code_id " +
+                        "AND c.user_id = ? " +
                         "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
                         "AND STR_TO_DATE(?,'%d-%M-%Y') "+
-                        "AND r.approved = 1";
+                        "AND r.approved = 1 ";
         
         switch (period) {
             case 2:
@@ -123,6 +177,62 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
                 while (rs.next()) {
                     System.out.println(rs.getString("date_period"));
                     map.put(rs.getString("date_period"),rs.getInt("count_approvedCodes")) ;
+                }
+                ps.close();
+                rs.close();
+                con.close();
+            }catch (SQLException ex) {
+                
+            }
+        return map;
+        
+    }
+    
+    @Override
+    public LinkedHashMap<String, Integer> getNumberOfTeamCodeApproved(String startDate, String endDate, int period, int projectId) {
+        Connection con = ConnectionFactory.getConnection();
+        
+        String query = "from review r, code c, user u " +
+                        "where r.code_id = c.code_id " +
+                        "AND c.user_id = u.user_id " +
+                        "AND u.project_id = ? " +
+                        "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
+                        "AND STR_TO_DATE(?,'%d-%M-%Y') "+
+                        "AND r.approved = 1 ";
+        
+        switch (period) {
+            case 2:
+                //monthly
+                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(c.push_date, '%m-%Y') AS date_period " +query;
+                query = query + "GROUP BY DATE_FORMAT(c.push_date, '%m-%Y') ";
+                break;
+            case 1:
+                //weekly
+                query = "select count(*) AS count_rejectedCodes, concat(WEEK(c.push_date),'-',YEAR(c.push_date)) AS date_period " +query;
+                query = query + "GROUP BY concat(WEEK(c.push_date),'-',YEAR(c.push_date)) ";
+                break;
+            default:
+                //daily
+                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(c.push_date,'%d-%m-%Y') AS date_period " +query;
+                query = query + "GROUP BY DATE_FORMAT(c.push_date,'%d-%m-%Y') ";
+                break;
+        }
+        query = query + " ORDER BY DATE(c.push_date) ASC";
+        
+        LinkedHashMap<String, Integer> map = new LinkedHashMap();
+        
+           try {
+                PreparedStatement ps = con.prepareStatement(query);
+                ps.setInt(1, projectId);
+                ps.setString(2, startDate);
+                ps.setString(3, endDate);
+                ResultSet rs = ps.executeQuery();
+                
+              System.out.println(ps);
+                
+                while (rs.next()) {
+                    System.out.println(rs.getString("date_period"));
+                    map.put(rs.getString("date_period"),rs.getInt("count_rejectedCodes")) ;
                 }
                 ps.close();
                 rs.close();

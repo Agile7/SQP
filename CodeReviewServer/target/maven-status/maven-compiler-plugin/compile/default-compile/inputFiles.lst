@@ -4,8 +4,12 @@ D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewse
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\Utilities\EmailReminderService.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DTO\ProjectDTO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DTO\ProjectAssignDTO.java
+D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\Controller\GamificationController.java
+D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\Controller\PersonalDashboardController.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\UserStoryDAOImpl.java
+D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\PersonalDashboardDAO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\AnnotationDAO.java
+D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\GamificationDAO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DTO\UserDTO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DTO\PositionDTO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DTO\UserstoryDTO.java
@@ -14,8 +18,10 @@ D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewse
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DTO\RuleDTO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DTO\VersionDTO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\CodeDAO.java
+D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\GamificationDAOImpl.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\AccountDAO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\CodeDAOImpl.java
+D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\PersonalDashboardDAOImpl.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DAO\UserStoryDAO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\DTO\ReviewDTO.java
 D:\OtherWorkspace\SQP\CodeReviewServer\src\main\java\com\agileseven\codereviewserver\Controller\ReviewController.java

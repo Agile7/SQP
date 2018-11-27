@@ -65,4 +65,44 @@ public class PersonalDashboardController {
         return map;
     }
     
+    @RequestMapping(path = "/numCodeApprovedTeam", method=RequestMethod.GET)
+    public LinkedHashMap<String, Integer> numberOfTeamCodeApproved(@RequestParam(value="startDate", defaultValue="") String startDate,
+                        @RequestParam(value="endDate", defaultValue="") String endDate,
+                        @RequestParam(value="period", defaultValue="") int period,
+                        @RequestParam(value="projectId", defaultValue="") int projectId) {
+        
+        LinkedHashMap<String, Integer> map = null;
+        try{
+           map = personalDashboardDAO.getNumberOfTeamCodeApproved(startDate, endDate, period, projectId);
+       
+        }
+        catch(Exception ex){
+//            System.err.println("Got an exception!");
+//            System.err.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        
+        return map;
+    }
+    
+    @RequestMapping(path = "/numCodeRejectedTeam", method=RequestMethod.GET)
+    public LinkedHashMap<String, Integer> numberOfTeamCodeRejected(@RequestParam(value="startDate", defaultValue="") String startDate,
+                        @RequestParam(value="endDate", defaultValue="") String endDate,
+                        @RequestParam(value="period", defaultValue="") int period,
+                        @RequestParam(value="projectId", defaultValue="") int projectId) {
+        
+        LinkedHashMap<String, Integer> map = null;
+        try{
+           map = personalDashboardDAO.getNumberOfTeamCodeRejected(startDate, endDate, period, projectId);
+       
+        }
+        catch(Exception ex){
+//            System.err.println("Got an exception!");
+//            System.err.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        
+        return map;
+    }
+    
 }

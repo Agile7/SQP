@@ -310,6 +310,36 @@ public class ServiceConsumer implements CommandLineRunner {
         
         return map;
     }
+    
+    public LinkedHashMap<String, Integer> getNumberOfTeamCodeApproved(String startDate, String endDate, int period, int projectId) {
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<LinkedHashMap> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/numCodeApprovedTeam/?startDate="+startDate+"&endDate="+endDate+"&period="+period+"&projectId="+projectId, LinkedHashMap.class);
+        
+        LinkedHashMap<String, Integer> map = responseEntity.getBody();
+       
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey());
+        }
+        
+        
+        return map;
+    }
+    
+    public LinkedHashMap<String, Integer> getNumberOfTeamCodeRejected(String startDate, String endDate, int period, int projectId) {
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<LinkedHashMap> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/numCodeRejectedTeam/?startDate="+startDate+"&endDate="+endDate+"&period="+period+"&projectId="+projectId, LinkedHashMap.class);
+        
+        LinkedHashMap<String, Integer> map = responseEntity.getBody();
+       
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey());
+        }
+        
+        
+        return map;
+    }
 
     public ProjectReviewsResponse getProjectReviewsStatistics(int projectId, String start, String end){
         RestTemplate restTemplate = new RestTemplate();
