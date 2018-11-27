@@ -103,4 +103,59 @@ public class GamificationController {
         
         return map;
     }
+    
+    @RequestMapping(path = "/annotationByTeam", method=RequestMethod.GET)
+    public Integer numberOfAnnotationByTeam(@RequestParam(value="startDate", defaultValue="") String startDate,
+                        @RequestParam(value="endDate", defaultValue="") String endDate,
+                        @RequestParam(value="projectId", defaultValue="") int projectId)  {
+        
+        int nbOfAnnotation = 0;
+        try{
+           nbOfAnnotation = gamificationDAO.getTotalAnnotation(startDate, endDate, projectId);
+           
+        }
+        catch(Exception ex){
+//            System.err.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        
+        return nbOfAnnotation;
+    }
+    
+    @RequestMapping(path = "/lineReviewedByTeam", method=RequestMethod.GET)
+    public Integer numberOfLineReviewedByTeam(@RequestParam(value="startDate", defaultValue="") String startDate,
+                        @RequestParam(value="endDate", defaultValue="") String endDate,
+                        @RequestParam(value="projectId", defaultValue="") int projectId)  {
+        
+        int nbOfLineReviewed = 0;
+        try{
+           nbOfLineReviewed = gamificationDAO.getTotalLineReviewed(startDate, endDate, projectId);
+           
+        }
+        catch(Exception ex){
+//            System.err.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        
+        return nbOfLineReviewed;
+    }
+    
+    @RequestMapping(path = "/ruleByAnnotation", method=RequestMethod.GET)
+    public LinkedHashMap<String, Integer> numberOfRuleByAnnotation(@RequestParam(value="startDate", defaultValue="") String startDate,
+                        @RequestParam(value="endDate", defaultValue="") String endDate,
+                        @RequestParam(value="projectId", defaultValue="") int projectId) {
+        
+        LinkedHashMap<String, Integer> mapRule = null;
+        try{
+           mapRule = gamificationDAO.getListRuleCount(startDate, endDate, projectId);
+           
+        }
+        catch(Exception ex){
+//            System.err.println("Got an exception!");
+//            System.err.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        
+        return mapRule;
+    }
 }

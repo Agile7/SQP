@@ -317,5 +317,33 @@ public class ServiceConsumer implements CommandLineRunner {
                 = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/review/project?projectId=" + projectId +"&start="+start+"&end="+end, ProjectReviewsResponse.class);
         return responseEntity.getBody();
     }
+    
+    public Integer getNumberOfAnnotation(String startDate, String endDate, int projectId){
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<Integer> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/annotationByTeam/?startDate="+ startDate +"&endDate="+ endDate + "&projectId=" + projectId, Integer.class);
+        
+        return responseEntity.getBody();
+    }
   
+    public Integer getNumberOfLineReviewed(String startDate, String endDate, int projectId){
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<Integer> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/lineReviewedByTeam/?startDate="+ startDate +"&endDate="+ endDate + "&projectId=" + projectId, Integer.class);
+        
+        return responseEntity.getBody();
+    }
+    
+    public LinkedHashMap<String, Integer> getNumberOfRuleAnnotation(String startDate, String endDate, int projectId) {
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<LinkedHashMap> responseEntity
+                = restTemplate.getForEntity("http://localhost:9000/CodeReviewer/ruleByAnnotation/?startDate=" + startDate + "&endDate=" + endDate + "&projectId=" + projectId, LinkedHashMap.class);
+        
+        LinkedHashMap<String, Integer> mapRule = responseEntity.getBody();
+       
+        for (Map.Entry<String, Integer> entry : mapRule.entrySet()) {
+            System.out.println(entry.getKey());
+        }
+        return mapRule;
+    }
 }
