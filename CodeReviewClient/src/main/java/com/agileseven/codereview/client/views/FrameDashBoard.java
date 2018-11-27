@@ -10,6 +10,8 @@ import com.agileseven.codereview.client.ServiceConsumer;
 import com.agileseven.codereview.client.Session;
 import com.agileseven.codereview.client.Utils;
 import com.agileseven.codereview.client.ProjectReviewsResponse;
+import com.agileseven.codereview.client.UserDTOWithXPGains;
+import com.agileseven.codereview.client.UserXpSingleInterval;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -21,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.swing.JOptionPane;
@@ -31,6 +34,8 @@ import org.jdatepicker.impl.UtilDateModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
@@ -57,6 +62,10 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private ChartPanel stackedBarIndividualRejectedApprovedPanel;
     private ChartPanel stackedBarTeamRejectedApprovedPanel;
     private ChartPanel codesRejectedByTeamAreaPanel;
+    private ChartPanel gamificationChartPanel;
+    
+    private JDatePickerImpl mnDatePickerFrom;
+    private JDatePickerImpl mnDatePickerTo;
     
     private JDatePickerImpl datePickerFromPersonal;
     private JDatePickerImpl datePickerToPersonal;
@@ -100,7 +109,7 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jPanel2.setLayout(new FlowLayout());
         jPanel2.setBorder(null);
         
-        
+        mnPanel.setLayout(new FlowLayout());
         
         /*Personal Dashboard*//*Personal Dashboard*//*Personal Dashboard*/
 //      Properties p3 = new Properties();
@@ -127,6 +136,16 @@ public class FrameDashBoard extends javax.swing.JFrame {
         datePickerToPersonal.getJFormattedTextField().setPreferredSize(new Dimension(200, 40));
         jPanel15.setLayout(new FlowLayout());
         jPanel15.add(datePickerToPersonal);
+        
+        mnDatePickerFrom = new JDatePickerImpl(datePanel1, new DateComponentFormatter());
+        mnDatePickerFrom.getJFormattedTextField().setPreferredSize(new Dimension(200, 40));
+        mnPanelFrom.setLayout(new FlowLayout());
+        mnPanelFrom.add(mnDatePickerFrom);
+
+        mnDatePickerTo = new JDatePickerImpl(datePanel2, new DateComponentFormatter());
+        mnDatePickerTo.getJFormattedTextField().setPreferredSize(new Dimension(200, 40));
+        mnPanelTo.setLayout(new FlowLayout());
+        mnPanelTo.add(mnDatePickerTo);
         
         jButton5.setVisible(false);
         jButton6.setVisible(false);
@@ -190,6 +209,14 @@ public class FrameDashBoard extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jPanel5 = new javax.swing.JPanel();
+        mnPanelFrom = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        mnPanelTo = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        mnMenuPeriod = new javax.swing.JComboBox<>();
+        mnBtnOk = new javax.swing.JButton();
+        mnPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -522,15 +549,120 @@ public class FrameDashBoard extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
+        mnPanelFrom.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout mnPanelFromLayout = new javax.swing.GroupLayout(mnPanelFrom);
+        mnPanelFrom.setLayout(mnPanelFromLayout);
+        mnPanelFromLayout.setHorizontalGroup(
+            mnPanelFromLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 265, Short.MAX_VALUE)
+        );
+        mnPanelFromLayout.setVerticalGroup(
+            mnPanelFromLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jLabel19.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel19.setText("From: ");
+
+        mnPanelTo.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout mnPanelToLayout = new javax.swing.GroupLayout(mnPanelTo);
+        mnPanelTo.setLayout(mnPanelToLayout);
+        mnPanelToLayout.setHorizontalGroup(
+            mnPanelToLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 261, Short.MAX_VALUE)
+        );
+        mnPanelToLayout.setVerticalGroup(
+            mnPanelToLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 48, Short.MAX_VALUE)
+        );
+
+        jLabel20.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel20.setText("To:");
+
+        jLabel21.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel21.setText("Period:");
+
+        mnMenuPeriod.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        mnMenuPeriod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Daily", "Weekly", "Monthly" }));
+        mnMenuPeriod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnMenuPeriodActionPerformed(evt);
+            }
+        });
+
+        mnBtnOk.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        mnBtnOk.setForeground(new java.awt.Color(51, 204, 0));
+        mnBtnOk.setText("OK");
+        mnBtnOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnBtnOkActionPerformed(evt);
+            }
+        });
+
+        mnPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout mnPanelLayout = new javax.swing.GroupLayout(mnPanel);
+        mnPanel.setLayout(mnPanelLayout);
+        mnPanelLayout.setHorizontalGroup(
+            mnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 998, Short.MAX_VALUE)
+        );
+        mnPanelLayout.setVerticalGroup(
+            mnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 522, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1621, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(198, 198, 198)
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mnPanelFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mnPanelTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53)
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(mnMenuPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49)
+                        .addComponent(mnBtnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(278, 278, 278)
+                        .addComponent(mnPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(260, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1448, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel20))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel21)
+                            .addComponent(mnMenuPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mnBtnOk)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel19))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(mnPanelFrom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mnPanelTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(36, 36, 36)
+                .addComponent(mnPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(815, Short.MAX_VALUE))
         );
 
         jScrollPane4.setViewportView(jPanel5);
@@ -1251,6 +1383,68 @@ public class FrameDashBoard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void mnMenuPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnMenuPeriodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnMenuPeriodActionPerformed
+
+    private void mnBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnBtnOkActionPerformed
+        String dateFrom = datePickerFrom.getJFormattedTextField().getText();
+        String dateTo = datePickerTo.getJFormattedTextField().getText();
+        int period = mnMenuPeriod.getSelectedIndex();
+
+        Date from = Utils.convertStringToDate(dateFrom, "dd-MMM-yyyy");
+        Date to = Utils.convertStringToDate(dateTo, "dd-MMM-yyyy");
+
+        if(from.compareTo(to) > 0){
+
+            JOptionPane.showMessageDialog(this,"The end date should be greater than start date!",
+                "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+
+            mnPanel.removeAll();
+            List<UserDTOWithXPGains> userXpGainsList = service.getUserXpGainsList(Session.currentProject.getProjectId(), dateFrom, dateTo, period);
+            prepareGamificationChartPanel(userXpGainsList, period);
+            mnPanel.add(gamificationChartPanel);
+            mnPanel.updateUI();
+        }
+    }//GEN-LAST:event_mnBtnOkActionPerformed
+
+    private void prepareGamificationChartPanel(List<UserDTOWithXPGains> userXpGainsList, int period) {
+
+        String categoryLabel;
+        if (period == 2) categoryLabel = "Months";
+        else if (period == 1) categoryLabel = "Weeks";
+        else categoryLabel = "Days";
+
+        JFreeChart chart = ChartFactory.createLineChart(
+                "Members' XP gain",
+                categoryLabel,"Xp points gained",
+                createGamficationDataset(userXpGainsList),
+                PlotOrientation.VERTICAL,
+                true,true,false);
+
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        plot.setBackgroundPaint( Color.WHITE );
+        CategoryAxis domainAxis = plot.getDomainAxis();
+        domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);
+        
+        gamificationChartPanel = new ChartPanel( chart );
+        gamificationChartPanel.setPreferredSize( new java.awt.Dimension( 700 , 500 ) );
+    }
+    
+    private DefaultCategoryDataset createGamficationDataset(List<UserDTOWithXPGains> userXpGainsList) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        for (UserDTOWithXPGains user : userXpGainsList){
+            dataset.addValue(0, user.getFirstName() + " " + user.getLastName(), user.getXpGainIntervalsList().get(0).getDateFrom());
+            for (UserXpSingleInterval interval : user.getXpGainIntervalsList()){
+                dataset.addValue(interval.getXpGained(), user.getFirstName() + " " + user.getLastName(), interval.getDateTo());
+            }
+        }
+        
+        return dataset;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -1304,7 +1498,10 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1336,5 +1533,10 @@ public class FrameDashBoard extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JButton mnBtnOk;
+    private javax.swing.JComboBox<String> mnMenuPeriod;
+    private javax.swing.JPanel mnPanel;
+    private javax.swing.JPanel mnPanelFrom;
+    private javax.swing.JPanel mnPanelTo;
     // End of variables declaration//GEN-END:variables
 }
