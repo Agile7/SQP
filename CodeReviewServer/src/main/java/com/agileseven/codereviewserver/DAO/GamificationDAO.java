@@ -5,7 +5,6 @@
  */
 package com.agileseven.codereviewserver.DAO;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
