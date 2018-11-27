@@ -37,7 +37,7 @@ public class CodeDAOImpl implements CodeDAO{
         
         Connection con = ConnectionFactory.getConnection();
         String query = "SELECT c.code_id,c.comment,c.user_id,c.user_story_id," +
-                        "STR_TO_DATE(c.push_date,'%Y-%m-%d %T') as push_date,c.code_text, "+
+                        "STR_TO_DATE(c.push_date,'%Y-%m-%d %T') as push_date,c.code_text, c.version, "+
                         "u.first_name, u.last_name, us.title "+
                         "FROM code c, user u, user_story us " +
                         "where c.user_id = u.user_id " +
@@ -133,7 +133,7 @@ public class CodeDAOImpl implements CodeDAO{
     public CodeDTO getCodeById(int codeId) {
         CodeDTO code = null;
          Connection con = ConnectionFactory.getConnection();
-        String query = "SELECT c.code_id, c.comment, c.code_text, c.push_date, c.user_id, "
+        String query = "SELECT c.code_id, c.comment, c.code_text, c.push_date, c.user_id, c.version, "
                         + "c.user_story_id, u.first_name, u.last_name, us.title "
                         + "FROM code c, user u , user_story us " 
                         + "where code_id = "+codeId
