@@ -24,8 +24,17 @@ public class ReviewDTO {
     private CodeDTO code;
     private UserDTO reviewer;
     private ArrayList<ReviewAnnotationDTO> annotationList;
+    private Date submitDate;
 
-    public ReviewDTO(int approved, int codeid, int reviewerid, int reviewid, String starttime, String submittime, CodeDTO codeDTO) {
+    public Date getSubmitDate() {
+        return submitDate;
+    }
+
+    public void setSubmitDate(Date submitDate) {
+        this.submitDate = submitDate;
+    }
+
+    public ReviewDTO(int approved, int codeid, int reviewerid, int reviewid, String starttime, String submittime, CodeDTO codeDTO, Date submitDate) {
         this.approved = approved;
         this.codeId = codeid;
         this.reviewerId = reviewerid;
@@ -33,6 +42,7 @@ public class ReviewDTO {
         this.startTime = starttime;
         this.submitTime = submittime;
         this.code = codeDTO;
+        this.submitDate = submitDate;
     }
    
 

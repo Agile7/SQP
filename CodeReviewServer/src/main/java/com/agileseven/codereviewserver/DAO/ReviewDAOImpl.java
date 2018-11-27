@@ -22,6 +22,7 @@ import java.util.logging.Logger;
  */
 public class ReviewDAOImpl implements ReviewDAO {
 
+    Connection connection = ConnectionFactory.getConnection();
    
     public int approveCode(int code_id, int approved) {
         Connection con = ConnectionFactory.getConnection();
@@ -247,6 +248,7 @@ public class ReviewDAOImpl implements ReviewDAO {
             review.setReviewerId(rs.getInt("reviewer_id"));
             review.setApproved(rs.getInt("approved"));
             review.setSubmitTime(rs.getString("submit_time"));
+            review.setSubmitDate(rs.getDate("submit_time"));
             
             CodeDTO code = new CodeDTO();
             code.setCodeId(rs.getInt("code_id"));
@@ -306,6 +308,82 @@ public class ReviewDAOImpl implements ReviewDAO {
             reviews.add(review);
         }
         return reviews;
+    }
+
+    @Override
+    public List<ReviewDTO> getReviewsOfUserCodes(int devId) {
+        try {
+            CodeDAO codeDAO = new CodeDAOImpl();
+
+            List<ReviewDTO> reviews = new ArrayList<>();
+            String sql = "SELECT * FROM review WHERE approved = 1 AND code_id IN (SELECT code_id FROM code WHERE user_id = ?);";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, devId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                ReviewDTO reviewDTO = createReviewDTO(resultSet);
+//                reviewDTO.setCode(codeDAO.getCodeById(reviewDTO.getCodeId()));
+
+                reviewDTO.setSubmitTime(reviewDTO.getSubmitDate().toString());
+
+                reviews.add(reviewDTO);
+            }
+            return reviews;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private ReviewDTO createReviewDTO(ResultSet set) throws SQLException {
+        ReviewDTO review = new ReviewDTO();
+        review.setReviewId(set.getInt(1));
+        review.setCodeId(2);
+        review.setReviewerId(3);
+        review.setApproved(4);
+        review.setStartTime(set.getString(5));
+        review.setSubmitTime(set.getString(6));
+        review.setSubmitDate(set.getDate(6));
+        return review;
+    }
+
+    @Override
+    public ArrayList<ReviewDTO> getReviewedCodesByUserBetweenDates(int userId, int projectId, String startDate, String endDate) {
+        ArrayList<ReviewDTO> reviewList = new ArrayList<ReviewDTO>();
+
+        Connection con = ConnectionFactory.getConnection();
+        String query = "SELECT c.code_id,c.code_text,c.user_story_id," +
+                "us.title, r.review_id, r.reviewer_id, u.first_name, u.last_name,"+
+                "r.approved, r.submit_time "+
+                "FROM code c, user u, user_story us, review r " +
+                "where r.reviewer_id = u.user_id " +
+                " AND c.user_story_id = us.user_story_id " +
+                " AND r.code_id = c.code_id " +
+                " AND us.project_id = ? " +
+                " AND c.user_id = ? " +
+                "AND r.submit_time BETWEEN ? AND ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            System.out.println(ps.toString());
+            ps.setInt(1, projectId);
+            ps.setInt(2, userId);
+            ps.setDate(3, Date.valueOf(startDate));
+            ps.setDate(4, Date.valueOf(endDate));
+            System.out.println(ps.toString());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                reviewList.add(buildReviewDTOfromResult(rs));
+            }
+            ps.close();
+            rs.close();
+            con.close();
+        }catch (SQLException ex) {
+
+        }
+
+        return reviewList;
     }
     
 }

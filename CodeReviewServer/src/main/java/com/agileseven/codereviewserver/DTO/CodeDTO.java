@@ -25,6 +25,7 @@ public class CodeDTO {
     private UserstoryDTO userStory;
     private UserDTO user;
     private int status;
+    private int version;
 
     public UserstoryDTO getUserStory() {
         return userStory;
@@ -42,7 +43,7 @@ public class CodeDTO {
         this.user = userDTO;
     }
 
-    public CodeDTO(int codeid, String codetext, String comment, int numlines, Date pushdate, int userid, String userstoryid, int status) {
+    public CodeDTO(int codeid, String codetext, String comment, int numlines, Date pushdate, int userid, String userstoryid, int status, int version) {
         this.codeId = codeid;
         this.codeText = codetext;
         this.comment = comment;
@@ -51,7 +52,15 @@ public class CodeDTO {
         this.userId = userid;
         this.userStoryId = userstoryid;
         this.status = status;
+        this.version = version;
+    }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public CodeDTO() {
