@@ -27,28 +27,28 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
         String query = "from review r, code c " +
                         "where r.code_id = c.code_id " +
                         "AND c.user_id = ? " +
-                        "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
+                        "AND r.start_time BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
                         "AND STR_TO_DATE(?,'%d-%M-%Y') "+
                         "AND r.approved = 0 ";
         
         switch (period) {
             case 2:
                 //monthly
-                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(c.push_date, '%m-%Y') AS date_period " +query;
-                query = query + "GROUP BY DATE_FORMAT(c.push_date, '%m-%Y') ";
+                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(r.submit_time, '%m-%Y') AS date_period " +query;
+                query = query + "GROUP BY DATE_FORMAT(r.submit_time, '%m-%Y') ";
                 break;
             case 1:
                 //weekly
-                query = "select count(*) AS count_rejectedCodes, concat(WEEK(c.push_date),'-',YEAR(c.push_date)) AS date_period " +query;
-                query = query + "GROUP BY concat(WEEK(c.push_date),'-',YEAR(c.push_date)) ";
+                query = "select count(*) AS count_rejectedCodes, concat(WEEK(r.submit_time),'-',YEAR(r.submit_time)) AS date_period " +query;
+                query = query + "GROUP BY concat(WEEK(r.submit_time),'-',YEAR(r.submit_time)) ";
                 break;
             default:
                 //daily
-                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(c.push_date,'%d-%m-%Y') AS date_period " +query;
-                query = query + "GROUP BY DATE_FORMAT(c.push_date,'%d-%m-%Y') ";
+                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(r.submit_time,'%d-%m-%Y') AS date_period " +query;
+                query = query + "GROUP BY DATE_FORMAT(r.submit_time,'%d-%m-%Y') ";
                 break;
         }
-        query = query + " ORDER BY DATE(c.push_date) ASC";
+        query = query + " ORDER BY DATE(r.submit_time) ASC";
         
         LinkedHashMap<String, Integer> map = new LinkedHashMap();
         
@@ -84,28 +84,28 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
                         "where r.code_id = c.code_id " +
                         "AND c.user_id = u.user_id " +
                         "AND u.project_id = ? " +
-                        "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
+                        "AND r.start_time BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
                         "AND STR_TO_DATE(?,'%d-%M-%Y') "+
                         "AND r.approved = 0 ";
         
         switch (period) {
             case 2:
                 //monthly
-                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(c.push_date, '%m-%Y') AS date_period " +query;
-                query = query + "GROUP BY DATE_FORMAT(c.push_date, '%m-%Y') ";
+                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(r.submit_time, '%m-%Y') AS date_period " +query;
+                query = query + "GROUP BY DATE_FORMAT(r.submit_time, '%m-%Y') ";
                 break;
             case 1:
                 //weekly
-                query = "select count(*) AS count_rejectedCodes, concat(WEEK(c.push_date),'-',YEAR(c.push_date)) AS date_period " +query;
-                query = query + "GROUP BY concat(WEEK(c.push_date),'-',YEAR(c.push_date)) ";
+                query = "select count(*) AS count_rejectedCodes, concat(WEEK(r.submit_time),'-',YEAR(r.submit_time)) AS date_period " +query;
+                query = query + "GROUP BY concat(WEEK(r.submit_time),'-',YEAR(r.submit_time)) ";
                 break;
             default:
                 //daily
-                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(c.push_date,'%d-%m-%Y') AS date_period " +query;
-                query = query + "GROUP BY DATE_FORMAT(c.push_date,'%d-%m-%Y') ";
+                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(r.submit_time,'%d-%m-%Y') AS date_period " +query;
+                query = query + "GROUP BY DATE_FORMAT(r.submit_time,'%d-%m-%Y') ";
                 break;
         }
-        query = query + " ORDER BY DATE(c.push_date) ASC";
+        query = query + " ORDER BY DATE(r.submit_time) ASC";
         
         LinkedHashMap<String, Integer> map = new LinkedHashMap();
         
@@ -140,28 +140,28 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
         String query = "from review r, code c " +
                         "where r.code_id = c.code_id " +
                         "AND c.user_id = ? " +
-                        "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
+                        "AND r.submit_time BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
                         "AND STR_TO_DATE(?,'%d-%M-%Y') "+
                         "AND r.approved = 1 ";
         
         switch (period) {
             case 2:
                 //monthly
-                query = "select count(*) AS count_approvedCodes, DATE_FORMAT(c.push_date, '%m-%Y') AS date_period " +query;
-                query = query + "GROUP BY DATE_FORMAT(c.push_date, '%m-%Y') ";
+                query = "select count(*) AS count_approvedCodes, DATE_FORMAT(r.submit_time, '%m-%Y') AS date_period " +query;
+                query = query + "GROUP BY DATE_FORMAT(r.submit_time, '%m-%Y') ";
                 break;
             case 1:
                 //weekly
-                query = "select count(*) AS count_approvedCodes, concat(WEEK(c.push_date),'-',YEAR(c.push_date)) AS date_period " +query;
-                query = query + "GROUP BY concat(WEEK(c.push_date),'-',YEAR(c.push_date)) ";
+                query = "select count(*) AS count_approvedCodes, concat(WEEK(r.submit_time),'-',YEAR(r.submit_time)) AS date_period " +query;
+                query = query + "GROUP BY concat(WEEK(r.submit_time),'-',YEAR(r.submit_time)) ";
                 break;
             default:
                 //daily
-                query = "select count(*) AS count_approvedCodes, DATE_FORMAT(c.push_date,'%d-%m-%Y') AS date_period " +query;
-                query = query + "GROUP BY DATE_FORMAT(c.push_date,'%d-%m-%Y') ";
+                query = "select count(*) AS count_approvedCodes, DATE_FORMAT(r.submit_time,'%d-%m-%Y') AS date_period " +query;
+                query = query + "GROUP BY DATE_FORMAT(r.submit_time,'%d-%m-%Y') ";
                 break;
         }
-        query = query + " ORDER BY DATE(c.push_date) ASC";
+        query = query + " ORDER BY DATE(r.submit_time) ASC";
         
         LinkedHashMap<String, Integer> map = new LinkedHashMap();
         
@@ -170,9 +170,10 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
                 ps.setInt(1, userId);
                 ps.setString(2, startDate);
                 ps.setString(3, endDate);
+                System.out.println("csvfvdfvdf : "+ps);
                 ResultSet rs = ps.executeQuery();
                 
-              System.out.println(ps);
+              
                 
                 while (rs.next()) {
                     System.out.println(rs.getString("date_period"));
@@ -196,28 +197,28 @@ public class PersonalDashboardDAOImpl implements PersonalDashboardDAO{
                         "where r.code_id = c.code_id " +
                         "AND c.user_id = u.user_id " +
                         "AND u.project_id = ? " +
-                        "AND c.push_date BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
+                        "AND r.submit_time BETWEEN STR_TO_DATE(?,'%d-%M-%Y') "+
                         "AND STR_TO_DATE(?,'%d-%M-%Y') "+
                         "AND r.approved = 1 ";
         
         switch (period) {
             case 2:
                 //monthly
-                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(c.push_date, '%m-%Y') AS date_period " +query;
-                query = query + "GROUP BY DATE_FORMAT(c.push_date, '%m-%Y') ";
+                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(r.submit_time, '%m-%Y') AS date_period " +query;
+                query = query + "GROUP BY DATE_FORMAT(r.submit_time, '%m-%Y') ";
                 break;
             case 1:
                 //weekly
-                query = "select count(*) AS count_rejectedCodes, concat(WEEK(c.push_date),'-',YEAR(c.push_date)) AS date_period " +query;
-                query = query + "GROUP BY concat(WEEK(c.push_date),'-',YEAR(c.push_date)) ";
+                query = "select count(*) AS count_rejectedCodes, concat(WEEK(r.submit_time),'-',YEAR(r.submit_time)) AS date_period " +query;
+                query = query + "GROUP BY concat(WEEK(r.submit_time),'-',YEAR(r.submit_time)) ";
                 break;
             default:
                 //daily
-                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(c.push_date,'%d-%m-%Y') AS date_period " +query;
-                query = query + "GROUP BY DATE_FORMAT(c.push_date,'%d-%m-%Y') ";
+                query = "select count(*) AS count_rejectedCodes, DATE_FORMAT(r.submit_time,'%d-%m-%Y') AS date_period " +query;
+                query = query + "GROUP BY DATE_FORMAT(r.submit_time,'%d-%m-%Y') ";
                 break;
         }
-        query = query + " ORDER BY DATE(c.push_date) ASC";
+        query = query + " ORDER BY DATE(r.submit_time) ASC";
         
         LinkedHashMap<String, Integer> map = new LinkedHashMap();
         
